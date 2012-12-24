@@ -8,7 +8,6 @@
 #include "logic/Contabilidade.h"
 #include "logic/Clientes.h"
 #include "logic/Fornecedores.h"
-#include "logic/Servicos.h"
 #include "logic/ContasBancarias.h"
 #include "logic/Timeline.h"
 #include "logic/Caixa.h"
@@ -37,7 +36,6 @@ public:
   Contabilidade *contabilidade_;
   Clientes *clientes_;
   Fornecedores *fornecedores_;
-  Servicos *servicos_;
   ContasBancarias *contasBancarias_;
   Timeline *timeline_;
   Caixa *caixa_;

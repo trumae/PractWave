@@ -10,7 +10,6 @@ CabureApplication::~CabureApplication() {
         delete contabilidade_;
         delete clientes_;
         delete fornecedores_;
-        delete servicos_;
         delete contasBancarias_;
         delete timeline_;
         delete caixa_;

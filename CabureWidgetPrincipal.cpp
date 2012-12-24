@@ -19,11 +19,8 @@
 #include "CabureApplication.h"
 #include "CabureUserManager.h"
 #include "CabureWidgetPrincipal.h"
-//#include "CabureMenu.h"
-//#include "CabureContent.h"
 #include "logic/Notificacao.h"
-//#include "widgets/MeusDados/MeusDadosWidget.h"
-//#include "widgets/ImportContactsGoogle/ImportContactsGoogle.h"
+#include "apps/Painel/Painel.h"
 
 using namespace Wt;
 
@@ -105,9 +102,6 @@ void CabureWidgetPrincipal::iniciaDBUser(std::string email) {
     cabure->fornecedores_ = new Fornecedores(cabure->db_,
             cabure->contabilidade_,
             cabure->timeline_);
-    cabure->servicos_ = new Servicos(cabure->db_,
-                                     cabure->contabilidade_,
-                                     cabure->timeline_);
     cabure->contasBancarias_ = new ContasBancarias(
         cabure->db_, cabure->contabilidade_,
         cabure->timeline_);
@@ -121,7 +115,6 @@ void CabureWidgetPrincipal::iniciaDBUser(std::string email) {
     cabure->contabilidade_->criaTabelas();
     cabure->clientes_->criaTabelas();
     cabure->fornecedores_->criaTabelas();
-    cabure->servicos_->criaTabelas();
     cabure->contasBancarias_->criaTabelas();
     cabure->timeline_->criaTabelas();
 }
@@ -337,7 +330,7 @@ void CabureWidgetPrincipal::createUI() {
        "       </div>"
        "    </div>"
     );
-    //painel->clicked().connect();
+    tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painel);
 
     WTemplate *tileTimeline = new WTemplate();
     tileTimeline->setTemplateText(
@@ -443,4 +436,25 @@ void CabureWidgetPrincipal::createUI() {
      t->bindWidget("loja", tileLoja);
      t->bindWidget("mensagem", tileMensagem);
 }
+
+void CabureWidgetPrincipal::viewHome(){
+    createUI();
+}
+
+void CabureWidgetPrincipal::googleAnalyticsLogger(std::string url){
+    doJavaScript("var pageTracker = _gat._getTracker('UA-34134276-1');"
+                 "pageTracker._trackPageview('" + url + "');");
+}
+
+WContainerWidget* CabureWidgetPrincipal::showPainel() {
+   googleAnalyticsLogger("/painel");
+   clear();
+   WContainerWidget *ret = new Painel(this);
+   return ret;
+}
+
+void CabureWidgetPrincipal::painel(){
+   showPainel();
+}
+
 

@@ -25,6 +25,7 @@ public:
   CabureWidgetPrincipal(Wt::WContainerWidget *parent = 0);
   ~CabureWidgetPrincipal();
   
+  void viewHome();
 private:
   Wt::Auth::OAuthProcess* processGoogle_;
   Wt::Auth::OAuthProcess* processFacebook_;
@@ -42,6 +43,9 @@ private:
   void informeSobreConvite(const Wt::Auth::Identity& identity);
   void createUI();
   void dadosContaUsuario();
+  void googleAnalyticsLogger(std::string url);
+  Wt::WContainerWidget* showPainel();
+  void painel();
 };
 
 
