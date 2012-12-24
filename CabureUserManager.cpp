@@ -10,6 +10,8 @@ CabureUserSessionDB::CabureUserSessionDB() {
 
     criaTableUser();
     criaTableDadosUser();
+    criaTableApps();
+    criaTableAppsUser();
     incluiColunaConviteAceito();
     criaTablesiCupom();
 }
@@ -23,6 +25,28 @@ void CabureUserSessionDB::criaTableUser() {
         std::cerr << "Erro ao criar tabela USER" << std::endl;
     }
 }
+
+void CabureUserSessionDB::criaTableApps() {
+    try {
+        session_
+                << "CREATE TABLE IF NOT EXISTS APP (id   INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,    name    TEXT, resource TEXT, padrao integer )  "
+                << cppdb::exec;
+    } catch (...) {
+        std::cerr << "Erro ao criar tabela USER" << std::endl;
+    }
+}
+
+
+void CabureUserSessionDB::criaTableAppsUser() {
+    try {
+        session_
+                << "CREATE TABLE IF NOT EXISTS APPUSER (id   INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, iduser integer, idapps integer )  "
+                << cppdb::exec;
+    } catch (...) {
+        std::cerr << "Erro ao criar tabela USER" << std::endl;
+    }
+}
+
 
 void CabureUserSessionDB::incluiColunaConviteAceito() {
     try {

@@ -147,16 +147,16 @@ void CabureWidgetPrincipal::authenticatedFacebook(const Wt::Auth::Identity& iden
 
 void CabureWidgetPrincipal::authenticated(const Wt::Auth::Identity& identity) {
     CabureApplication *cabure = CabureApplication::cabureApplication();
-    int idUsuario = -1;
-    int conviteAceito = -1;
-    cppdb::result res = userDB.db() << "select id, conviteaceito from user where email = ?"
-                        << identity.email() << cppdb::row;
+    //int idUsuario = -1;
+    //int conviteAceito = -1;
+    //cppdb::result res = userDB.db() << "select id, conviteaceito from user where email = ?"
+    //                    << identity.email() << cppdb::row;
 
     cabure->name = identity.name().toUTF8();
     cabure->email = identity.email();
     iniciaDBUser(identity.email());
 
-    if(!res.empty()) {
+/*    if(!res.empty()) {
         res >> idUsuario >> conviteAceito;
 
         cabure->meusDados_->idUser = idUsuario;
@@ -198,7 +198,7 @@ void CabureWidgetPrincipal::authenticated(const Wt::Auth::Identity& identity) {
         informeSobreConvite(identity);
         return;
     }
-
+*/
     createUI();
 }
 
@@ -322,64 +322,125 @@ void CabureWidgetPrincipal::informeSobreConvite(const Wt::Auth::Identity& identi
 }
 
 void CabureWidgetPrincipal::createUI() {
-    CabureApplication *cabure = CabureApplication::cabureApplication();
+    //CabureApplication *cabure = CabureApplication::cabureApplication();
     clear();
+
+    //WCssDecorationStyle& decoration=cabure->root()->decorationStyle();
+    //decoration.setBackgroundImage("http://br.bing.com/az/hprichbg?p=rb\%2fMidwestCardinal_ROW12109954041_1366x768.jpg");
+
+    // modulos padrao
+    WTemplate *tilePainel = new WTemplate();
+    tilePainel->setTemplateText(
+       "     <div class='tile bg-color-blueDark'>"
+       "       <div class='tile-content'>"
+       "          <h2>Painel</h2>"
+       "       </div>"
+       "    </div>"
+    );
+    //painel->clicked().connect();
+
+    WTemplate *tileTimeline = new WTemplate();
+    tileTimeline->setTemplateText(
+       "     <div class='tile bg-color-yellow'>"
+       "       <div class='tile-content'>"
+       "          <h2>Timeline</h2>"
+       "       </div>"
+       "    </div>"
+    );
+
+    WTemplate *tileCliente = new WTemplate();
+    tileCliente->setTemplateText(
+       "     <div class='tile double bg-color-orangeDark'>"
+       "       <div class='tile-content'>"
+       "          <h2>Cliente</h2>"
+       "       </div>"
+       "    </div>"
+    );
+
+    WTemplate *tileFornecedor = new WTemplate();
+    tileFornecedor->setTemplateText(
+       "     <div class='tile double bg-color-purple'>"
+       "       <div class='tile-content'>"
+       "          <h2>Fornecedor</h2>"
+       "       </div>"
+       "    </div>"
+    );
+
+    WTemplate *tileBanco = new WTemplate();
+    tileBanco->setTemplateText(
+       "     <div class='tile double bg-color-blue'>"
+       "       <div class='tile-content'>"
+       "          <h2>Banco</h2>"
+       "       </div>"
+       "    </div>"
+    );
+
+    WTemplate *tileCaixa = new WTemplate();
+    tileCaixa->setTemplateText(
+       "     <div class='tile double bg-color-pink'>"
+       "       <div class='tile-content'>"
+       "          <h2>Caixa</h2>"
+       "       </div>"
+       "    </div>"
+    );
+
+    WTemplate *tileLoja = new WTemplate();
+    tileLoja->setTemplateText(
+       "     <div class='tile icon bg-color-green'>"
+       "       <div class='tile-content'>"
+       "          <img class='icon' src='images/Market128.png'/>"
+       "       </div>"
+       "       <div class='brand'>"
+       "          <span class='name'>Loja</span>"
+       "       </div>"
+       "    </div>"
+    );
+    
+    WTemplate *tileMensagem = new WTemplate();
+    tileMensagem->setTemplateText(
+       "     <div class='tile icon bg-color-greenDark'>"
+       "       <div class='tile-content'>"
+       "          <img class='icon' src='images/Mail128.png'/>"
+       "       </div>"
+       "       <div class='brand'>"
+       "          <span class='name'>Mensagem</span>"
+       "          <span class='badge'>0</span>"
+       "       </div>"
+       "    </div>"
+    );
 
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-        "<div class='navbar navbar-fixed-top'>"
-        "  <div class='navbar-inner'>"
-        "    <div class='container-fluid'>"
-        "      <a class='btn btn-navbar' data-toggle='collapse' data-target='.nav-collapse'>"
-        "      <span class='icon-bar'></span>"
-        "      <span class='icon-bar'></span>"
-        "      <span class='icon-bar'></span>"
-        "      </a>"
-        "      <a class='brand' href='#'><img src='img/cabure.png' alt='logo' />PractWave</a>"
-        "      <ul class='nav pull-left bar-root'>"
-        "        <li class='divider-vertical'></li>"
-        "        <li><a href='#'><i class='icon-envelope icon-white'></i><span class='label label-important'>0</span></a> </li>"
-        "      </ul>"
-        "      <div class='group-menu nav-collapse'>"
-        "         <ul class='nav pull-right'>"
-        "           <li class='divider-vertical'></li>"
-        "           <li class='dropdown'>"
-        "             <a href='#' class='dropdown-toggle'"
-        "                data-toggle='dropdown'>"
-        "              <h4>" + WString(cabure->name, UTF8) +
-        "              <b class='caret'></b></h4>"
-        "             </a>"
-        "             <ul class='dropdown-menu'>"
-        "                <li>${dadosConta}</li>"
-        "            </ul>"
-        "          </li>"
-        "         </ul>"
-        "      </div>"
-        "    </div>"
-        "  </div>"
-        "</div>"
-        " <div class='container-fluid conteudo'>"
-        "   <div class='row-fluid'>"
-        "     <div class='span3' id='menu-left'>"
-        "       <div  class='sidebar-nav'>"
-        "          ${menu} "
-        "       </div>"
-        "     </div>"
-        "     <div class='span6 section-body' id='content'>"
-        "     ${content}"
-        "     </div>"
-        "     <div class='span3'>"
-        "     ${ads}"
-        "     </div>"
-        "   </div>"
-        " </div>"
-        "<div id='rodape'>"
-        "</div>"
-        , Wt::XHTMLUnsafeText);
+     "<div class='page secondary'>"
+     "  <div class='page-header'>"
+     "    <div class='page-header-content'>"
+     "      <h1>PractWave</h1>"
+     "    </div>"
+     "  </div>"
+     "  <div class='page-region'>"
+     "     <div class='page-region-content'>"
+     "     ${painel}"
+     "     ${timeline}"
+     "     ${cliente}"
+     "     ${fornecedor}"
+     "     ${banco}"
+     "     ${caixa}"
+     "     ${loja}"
+     "     ${mensagem}"
+     "      </div>"
+     //"       <h4>" + WString(cabure->name, UTF8) + "</h4>"
+     "    </div>"
+     "  </div>"
+     "</div>"
+     , Wt::XHTMLUnsafeText);
 
-    t->bindString("dadosConta", "dadosConta");
-    t->bindString("ads", "ads");
-    t->bindString("content", "content");
-    t->bindString("menu", "menu");
+     t->bindWidget("painel", tilePainel);
+     t->bindWidget("timeline", tileTimeline);
+     t->bindWidget("cliente", tileCliente);
+     t->bindWidget("fornecedor", tileFornecedor);
+     t->bindWidget("banco", tileBanco);
+     t->bindWidget("caixa", tileCaixa);
+     t->bindWidget("loja", tileLoja);
+     t->bindWidget("mensagem", tileMensagem);
 }
 

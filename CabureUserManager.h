@@ -21,6 +21,8 @@ private:
 
 	void criaTableUser();
 	void criaTableDadosUser();
+	void criaTableApps();
+	void criaTableAppsUser();
         void incluiColunaConviteAceito();
 
 	//metodos para gerencia do sistema de cupons promocionais
