@@ -47,8 +47,10 @@ void Painel::viewHome() {
     Contabilidade *contabilidade = app->contabilidade_;
     
     clear();
-    WTemplate *back = new WTemplate();
-    back->setTemplateText(" <a class='back-button big page-back'></a>");
+    WAnchor *back = new WAnchor();
+    back->setStyleClass("back-button big page-back");
+    //WTemplate *back = new WTemplate();
+    //back->setTemplateText(" <a class='back-button big page-back'></a>");
     back->setInline(true);
     back->clicked().connect(app->principal_, &CabureWidgetPrincipal::viewHome);
     
@@ -65,6 +67,9 @@ void Painel::viewHome() {
         "   </div>"
         "   <div class='page-region'>"
         "      <div class='page-region-content'>"
+        "        <div class='grid'>"
+        "          <div class='row'>"
+        "             <div class='span12'>"
         "         <div class='tile double bg-color-blue'>"
         "           <div class='tile-content'>"
         "              <h2>Total a Receber</h2>"
@@ -85,6 +90,8 @@ void Painel::viewHome() {
         "              </div>"
         "           </div>"
         "         </div>"
+        "         </div>"
+        "         </div></div>"
         "    </div>"
         "</div>"
     );
@@ -128,12 +135,12 @@ for(Fornecedor forn: fornecedores_) {
             complementarTplDevo = contabilidade->getSaldoContaFolha(fornecedores_[0].idconta) != 0;
         if(complementarTplDeve) {
             tplPainel +=
-                "<center>${chartDeve}</center>";
+                "<br/>${chartDeve}";
             chartDeve = new WImage(getUrlGrafico(QUEMMEDEVE));
         }
         if(complementarTplDevo) {
             tplPainel +=
-                "<center>${chartDevo}</center>";
+                "${chartDevo}";
             chartDevo = new WImage(getUrlGrafico(PRAQUEMDEVO));
         }
         w->setTemplateText(
