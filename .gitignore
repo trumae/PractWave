@@ -1,0 +1,12 @@
+*.o
+*~
+tags
+caburewt
+*.swp
+*.db
+*.db-journal
+TAGS
+nohup.out
+cabureAds/adswt
+.project
+.cproject

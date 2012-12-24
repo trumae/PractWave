@@ -1,0 +1,6 @@
+Para executar a aplicacao, execute:
+
+  $ ./caburewt --http-address 0.0.0.0 --http-port 8080 --docroot www/ -c wt_config.xml
+
+
+
