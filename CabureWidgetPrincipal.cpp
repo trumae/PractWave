@@ -21,6 +21,7 @@
 #include "CabureWidgetPrincipal.h"
 #include "logic/Notificacao.h"
 #include "apps/Painel/Painel.h"
+#include "apps/Timeline/Timeline.h"
 
 using namespace Wt;
 
@@ -322,24 +323,11 @@ void CabureWidgetPrincipal::createUI() {
     //decoration.setBackgroundImage("http://br.bing.com/az/hprichbg?p=rb\%2fMidwestCardinal_ROW12109954041_1366x768.jpg");
 
     // modulos padrao
-    WTemplate *tilePainel = new WTemplate();
-    tilePainel->setTemplateText(
-       "     <div class='tile bg-color-blueDark'>"
-       "       <div class='tile-content'>"
-       "          <h2>Painel</h2>"
-       "       </div>"
-       "    </div>"
-    );
+    TilePainel *tilePainel = new TilePainel();
     tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painel);
 
-    WTemplate *tileTimeline = new WTemplate();
-    tileTimeline->setTemplateText(
-       "     <div class='tile bg-color-yellow'>"
-       "       <div class='tile-content'>"
-       "          <h2>Timeline</h2>"
-       "       </div>"
-       "    </div>"
-    );
+    TileTimeline *tileTimeline = new TileTimeline();
+    tileTimeline->clicked().connect(this, &CabureWidgetPrincipal::timeline);
 
     WTemplate *tileCliente = new WTemplate();
     tileCliente->setTemplateText(
@@ -457,4 +445,14 @@ void CabureWidgetPrincipal::painel(){
    showPainel();
 }
 
+WContainerWidget* CabureWidgetPrincipal::showTimeline() {
+   googleAnalyticsLogger("/timeline");
+   clear();
+   WContainerWidget *ret = new TimelineApp(this);
+   return ret;
+}
+
+void CabureWidgetPrincipal::timeline(){
+   showTimeline();
+}
 

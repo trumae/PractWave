@@ -5,6 +5,9 @@
 #include <Wt/WLineEdit>
 #include <vector>
 
+#include "../../logic/Clientes.h"
+#include "../../logic/Fornecedores.h"
+
 class Painel : public Wt::WContainerWidget {
  public:
   Painel(Wt::WContainerWidget *parent);
@@ -17,6 +20,11 @@ class Painel : public Wt::WContainerWidget {
   std::vector<Fornecedor> fornecedores_;
 
   std::string getUrlGrafico(TipoGrafico tipoGrafico);
+};
+
+class TilePainel : public Wt::WContainerWidget {
+  public:
+    TilePainel();
 };
 
 #endif

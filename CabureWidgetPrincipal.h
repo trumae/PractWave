@@ -46,6 +46,8 @@ private:
   void googleAnalyticsLogger(std::string url);
   Wt::WContainerWidget* showPainel();
   void painel();
+  Wt::WContainerWidget* showTimeline();
+  void timeline();
 };
 
 
