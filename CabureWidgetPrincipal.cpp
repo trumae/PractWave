@@ -20,8 +20,8 @@
 #include "CabureUserManager.h"
 #include "CabureWidgetPrincipal.h"
 #include "logic/Notificacao.h"
-#include "apps/Painel/Painel.h"
-#include "apps/Timeline/Timeline.h"
+#include "apps/Painel/PainelApp.h"
+#include "apps/Timeline/TimelineApp.h"
 
 using namespace Wt;
 
@@ -437,7 +437,7 @@ void CabureWidgetPrincipal::googleAnalyticsLogger(std::string url){
 WContainerWidget* CabureWidgetPrincipal::showPainel() {
    googleAnalyticsLogger("/painel");
    clear();
-   WContainerWidget *ret = new Painel(this);
+   WContainerWidget *ret = new PainelApp(this);
    return ret;
 }
 

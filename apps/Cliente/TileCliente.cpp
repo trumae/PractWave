@@ -1,5 +1,5 @@
 #include <Wt/WTemplate>
-#include "TimelineApp.h"
+#include "Timeline.h"
 
 using namespace Wt;
 

@@ -11,12 +11,12 @@
 #include "../../logic/Fornecedores.h"
 #include "../../logic/Contabilidade.h"
 #include "../../logic/Moeda.h"
-#include "Painel.h"
+#include "PainelApp.h"
 
 using namespace Wt;
 using namespace std;
 
-Painel::Painel(WContainerWidget *parent)
+PainelApp::PainelApp(WContainerWidget *parent)
     : WContainerWidget(parent) {
     CabureApplication *app = CabureApplication::cabureApplication();
 
@@ -42,7 +42,7 @@ Painel::Painel(WContainerWidget *parent)
 }
 
 
-void Painel::viewHome() {
+void PainelApp::viewHome() {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
     
@@ -157,7 +157,7 @@ for(Fornecedor forn: fornecedores_) {
     }
 }
 
-std::string Painel::getUrlGrafico(TipoGrafico tipoGrafico) {
+std::string PainelApp::getUrlGrafico(TipoGrafico tipoGrafico) {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
     int sizecli = clientes_.size();

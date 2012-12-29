@@ -1,5 +1,5 @@
 #include <Wt/WTemplate>
-#include "Painel.h"
+#include "PainelApp.h"
 
 using namespace Wt;
 

@@ -1,5 +1,5 @@
-#ifndef __DASHBOARD_WIDGET__
-#define __DASHBOARD_WIDGET__
+#ifndef __PAINELAPP_WIDGET__
+#define __PAINELAPP_WIDGET__
 
 #include <Wt/WContainerWidget>
 #include <Wt/WLineEdit>
@@ -8,9 +8,9 @@
 #include "../../logic/Clientes.h"
 #include "../../logic/Fornecedores.h"
 
-class Painel : public Wt::WContainerWidget {
+class PainelApp : public Wt::WContainerWidget {
  public:
-  Painel(Wt::WContainerWidget *parent);
+  PainelApp(Wt::WContainerWidget *parent);
   void viewHome();
   void viewZero(){};
  private:

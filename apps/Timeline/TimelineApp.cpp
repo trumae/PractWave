@@ -13,7 +13,7 @@
 #include "../../logic/Contabilidade.h"
 #include "../../logic/Moeda.h"
 #include "../../logic/Timeline.h"
-#include "Timeline.h"
+#include "TimelineApp.h"
 
 using namespace Wt;
 using namespace std;
@@ -33,10 +33,17 @@ void TimelineApp::viewHome() {
     back->clicked().connect(app->principal_, &CabureWidgetPrincipal::viewHome);
     
     vector<ItemTimeline> vitem;
-    vector<ItemTimeline>::iterator itItem;
     app->timeline_->getTodosTimelineComLimite(vitem, 30);
 
-    std::string tpl(
+    string tabela = "<table class='striped'>";
+    for(ItemTimeline item: vitem) {
+      tabela += "<tr><td>" +
+	      item.descricao +
+	      "</td></tr>"; 
+    }
+    tabela += "</table>";
+
+    string tpl(
         "<img height=\"1\" width=\"1\" style=\"border-style:none;\" alt=\"\" src=\"http://www.googleadservices.com/pagead/conversion/999519350/?value=0,10&amp;label=eLrVCILgwgMQ9ujN3AM&amp;guid=ON&amp;script=0\"/>"
 
         "<div class='page secondary'>"
@@ -57,7 +64,7 @@ void TimelineApp::viewHome() {
     WTemplate *wtemplate = new WTemplate(this);
     wtemplate->setTemplateText(tpl);
     wtemplate->bindWidget("backButton", back);
-    wtemplate->bindString("tabela", "");
+    wtemplate->bindString("tabela", WString(tabela, UTF8));
 
 }
 
