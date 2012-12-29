@@ -44,10 +44,12 @@ private:
   void createUI();
   void dadosContaUsuario();
   void googleAnalyticsLogger(std::string url);
-  Wt::WContainerWidget* showPainel();
-  void painel();
-  Wt::WContainerWidget* showTimeline();
-  void timeline();
+  Wt::WContainerWidget* showPainelApp();
+  void painelApp();
+  Wt::WContainerWidget* showTimelineApp();
+  void timelineApp();
+  Wt::WContainerWidget* showClienteApp();
+  void clienteApp();
 };
 
 

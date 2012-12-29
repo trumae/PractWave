@@ -22,6 +22,7 @@
 #include "logic/Notificacao.h"
 #include "apps/Painel/PainelApp.h"
 #include "apps/Timeline/TimelineApp.h"
+#include "apps/Cliente/ClienteApp.h"
 
 using namespace Wt;
 
@@ -324,19 +325,13 @@ void CabureWidgetPrincipal::createUI() {
 
     // modulos padrao
     TilePainel *tilePainel = new TilePainel();
-    tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painel);
+    tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painelApp);
 
     TileTimeline *tileTimeline = new TileTimeline();
-    tileTimeline->clicked().connect(this, &CabureWidgetPrincipal::timeline);
+    tileTimeline->clicked().connect(this, &CabureWidgetPrincipal::timelineApp);
 
-    WTemplate *tileCliente = new WTemplate();
-    tileCliente->setTemplateText(
-       "     <div class='tile double bg-color-orangeDark'>"
-       "       <div class='tile-content'>"
-       "          <h2>Cliente</h2>"
-       "       </div>"
-       "    </div>"
-    );
+    TileCliente *tileCliente = new TileCliente();
+    tileCliente->clicked().connect(this, &CabureWidgetPrincipal::clienteApp);
 
     WTemplate *tileFornecedor = new WTemplate();
     tileFornecedor->setTemplateText(
@@ -434,25 +429,37 @@ void CabureWidgetPrincipal::googleAnalyticsLogger(std::string url){
                  "pageTracker._trackPageview('" + url + "');");
 }
 
-WContainerWidget* CabureWidgetPrincipal::showPainel() {
+WContainerWidget* CabureWidgetPrincipal::showPainelApp() {
    googleAnalyticsLogger("/painel");
    clear();
    WContainerWidget *ret = new PainelApp(this);
    return ret;
 }
 
-void CabureWidgetPrincipal::painel(){
-   showPainel();
+void CabureWidgetPrincipal::painelApp(){
+   showPainelApp();
 }
 
-WContainerWidget* CabureWidgetPrincipal::showTimeline() {
+WContainerWidget* CabureWidgetPrincipal::showTimelineApp() {
    googleAnalyticsLogger("/timeline");
    clear();
    WContainerWidget *ret = new TimelineApp(this);
    return ret;
 }
 
-void CabureWidgetPrincipal::timeline(){
-   showTimeline();
+void CabureWidgetPrincipal::timelineApp(){
+   showTimelineApp();
 }
+
+WContainerWidget* CabureWidgetPrincipal::showClienteApp() {
+   googleAnalyticsLogger("/cliente");
+   clear();
+   WContainerWidget *ret = new ClienteApp(this);
+   return ret;
+}
+
+void CabureWidgetPrincipal::clienteApp(){
+   showClienteApp();
+}
+
 
