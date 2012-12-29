@@ -11,8 +11,6 @@ protected:
     virtual std::string getTitulo();
 public:
     ClienteApp(Wt::WContainerWidget *parent);
-    void viewHome();
-    void viewZero() {};
 };
 
 class TileCliente : public Wt::WContainerWidget {

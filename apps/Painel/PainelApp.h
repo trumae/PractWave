@@ -7,12 +7,14 @@
 
 #include "../../logic/Clientes.h"
 #include "../../logic/Fornecedores.h"
+#include "../App.h"
 
-class PainelApp : public Wt::WContainerWidget {
+class PainelApp : public App {
+ protected:
+  virtual Wt::WWidget *getConteudo();
+  virtual std::string getTitulo();
  public:
   PainelApp(Wt::WContainerWidget *parent);
-  void viewHome();
-  void viewZero(){};
  private:
   enum TipoGrafico {QUEMMEDEVE, PRAQUEMDEVO};
 

@@ -2,13 +2,17 @@
 #define __TIMELINE_APP__
 
 #include <Wt/WContainerWidget>
-#include "../../logic/Timeline.h"
+#include <string>
 
-class TimelineApp : public Wt::WContainerWidget {
+#include "../../logic/Timeline.h"
+#include "../App.h"
+
+class TimelineApp : public App {
+ protected:
+  virtual Wt::WWidget *getConteudo();
+  virtual std::string getTitulo();
  public:
   TimelineApp(Wt::WContainerWidget *parent);
-  void viewHome();
-  void viewZero(){};
 };
 
 class TileTimeline : public Wt::WContainerWidget {

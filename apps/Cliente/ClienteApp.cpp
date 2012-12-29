@@ -20,6 +20,7 @@ using namespace std;
 
 ClienteApp::ClienteApp(WContainerWidget *parent)
     : App(parent) {
+   init();
 }
 
 WWidget* ClienteApp::getConteudo() {
@@ -27,5 +28,5 @@ WWidget* ClienteApp::getConteudo() {
 }
 
 string ClienteApp::getTitulo(){
-   return "Clientes";
+   return "PractWave - Clientes";
 }

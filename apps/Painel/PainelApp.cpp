@@ -17,7 +17,7 @@ using namespace Wt;
 using namespace std;
 
 PainelApp::PainelApp(WContainerWidget *parent)
-    : WContainerWidget(parent) {
+    : App(parent) {
     CabureApplication *app = CabureApplication::cabureApplication();
 
     app->clientes_->getTodosClientes(clientes_);
@@ -38,35 +38,17 @@ PainelApp::PainelApp(WContainerWidget *parent)
                contabilidade->getSaldoContaFolha(b.idconta);
     });
 
-    viewHome();
+    init();
 }
 
+std::string PainelApp::getTitulo() {
+    return "PractWave - Painel";
+}
 
-void PainelApp::viewHome() {
+Wt::WWidget *PainelApp::getConteudo() {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
-    
-    clear();
-    WAnchor *back = new WAnchor();
-    back->setStyleClass("back-button big page-back");
-    //WTemplate *back = new WTemplate();
-    //back->setTemplateText(" <a class='back-button big page-back'></a>");
-    back->setInline(true);
-    back->clicked().connect(app->principal_, &CabureWidgetPrincipal::viewHome);
-    
     std::string tplInformacoes(
-        //informacoes gerais
-        "<img height=\"1\" width=\"1\" style=\"border-style:none;\" alt=\"\" src=\"http://www.googleadservices.com/pagead/conversion/999519350/?value=0,10&amp;label=eLrVCILgwgMQ9ujN3AM&amp;guid=ON&amp;script=0\"/>"
-
-        "<div class='page secondary'>"
-        "   <div class='page-header'>"
-        "      <div class='page-header-content'>"
-        "          <h1>Painel</h1>"
-        "          ${backButton}"
-        "      </div>"
-        "   </div>"
-        "   <div class='page-region'>"
-        "      <div class='page-region-content'>"
         "        <div class='grid'>"
         "          <div class='row'>"
         "             <div class='span12'>"
@@ -91,11 +73,9 @@ void PainelApp::viewHome() {
         "           </div>"
         "         </div>"
         "         </div>"
-        "         </div></div>"
-        "    </div>"
-        "</div>"
     );
-    
+    WTemplate *w;
+
     long long totalReceber = 0;
     long long totalPagar = 0;
 
@@ -112,7 +92,7 @@ for(Fornecedor forn: fornecedores_) {
     string textoNumFornecedores = boost::lexical_cast<string>(fornecedores_.size());
 
     if(clientes_.size() == 0 && fornecedores_.size() == 0) {
-        WTemplate *w = new WTemplate(this);
+        w = new WTemplate(this);
         w->setTemplateText(
             tplInformacoes
             , XHTMLUnsafeText);
@@ -120,14 +100,13 @@ for(Fornecedor forn: fornecedores_) {
         w->bindString("totalPagar", mtotalPagar.valStr());
         w->bindString("numClientes", textoNumClientes);
         w->bindString("numFornecedores", textoNumFornecedores);
-        w->bindWidget("backButton", back);
     } else {
         WImage *chartDeve;
         WImage *chartDevo;
         bool complementarTplDeve = false;
         bool complementarTplDevo = false;
 
-        WTemplate *w = new WTemplate(this);
+        w = new WTemplate(this);
         std::string tplPainel = tplInformacoes;
         if(clientes_.size() > 0)
             complementarTplDeve = contabilidade->getSaldoContaFolha(clientes_[0].idconta) != 0;
@@ -151,10 +130,10 @@ for(Fornecedor forn: fornecedores_) {
         w->bindString("totalPagar", mtotalPagar.valStr());
         w->bindString("numClientes", textoNumClientes);
         w->bindString("numFornecedores", textoNumFornecedores);
-        w->bindWidget("backButton", back);
         if(complementarTplDeve)  w->bindWidget("chartDeve", chartDeve);
         if(complementarTplDevo)  w->bindWidget("chartDevo", chartDevo);
     }
+    return w;
 }
 
 std::string PainelApp::getUrlGrafico(TipoGrafico tipoGrafico) {

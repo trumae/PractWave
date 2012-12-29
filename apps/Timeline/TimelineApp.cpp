@@ -19,19 +19,12 @@ using namespace Wt;
 using namespace std;
 
 TimelineApp::TimelineApp(WContainerWidget *parent)
-    : WContainerWidget(parent) {
-    viewHome();
+    : App(parent) {
+   init();
 }
 
-
-void TimelineApp::viewHome() {
+WWidget *TimelineApp::getConteudo(){
     CabureApplication *app = CabureApplication::cabureApplication();
-    clear();
-    WAnchor *back = new WAnchor();
-    back->setStyleClass("back-button big page-back");
-    back->setInline(true);
-    back->clicked().connect(app->principal_, &CabureWidgetPrincipal::viewHome);
-    
     vector<ItemTimeline> vitem;
     app->timeline_->getTodosTimelineComLimite(vitem, 30);
 
@@ -42,29 +35,11 @@ void TimelineApp::viewHome() {
 	      "</td></tr>"; 
     }
     tabela += "</table>";
-
-    string tpl(
-        "<img height=\"1\" width=\"1\" style=\"border-style:none;\" alt=\"\" src=\"http://www.googleadservices.com/pagead/conversion/999519350/?value=0,10&amp;label=eLrVCILgwgMQ9ujN3AM&amp;guid=ON&amp;script=0\"/>"
-
-        "<div class='page secondary'>"
-        "   <div class='page-header'>"
-        "      <div class='page-header-content'>"
-        "          <h1>Timeline</h1>"
-        "          ${backButton}"
-        "      </div>"
-        "   </div>"
-        "   <div class='page-region'>"
-        "      <div class='page-region-content'>"
-	"      ${tabela}"
-        "      </div>"
-        "   </div>"
-        "</div>"
-    );
         
-    WTemplate *wtemplate = new WTemplate(this);
-    wtemplate->setTemplateText(tpl);
-    wtemplate->bindWidget("backButton", back);
-    wtemplate->bindString("tabela", WString(tabela, UTF8));
-
+    WText *wtext = new WText(WString(tabela, UTF8), XHTMLUnsafeText);
+    return wtext;
 }
 
+string TimelineApp::getTitulo(){
+   return "PractWave - Timeline";
+}

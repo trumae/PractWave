@@ -11,10 +11,9 @@
 
 class App : public Wt::WContainerWidget {
 protected:
-    virtual WWidget* getConteudo() { return new Wt::WText("Reescreva getConteudo()"); }
-    virtual std::string getTitulo() { return "Reescreva getTitulo()";}
-public:
-    App(Wt::WContainerWidget *p) : Wt::WContainerWidget(p) {
+    virtual WWidget* getConteudo() = 0; 
+    virtual std::string getTitulo() = 0;
+    void init() {
         CabureApplication *app = CabureApplication::cabureApplication();
         clear();
 	Wt::WAnchor *back = new Wt::WAnchor();
@@ -34,7 +33,7 @@ public:
             "   </div>"
             "   <div class='page-region'>"
             "      <div class='page-region-content'>"
-            "      ${tabela}"
+            "      ${conteudo}"
             "      </div>"
             "   </div>"
             "</div>"
@@ -44,8 +43,10 @@ public:
         wtemplate->setTemplateText(tpl);
         wtemplate->bindWidget("backButton", back);
         wtemplate->bindString("titulo", getTitulo());
-        wtemplate->bindWidget("tabela", getConteudo());
+        wtemplate->bindWidget("conteudo", getConteudo());
     }
+  public:
+    App(Wt::WContainerWidget *p) : Wt::WContainerWidget(p) {}
 };
 
 #endif
