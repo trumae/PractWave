@@ -33,10 +33,17 @@ protected:
             "   </div>"
             "   <div class='page-region'>"
             "      <div class='page-region-content'>"
-            "      ${conteudo}"
+            "      ${conteudo}<br/><br/>"
             "      </div>"
             "   </div>"
             "</div>"
+	    //"<div class='nav-bar fixed-bottom bg-color-darken'>"
+	    //"    <div class='nav-bar-inner'>"
+            //"      <span class='element place-right'>Botoes aqui</span>"
+            //"      <span class='element'>&copy; 2012 CMSoftwares</span>"
+	    //"      <span class='divider'></span>"
+	    //"    </div>"
+	    //"</div>"
         );
 
 	Wt::WTemplate *wtemplate = new Wt::WTemplate(this);
