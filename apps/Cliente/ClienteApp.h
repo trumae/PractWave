@@ -9,6 +9,9 @@ class ClienteApp : public App {
 protected:
     virtual WWidget* getConteudo();
     virtual std::string getTitulo();
+
+    void processInicial(std::string inicial);
+    void processCliente(int id, std::string inicial);
 public:
     ClienteApp(Wt::WContainerWidget *parent);
 };

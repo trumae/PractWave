@@ -22,8 +22,6 @@ protected:
         back->clicked().connect(app->principal_, &CabureWidgetPrincipal::viewHome);
 
 	std::string tpl(
-            "<img height=\"1\" width=\"1\" style=\"border-style:none;\" alt=\"\" src=\"http://www.googleadservices.com/pagead/conversion/999519350/?value=0,10&amp;label=eLrVCILgwgMQ9ujN3AM&amp;guid=ON&amp;script=0\"/>"
-
             "<div class='page secondary'>"
             "   <div class='page-header'>"
             "      <div class='page-header-content'>"
