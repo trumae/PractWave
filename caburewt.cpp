@@ -13,7 +13,6 @@ using namespace Wt;
 using namespace Wt::Dbo;
 
 WApplication *createApplication(const WEnvironment& env) {
-    //WApplication *app = new CabureApplication(env);
     CabureApplication *app = new CabureApplication(env);
     app->setTitle("PractWave");
     //app->setCssTheme("Polished");
@@ -25,6 +24,7 @@ WApplication *createApplication(const WEnvironment& env) {
     app->addMetaHeader("author","trumae@gmail.com");
 
     //inclue CSS
+    app->useStyleSheet("css/practwave.css");
     app->useStyleSheet("css/modern.css");
     app->useStyleSheet("css/modern-responsive.css");
 
@@ -35,8 +35,8 @@ WApplication *createApplication(const WEnvironment& env) {
 
     //loadinIndicator
     WApplication::instance()->styleSheet().addRule("body", "margin: 0px");
-    WLoadingIndicator *loading = new Wt::WOverlayLoadingIndicator();
-    loading->setMessage("Carregando ...");
+    WLoadingIndicator *loading = new Wt::WOverlayLoadingIndicator("loading");
+    loading->setMessage("Carregando");
     app->setLoadingIndicator(loading);
 
     //cria Widget Principal

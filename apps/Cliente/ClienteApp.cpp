@@ -4,6 +4,7 @@
 #include <Wt/WImage>
 #include <Wt/WText>
 #include <Wt/WBreak>
+#include <Wt/WStackedWidget>
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <vector>
@@ -14,6 +15,8 @@
 #include "../../logic/Contabilidade.h"
 #include "../../logic/Moeda.h"
 #include "../../logic/Timeline.h"
+#include "../../widgets/ContaWidget/ContaWidget.h"
+#include "../../widgets/ContaCliente/ContaCliente.h"
 #include "ClienteApp.h"
 #include <cppdb/frontend.h>
 #include <boost/lexical_cast.hpp>
@@ -113,7 +116,7 @@ void ClienteApp::processInicial(string inicial) {
                         "   </div>"
                         "</div>";
         WText *tt = new WText(WString(buffer, UTF8), Wt::XHTMLUnsafeText);
-        tt->clicked().connect(boost::bind(&ClienteApp::processCliente, this, id, inicial));
+        tt->clicked().connect(boost::bind(&ClienteApp::processCliente, this, id, idconta, inicial));
         container->addWidget(tt);
     }
 
@@ -138,14 +141,28 @@ void ClienteApp::processInicial(string inicial) {
     t->bindWidget("conteudo", container);
 }
 
-void ClienteApp::processCliente(int id, string inicial) {
+void ClienteApp::processCliente(int id, int idconta, string inicial) {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
     clear();
+    
+	stack = new WStackedWidget();
+    stack->addWidget(new ContaCliente(this, idconta));
+    stack->addWidget(new WText("Teste"));
+
     Wt::WAnchor *back = new Wt::WAnchor();
     back->setStyleClass("back-button big page-back");
     back->setInline(true);
     back->clicked().connect(boost::bind(&ClienteApp::processInicial, this, inicial));
+
+    WText *conta = new WText("<li class='sticker sticker-color-blue'><a><i class='icon-clipboard-2'></i>Conta</a></li>", Wt::XHTMLUnsafeText);
+    conta->setInline(true);
+	conta->clicked().connect(this, &ClienteApp::showConta);
+
+
+	WText *dados = new WText("<li class='sticker sticker-color-orange'><a><i class='icon-user'></i>Dados</a></li>", Wt::XHTMLUnsafeText);
+	dados->setInline(true);
+	dados->clicked().connect(this, &ClienteApp::showDados);
 
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
@@ -157,8 +174,7 @@ void ClienteApp::processCliente(int id, string inicial) {
     "      </div>"
     "   </div>"
     "   <div class='page-sidebar'>"
-    "      <li class='sticker sticker-color-blue'><a><i class='icon-clipboard-2'></i>Conta</a></li>"
-    "      <li class='sticker sticker-color-orange'><a><i class='icon-user'></i>Dados</a></li>"
+	"    ${conta} ${dados}"
     "   </div>"
     "   <div class='page-region'>"
     "      <div class='page-region-content'>"
@@ -168,7 +184,20 @@ void ClienteApp::processCliente(int id, string inicial) {
     "</div>", Wt::XHTMLUnsafeText);
 
     t->bindWidget("backButton", back);
+    t->bindWidget("conta", conta);
+    t->bindWidget("dados", dados);
     t->bindString("titulo", getTitulo());
-    t->bindWidget("conteudo", new WText("Teste"));
+
+    t->bindWidget("conteudo", stack);
 }
+
+void ClienteApp::showDados(){
+    stack->setCurrentIndex(1);
+}
+
+void ClienteApp::showConta(){
+    stack->setCurrentIndex(0);
+}
+
+
 

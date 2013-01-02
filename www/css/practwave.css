@@ -1,0 +1,48 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.loading {
+  background: none;
+  border: 0px;
+  z-index: 10001; visibility: visible;
+  position: absolute; left: 50%; top: 50%;
+  margin-left: -50px; margin-top: -40px;
+  width: 100px; height: 80px;
+  text-align: center 
+}
+
+/* ****************** ContaWidget ******************* */
+
+.headerConta {
+    font-weight: bold;
+}
+
+.dataContaWidget {
+}
+
+.descricaoContaWidget {
+}
+
+.debitoContaWidget {
+	float: right;
+}
+
+.creditoContaWidget {
+	float: right;
+}
+
+.botaoContaWidget {
+	float: right;
+}
+
+.item-cadastro .saldo {
+	float: right;
+        font-weight: bold;
+}
+
+.item-cadastro .nomeconta {
+    font-weight: bold;
+}
+
