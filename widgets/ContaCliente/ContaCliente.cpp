@@ -104,35 +104,33 @@ void ContaCliente::anotar() {
     valor->setValidator(Moeda::newWValidator());
 
     Wt::WPushButton *ok = new WPushButton("Ok");
-    ok->setStyleClass("btn btn-primary");
+    ok->setStyleClass("bg-color-blue fg-color-white");
     ok->clicked().connect(this, &ContaCliente::trataAnotarOk);
     Wt::WPushButton *cancel = new WPushButton("Cancela");
-    cancel->setStyleClass("btn");
     cancel->clicked().connect(this, &ContaCliente::trataCancela);
 
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-        "<form class='form-horizontal'>"
-        "  <fieldset>"
-        "    <legend>Anotar para cliente</legend>"
-        "    <div class='control-group'> <!-- descricao -->"
-        "      <label class='control-label' for='nome'>"
-        "        Descri&ccedil;&atilde;o</label>"
-        "      <div class='controls'>"
+        "<h2>Anotar para cliente</h2>"
+        "<div class='grid'>"
+        "  <div class='row'>  "
+        "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+        "    <div class='input-control text span4'> <!-- descricao -->"
         "        ${descricao}"
-        "      </div>"
+        "        <button class='helper'></button>"
         "    </div>"
-        "    <div class='control-group'> <!-- valor -->"
-        "      <label class='control-label' for='nome'>Valor</label>"
-        "      <div class='controls'>"
-        "        ${valor}"
-        "      </div>"
+        "  </div>"
+        "  <div class='row'>  "
+        "    <div class='span1'>Valor</div>"
+        "    <div class='input-control text span4'> <!-- valor -->"
+        "      ${valor}"
+        "      <button class='helper'></button>"
         "    </div>"
-        "  </fieldset>"
-        "<div class='well'>"
+        "  </div>"
+        "</div>"
+        "<div>"
         "   ${ok}${cancel}"
-	"</div>"
-        "</form>", XHTMLUnsafeText);
+	"</div>", XHTMLUnsafeText);
 
     t->bindWidget("descricao", descricao);
     t->bindWidget("valor", valor);
@@ -147,35 +145,32 @@ void ContaCliente::receber() {
     valor->setValidator(Moeda::newWValidator());
 
     Wt::WPushButton *ok = new WPushButton("Ok");
-    ok->setStyleClass("btn btn-primary");
+    ok->setStyleClass("bg-color-blue fg-color-white");
     ok->clicked().connect(this, &ContaCliente::trataReceberOk);
     Wt::WPushButton *cancel = new WPushButton("Cancela");
-    cancel->setStyleClass("btn");
     cancel->clicked().connect(this, &ContaCliente::trataCancela);
 
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-        "<form class='form-horizontal'>"
-        "  <fieldset>"
-        "    <legend>Receber de cliente</legend>"
-        "    <div class='control-group'> <!-- descricao -->"
-        "      <label class='control-label' for='nome'>"
-        "        Descri&ccedil;&atilde;o</label>"
-        "      <div class='controls'>"
+        "<h2>Receber de cliente</h2>"
+        "<div class='grid'>"
+        "  <div class='row'>  "
+        "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+        "    <div class='input-control text span4'> <!-- descricao -->"
         "        ${descricao}"
-        "      </div>"
+        "        <button class='helper'></button>"
         "    </div>"
-        "    <div class='control-group'> <!-- valor -->"
-        "      <label class='control-label' for='nome'>Valor</label>"
-        "      <div class='controls'>"
+        "  </div>"
+        "  <div class='row'>  "
+        "    <div class='span1'>Valor</div>"
+        "    <div class='input-control text span4'> <!-- valor -->"
         "        ${valor}"
-        "      </div>"
+        "        <button class='helper'></button>"
         "    </div>"
-        "  </fieldset>"
-        "<div class='well'>"
+        "</div>"
+        "<div>"
         "   ${ok}${cancel}"
-	"</div>"
-        "</form>", XHTMLUnsafeText);
+	"</div>", XHTMLUnsafeText);
 
     t->bindWidget("descricao", descricao);
     t->bindWidget("valor", valor);
