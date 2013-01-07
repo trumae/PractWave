@@ -28,6 +28,7 @@ using namespace std;
 ClienteApp::ClienteApp(WContainerWidget *parent)
   : App(parent) {
   init();
+  aba = CONTA;
 }
 
 WWidget* ClienteApp::getConteudo() {
@@ -145,21 +146,18 @@ void ClienteApp::processInicial(string inicial) {
 
 void ClienteApp::processCliente(int id, int idconta, string inicial) {
   CabureApplication *app = CabureApplication::cabureApplication();
+
+  idAux = id;
+  idcontaAux = idconta;
+  inicialAux = inicial;
+
   clear();
 
-  stack = new WStackedWidget();
-
-  /* O Widget ContaCliente deve ser colocado em um WContainerWidget, a troca entre
-     widgets empilhados em WStackWidget eh feito pelo id da div dos widgets adicionados.
-     Como o ContaCliente faz varios clear() e reconstrucoes, o id de sua rais eh alterado.
-     Colocar um container envolvendo tudo isto trata este problema, ja que ContaCliente nao
-     altera o widget em que esta colocada.
-  */
   WContainerWidget *molduraConta = new WContainerWidget();
-  molduraConta->addWidget(new ContaCliente(this, idconta));
-
-  stack->addWidget(molduraConta);
-  stack->addWidget(createFormCliente(app->clientes_->getClientePorId(id)));
+  if(aba == CONTA)
+    molduraConta->addWidget(new ContaCliente(this,idconta));
+  else
+    molduraConta->addWidget(createFormCliente(app->clientes_->getClientePorId(id)));
 
   Wt::WAnchor *back = new Wt::WAnchor();
   back->setStyleClass("back-button big page-back");
@@ -197,15 +195,17 @@ void ClienteApp::processCliente(int id, int idconta, string inicial) {
   t->bindWidget("conta", conta);
   t->bindWidget("dados", dados);
   t->bindString("titulo", getTitulo());
-  t->bindWidget("conteudo", stack);
+  t->bindWidget("conteudo", molduraConta);
 }
 
 void ClienteApp::showDados(){
-  stack->setCurrentIndex(1);
+  aba = DADOS;
+  processCliente(idAux, idcontaAux, inicialAux);
 }
 
 void ClienteApp::showConta(){
-  stack->setCurrentIndex(0);
+  aba = CONTA;
+  processCliente(idAux, idcontaAux, inicialAux);
 }
 
 // Formularios de edicao e adicao

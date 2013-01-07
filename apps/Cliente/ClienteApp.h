@@ -11,7 +11,12 @@
 
 class ClienteApp : public App {
  private:
-  Wt::WStackedWidget *stack;
+  enum abaCliente {CONTA, DADOS} aba;
+
+  //variaveis auxiliares
+  int idAux;
+  int idcontaAux;
+  std::string inicialAux;
  protected:
   virtual WWidget* getConteudo();
   virtual std::string getTitulo();
