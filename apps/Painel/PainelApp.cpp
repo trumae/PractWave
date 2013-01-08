@@ -32,20 +32,30 @@ PainelApp::PainelApp(WContainerWidget *parent)
     app->fornecedores_->getTodosFornecedores(fornecedores_);
     sort(fornecedores_.begin(), fornecedores_.end(),
     [](const Fornecedor &a, const Fornecedor &b) {
+
         CabureApplication *app = CabureApplication::cabureApplication();
         Contabilidade *contabilidade = app->contabilidade_;
         return contabilidade->getSaldoContaFolha(a.idconta) >
                contabilidade->getSaldoContaFolha(b.idconta);
     });
 
-    init();
+    start();
+}
+
+void PainelApp::init(){
+  adicionaEstado(PAINEL, boost::bind(&PainelApp::Painel, this));
+
+  adicionaTransicao(PAINEL, START, "back", 
+		    boost::bind(&PainelApp::fazNada, this, nullptr),
+		    boost::bind(&PainelApp::guardOk, this));  
+  setEstado(PAINEL);
 }
 
 std::string PainelApp::getTitulo() {
     return "PractWave - Painel";
 }
 
-Wt::WWidget *PainelApp::getConteudo() {
+Wt::WWidget *PainelApp::Painel() {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
     std::string tplInformacoes(
@@ -79,10 +89,10 @@ Wt::WWidget *PainelApp::getConteudo() {
     long long totalReceber = 0;
     long long totalPagar = 0;
 
-for(Cliente cli: clientes_) {
+    for(Cliente cli: clientes_) {
         totalReceber += contabilidade->getSaldoContaFolha(cli.idconta);
     }
-for(Fornecedor forn: fornecedores_) {
+    for(Fornecedor forn: fornecedores_) {
         totalPagar += contabilidade->getSaldoContaFolha(forn.idconta);
     }
 
@@ -92,7 +102,7 @@ for(Fornecedor forn: fornecedores_) {
     string textoNumFornecedores = boost::lexical_cast<string>(fornecedores_.size());
 
     if(clientes_.size() == 0 && fornecedores_.size() == 0) {
-        w = new WTemplate(this);
+        w = new WTemplate();
         w->setTemplateText(
             tplInformacoes
             , XHTMLUnsafeText);
@@ -106,7 +116,7 @@ for(Fornecedor forn: fornecedores_) {
         bool complementarTplDeve = false;
         bool complementarTplDevo = false;
 
-        w = new WTemplate(this);
+        w = new WTemplate();
         std::string tplPainel = tplInformacoes;
         if(clientes_.size() > 0)
             complementarTplDeve = contabilidade->getSaldoContaFolha(clientes_[0].idconta) != 0;

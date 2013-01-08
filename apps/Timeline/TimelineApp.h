@@ -9,8 +9,12 @@
 
 class TimelineApp : public App {
  protected:
-  virtual Wt::WWidget *getConteudo();
+  const int START = 0;
+  const int TIMELINE = 1;
+
   virtual std::string getTitulo();
+
+  
  public:
   TimelineApp(Wt::WContainerWidget *parent);
 };

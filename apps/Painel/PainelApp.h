@@ -11,8 +11,14 @@
 
 class PainelApp : public App {
  protected:
-  virtual Wt::WWidget *getConteudo();
+
+  // Estados
+  const int PAINEL = 1;
+
   virtual std::string getTitulo();
+
+  void init();
+  Wt::WWidget *Painel();
  public:
   PainelApp(Wt::WContainerWidget *parent);
  private:
