@@ -11,21 +11,36 @@
 
 class ClienteApp : public App {
  private:
+  const int INICIAIS = 1;
+  const int ADICIONACLIENTE = 2;
+  const int LISTACLIENTES = 3;
+  const int DADOSCLIENTE = 4;
+  const int CONTACLIENTE = 5;
+
   enum abaCliente {CONTA, DADOS} aba;
 
   //variaveis auxiliares
-  int idAux;
-  int idcontaAux;
-  std::string inicialAux;
+  std::vector<std::string> iniciais_;
+  std::string inicialAtual_;
+  int idCliente_;
+  int idContaCliente_;
  protected:
-  virtual WWidget* getConteudo();
+
+  void setInicialAtual(std::string ini);
+  void setClienteAtual(int id, int idconta);
+  void constroiTabela();
+
+  WWidget* EIniciais();
+  WWidget* EAdicionaCliente();
+  WWidget* EListaClientes();
+  WWidget* EDadosCliente();
+  WWidget* EContaCliente();
+
   virtual std::string getTitulo();
+  virtual void init();
   
   void processInicial(std::string inicial);
   void processCliente(int id, int idconta, std::string inicial);
-  
-  void showDados();
-  void showConta();
   
   Wt::WLineEdit *buscaEdit;
   Wt::WPushButton *buscaBtn;

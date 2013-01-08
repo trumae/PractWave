@@ -16,27 +16,26 @@ struct Transicao {
   int current;
   int next;
   std::string event;
-  boost::function<void(void *)> action;
+  boost::function<void()> action;
   boost::function<bool()> guard;
 };
 
 class App : public Wt::WContainerWidget {
- private:
+ protected:
   std::vector<struct Transicao> tabela;
   std::map<int, boost::function<Wt::WWidget *()> > estados;
   int estado_;
 
- protected:
   const int START  = 0;
 
   Wt::WWidget *conteudo_;
 
-  virtual void trataEvento(std::string nome, void *dados = nullptr) {
+  virtual void trataEvento(std::string nome) {
     int estadoantigo = estado_;
     for(Transicao trans : tabela) {
       if(trans.current == estado_ && trans.event == nome){
 	if(trans.guard()) {
-	  trans.action(dados);	
+	  trans.action();	
 	  estado_ = trans.next;
 	  if(estadoantigo != estado_) {
 	    if(estado_ == START ) {
@@ -68,7 +67,7 @@ class App : public Wt::WContainerWidget {
     estados[i] = fun;
   } 
 
-  void adicionaTransicao(int current, int next, std::string event, boost::function<void(void *)> action, boost::function<bool()> guard = &App::guardOk){
+  void adicionaTransicao(int current, int next, std::string event, boost::function<void()> action, boost::function<bool()> guard = &App::guardOk){
     Transicao t;
     t.current = current;
     t.next = next;
@@ -84,7 +83,7 @@ class App : public Wt::WContainerWidget {
     Wt::WAnchor *back = new Wt::WAnchor();
     back->setStyleClass("back-button big page-back");
     back->setInline(true);
-    back->clicked().connect(boost::bind(&App::trataEvento, this, "back", nullptr));
+    back->clicked().connect(boost::bind(&App::trataEvento, this, "back"));
     
     std::string tpl(
 		    "<div class='page secondary'>"
@@ -109,9 +108,6 @@ class App : public Wt::WContainerWidget {
     wtemplate->bindWidget("conteudo", conteudo_);
   }
 
-  void start() {
-    init();
-  }
  public:
  App(Wt::WContainerWidget *p) : Wt::WContainerWidget(p) {}
 };

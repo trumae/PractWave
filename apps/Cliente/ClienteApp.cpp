@@ -25,19 +25,52 @@
 using namespace Wt;
 using namespace std;
 
-/////////////////////////// Novo Codigo ////////////////////////////
-
-
-
-////////////////////////////////////////////////////////////////////
-
 ClienteApp::ClienteApp(WContainerWidget *parent)
   : App(parent) {
-  init();
   aba = CONTA;
+  init();
 }
 
-WWidget* ClienteApp::getConteudo() {
+void ClienteApp::constroiTabela(){
+  //limpa vetores
+  tabela.clear();
+  estados.clear();
+
+  // Estados
+  adicionaEstado(INICIAIS, boost::bind(&ClienteApp::EIniciais, this));
+  adicionaEstado(ADICIONACLIENTE, boost::bind(&ClienteApp::EAdicionaCliente, this));
+  adicionaEstado(LISTACLIENTES, boost::bind(&ClienteApp::EListaClientes, this));
+  adicionaEstado(DADOSCLIENTE, boost::bind(&ClienteApp::EDadosCliente, this));
+  adicionaEstado(CONTACLIENTE, boost::bind(&ClienteApp::EContaCliente, this));  
+  
+  // Transicoes
+  adicionaTransicao(INICIAIS, START, "back",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(LISTACLIENTES, INICIAIS, "back",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(CONTACLIENTE, LISTACLIENTES, "back",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+
+
+}
+
+void ClienteApp::init(){
+  constroiTabela();
+  setEstado(INICIAIS);
+}
+
+string ClienteApp::getTitulo() {
+  return "PractWave - Clientes";
+}
+
+WWidget* ClienteApp::EAdicionaCliente() {
+  return nullptr;
+}
+
+WWidget* ClienteApp::EIniciais() {
   WContainerWidget *container = new WContainerWidget();
   CabureApplication *app = CabureApplication::cabureApplication();
   
@@ -70,6 +103,7 @@ WWidget* ClienteApp::getConteudo() {
   cppdb::session &db = app->db_;
   cppdb::result res = db << "select substr(upper(nome),1,1) as inicial, "
     "count(*) from cliente group by inicial order by inicial";
+  constroiTabela(); // constroi novamente tabela de estados e transicoes
   while(res.next()) {
     string inicial;
     int count;
@@ -85,28 +119,28 @@ WWidget* ClienteApp::getConteudo() {
       "   </div>"
       "</div>";
     WText *tt = new WText(WString(buffer, UTF8), Wt::XHTMLUnsafeText);
-    tt->clicked().connect(boost::bind(&ClienteApp::processInicial, this, inicial));
+    tt->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "letra" + inicial));
+    adicionaTransicao(INICIAIS, LISTACLIENTES, "letra" + inicial,
+		      boost::bind(&ClienteApp::setInicialAtual, this, inicial),
+		      boost::bind(&ClienteApp::guardOk, this));  
     container->addWidget(tt);
   }
   return container;
 }
 
-string ClienteApp::getTitulo() {
-  return "PractWave - Clientes";
+void ClienteApp::setInicialAtual(string ini){
+  inicialAtual_ = ini;
 }
 
-void ClienteApp::processInicial(string inicial) {
+WWidget* ClienteApp::EListaClientes() {
+  //void ClienteApp::processInicial(string inicial) {
   CabureApplication *app = CabureApplication::cabureApplication();
   Contabilidade *contabilidade = app->contabilidade_;
-  clear();
-  Wt::WAnchor *back = new Wt::WAnchor();
-  back->setStyleClass("back-button big page-back");
-  back->setInline(true);
-  back->clicked().connect(this, &ClienteApp::init);
   
   WContainerWidget *container = new WContainerWidget();
   cppdb::session &db = app->db_;
-  cppdb::result res = db << "select id, nome, idconta from cliente where substr(upper(nome),1,1) = ? order by nome" << inicial;
+  cppdb::result res = db << "select id, nome, idconta from cliente where substr(upper(nome),1,1) = ? order by nome" << inicialAtual_;
+  constroiTabela();
   while(res.next()) {
     int id, idconta;
     string nome;
@@ -125,38 +159,31 @@ void ClienteApp::processInicial(string inicial) {
       "   </div>"
       "</div>";
     WText *tt = new WText(WString(buffer, UTF8), Wt::XHTMLUnsafeText);
-    tt->clicked().connect(boost::bind(&ClienteApp::processCliente, this, id, idconta, inicial));
+    tt->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "cliente" + id));
+    adicionaTransicao(LISTACLIENTES, CONTACLIENTE, "cliente" + id,
+		      boost::bind(&ClienteApp::setClienteAtual, this, id, idconta),
+		      boost::bind(&ClienteApp::guardOk, this));  
     container->addWidget(tt);
   }
-
-  WTemplate *t = new WTemplate(this);
-  t->setTemplateText(
-		     "<div class='page secondary'>"
-		     "   <div class='page-header'>"
-		     "      <div class='page-header-content'>"
-		     "          <h1>${titulo}</h1>"
-		     "          ${backButton}"
-		     "      </div>"
-		     "   </div>"
-		     "   <div class='page-region'>"
-		     "      <div class='page-region-content'>"
-		     "      ${conteudo}"
-		     "      </div>"
-		     "   </div>"
-		     "</div>", Wt::XHTMLUnsafeText);
-
-  t->bindWidget("backButton", back);
-  t->bindString("titulo", getTitulo());
-  t->bindWidget("conteudo", container);
+  return container;
 }
+
+void ClienteApp::setClienteAtual(int id, int idconta){
+  idCliente_ = id;
+  idContaCliente_ = idconta;
+}
+
+WWidget* ClienteApp::EDadosCliente(){
+  return nullptr;
+}
+
+WWidget* ClienteApp::EContaCliente(){
+  return new ContaCliente(this,idContaCliente_);
+}
+
 
 void ClienteApp::processCliente(int id, int idconta, string inicial) {
   CabureApplication *app = CabureApplication::cabureApplication();
-
-  idAux = id;
-  idcontaAux = idconta;
-  inicialAux = inicial;
-
   clear();
 
   WContainerWidget *molduraConta = new WContainerWidget();
@@ -164,54 +191,6 @@ void ClienteApp::processCliente(int id, int idconta, string inicial) {
     molduraConta->addWidget(new ContaCliente(this,idconta));
   else
     molduraConta->addWidget(createFormCliente(app->clientes_->getClientePorId(id)));
-
-  Wt::WAnchor *back = new Wt::WAnchor();
-  back->setStyleClass("back-button big page-back");
-  back->setInline(true);
-  back->clicked().connect(boost::bind(&ClienteApp::processInicial, this, inicial));
-
-  WText *conta = new WText("<li class='sticker sticker-color-blue'><a><i class='icon-clipboard-2'></i>Conta</a></li>", Wt::XHTMLUnsafeText);
-  conta->setInline(true);
-  conta->clicked().connect(this, &ClienteApp::showConta);
-
-  WText *dados = new WText("<li class='sticker sticker-color-orange'><a><i class='icon-user'></i>Dados</a></li>", Wt::XHTMLUnsafeText);
-  dados->setInline(true);
-  dados->clicked().connect(this, &ClienteApp::showDados);
-
-  WTemplate *t = new WTemplate(this);
-  t->setTemplateText(
-		     "<div class='page secondary with-sidebar'>"
-		     "   <div class='page-header'>"
-		     "      <div class='page-header-content'>"
-		     "          <h1>${titulo}</h1>"
-		     "          ${backButton}"
-		     "      </div>"
-		     "   </div>"
-		     "   <div class='page-sidebar'>"
-		     "    ${conta} ${dados}"
-		     "   </div>"
-		     "   <div class='page-region'>"
-		     "      <div class='page-region-content'>"
-		     "      ${conteudo}"
-		     "      </div>"
-		     "   </div>"
-		     "</div>", Wt::XHTMLUnsafeText);
-
-  t->bindWidget("backButton", back);
-  t->bindWidget("conta", conta);
-  t->bindWidget("dados", dados);
-  t->bindString("titulo", getTitulo());
-  t->bindWidget("conteudo", molduraConta);
-}
-
-void ClienteApp::showDados(){
-  aba = DADOS;
-  processCliente(idAux, idcontaAux, inicialAux);
-}
-
-void ClienteApp::showConta(){
-  aba = CONTA;
-  processCliente(idAux, idcontaAux, inicialAux);
 }
 
 // Formularios de edicao e adicao

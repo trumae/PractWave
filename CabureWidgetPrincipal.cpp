@@ -21,8 +21,8 @@
 #include "CabureWidgetPrincipal.h"
 #include "logic/Notificacao.h"
 #include "apps/Painel/PainelApp.h"
-//#include "apps/Timeline/TimelineApp.h"
-//#include "apps/Cliente/ClienteApp.h"
+#include "apps/Timeline/TimelineApp.h"
+#include "apps/Cliente/ClienteApp.h"
 
 using namespace Wt;
 
@@ -327,12 +327,12 @@ void CabureWidgetPrincipal::createUI() {
     TilePainel *tilePainel = new TilePainel();
     tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painelApp);
 
-    /*    TileTimeline *tileTimeline = new TileTimeline();
+    TileTimeline *tileTimeline = new TileTimeline();
     tileTimeline->clicked().connect(this, &CabureWidgetPrincipal::timelineApp);
 
     TileCliente *tileCliente = new TileCliente();
     tileCliente->clicked().connect(this, &CabureWidgetPrincipal::clienteApp);
-    */
+    
     WTemplate *tileFornecedor = new WTemplate();
     tileFornecedor->setTemplateText(
        "     <div class='tile double bg-color-purple'>"
@@ -396,8 +396,8 @@ void CabureWidgetPrincipal::createUI() {
      "  <div class='page-region'>"
      "     <div class='page-region-content'>"
      "     ${painel}"
-     //"     ${timeline}"
-     //"     ${cliente}"
+     "     ${timeline}"
+     "     ${cliente}"
      "     ${fornecedor}"
      "     ${banco}"
      "     ${caixa}"
@@ -411,8 +411,8 @@ void CabureWidgetPrincipal::createUI() {
      , Wt::XHTMLUnsafeText);
 
      t->bindWidget("painel", tilePainel);
-     //     t->bindWidget("timeline", tileTimeline);
-     //t->bindWidget("cliente", tileCliente);
+     t->bindWidget("timeline", tileTimeline);
+     t->bindWidget("cliente", tileCliente);
      t->bindWidget("fornecedor", tileFornecedor);
      t->bindWidget("banco", tileBanco);
      t->bindWidget("caixa", tileCaixa);
@@ -441,11 +441,10 @@ void CabureWidgetPrincipal::painelApp(){
 }
 
 WContainerWidget* CabureWidgetPrincipal::showTimelineApp() {
-  /*googleAnalyticsLogger("/timeline");
-   clear();
-   WContainerWidget *ret = new TimelineApp(this);
-   return ret;*/
-  return nullptr;
+  googleAnalyticsLogger("/timeline");
+  clear();
+  WContainerWidget *ret = new TimelineApp(this);
+  return ret;
 }
 
 void CabureWidgetPrincipal::timelineApp(){
@@ -453,11 +452,10 @@ void CabureWidgetPrincipal::timelineApp(){
 }
 
 WContainerWidget* CabureWidgetPrincipal::showClienteApp() {
-  /*   googleAnalyticsLogger("/cliente");
-   clear();
-   WContainerWidget *ret = new ClienteApp(this);
-   return ret;*/
-  return nullptr;
+  googleAnalyticsLogger("/cliente");
+  clear();
+  WContainerWidget *ret = new ClienteApp(this);
+  return ret;
 }
 
 void CabureWidgetPrincipal::clienteApp(){

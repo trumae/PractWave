@@ -39,7 +39,7 @@ PainelApp::PainelApp(WContainerWidget *parent)
                contabilidade->getSaldoContaFolha(b.idconta);
     });
 
-    start();
+    init();
 }
 
 void PainelApp::init(){

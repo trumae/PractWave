@@ -23,7 +23,16 @@ TimelineApp::TimelineApp(WContainerWidget *parent)
    init();
 }
 
-WWidget *TimelineApp::getConteudo(){
+void TimelineApp::init(){
+  adicionaEstado(TIMELINE, boost::bind(&TimelineApp::timeline, this));
+  
+  adicionaTransicao(TIMELINE, START, "back",
+		    boost::bind(&TimelineApp::fazNada, this, nullptr),
+		    boost::bind(&TimelineApp::guardOk, this));
+  setEstado(TIMELINE);
+}
+
+WWidget *TimelineApp::timeline(){
     CabureApplication *app = CabureApplication::cabureApplication();
     vector<ItemTimeline> vitem;
     app->timeline_->getTodosTimelineComLimite(vitem, 30);
