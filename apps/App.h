@@ -26,7 +26,7 @@ class App : public Wt::WContainerWidget {
   std::map<int, boost::function<Wt::WWidget *()> > estados;
   int estado_;
 
-  const int START  = 0;
+  int START  = 0;
 
   Wt::WWidget *conteudo_;
 

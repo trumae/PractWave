@@ -6,22 +6,22 @@
 #include <Wt/WContainerWidget>
 
 class AjusteContaWidget : public Wt::WObject {
-	public:
-		AjusteContaWidget(int conta);
-		void setCabureContent(Wt::WContainerWidget *c) {
-			content_ = c;
-		}
-		Wt::WWidget *getButton();
-	private:
-		int conta_;
-		Wt::WContainerWidget *content_;
-		Wt::WLineEdit *descricao;
-		Wt::WLineEdit *valor;
+ public:
+  AjusteContaWidget(int conta);
+  void setWidgetPai(Wt::WContainerWidget *c) {
+    widgetPai_ = c;
+  }
+  Wt::WWidget *getButton();
+ private:
+  int conta_;
+  Wt::WContainerWidget *widgetPai_;
+  Wt::WLineEdit *descricao;
+  Wt::WLineEdit *valor;
 
-		void ajuste();
-		void trataOk();
-		void trataCancela();
-		void ajusteAction(std::string descricao, int valor);
+  void ajuste();
+  void trataOk();
+  void trataCancela();
+  void ajusteAction(std::string descricao, int valor);
 };
 
 #endif

@@ -27,7 +27,6 @@ using namespace std;
 
 ClienteApp::ClienteApp(WContainerWidget *parent)
   : App(parent) {
-  aba = CONTA;
   init();
 }
 
@@ -178,19 +177,9 @@ WWidget* ClienteApp::EDadosCliente(){
 }
 
 WWidget* ClienteApp::EContaCliente(){
-  return new ContaCliente(this,idContaCliente_);
-}
-
-
-void ClienteApp::processCliente(int id, int idconta, string inicial) {
-  CabureApplication *app = CabureApplication::cabureApplication();
-  clear();
-
   WContainerWidget *molduraConta = new WContainerWidget();
-  if(aba == CONTA)
-    molduraConta->addWidget(new ContaCliente(this,idconta));
-  else
-    molduraConta->addWidget(createFormCliente(app->clientes_->getClientePorId(id)));
+  molduraConta->addWidget(new ContaCliente(molduraConta, idContaCliente_));
+  return molduraConta;
 }
 
 // Formularios de edicao e adicao
