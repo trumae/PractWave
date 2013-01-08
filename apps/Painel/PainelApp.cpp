@@ -18,8 +18,10 @@ using namespace std;
 
 PainelApp::PainelApp(WContainerWidget *parent)
     : App(parent) {
-    CabureApplication *app = CabureApplication::cabureApplication();
-
+  PAINEL = 1;
+  
+  CabureApplication *app = CabureApplication::cabureApplication();
+  
     app->clientes_->getTodosClientes(clientes_);
     sort(clientes_.begin(), clientes_.end(),
     [](const Cliente &a, const Cliente &b) {

@@ -13,7 +13,7 @@ class PainelApp : public App {
  protected:
 
   // Estados
-  const int PAINEL = 1;
+  int PAINEL;
 
   virtual std::string getTitulo();
 

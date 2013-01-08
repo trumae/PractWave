@@ -11,11 +11,11 @@
 
 class ClienteApp : public App {
  private:
-  int INICIAIS = 1;
-  int ADICIONACLIENTE = 2;
-  int LISTACLIENTES = 3;
-  int DADOSCLIENTE = 4;
-  int CONTACLIENTE = 5;
+  int INICIAIS;
+  int ADICIONACLIENTE;
+  int LISTACLIENTES;
+  int DADOSCLIENTE;
+  int CONTACLIENTE;
 
   //variaveis auxiliares
   std::vector<std::string> iniciais_;

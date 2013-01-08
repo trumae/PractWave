@@ -20,7 +20,8 @@ using namespace std;
 
 TimelineApp::TimelineApp(WContainerWidget *parent)
     : App(parent) {
-   init();
+  TIMELINE = 1;
+  init();
 }
 
 void TimelineApp::init(){

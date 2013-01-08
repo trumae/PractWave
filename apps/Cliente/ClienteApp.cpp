@@ -27,6 +27,11 @@ using namespace std;
 
 ClienteApp::ClienteApp(WContainerWidget *parent)
   : App(parent) {
+  INICIAIS = 1;
+  ADICIONACLIENTE = 2;
+  LISTACLIENTES = 3;
+  DADOSCLIENTE = 4;
+  CONTACLIENTE = 5;
   init();
 }
 

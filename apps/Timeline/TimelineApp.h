@@ -9,7 +9,7 @@
 
 class TimelineApp : public App {
  protected:
-  const int TIMELINE = 1;
+  int TIMELINE;
 
   virtual std::string getTitulo();
   virtual void init();
