@@ -8,7 +8,7 @@
 
 class CalculadoraApp : public App {
  protected:
-  const int CALCULADORA = 1;
+  int CALCULADORA;
 
   virtual std::string getTitulo();
   virtual void init();

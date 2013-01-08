@@ -15,6 +15,7 @@ using namespace std;
 
 CalculadoraApp::CalculadoraApp(WContainerWidget *parent)
     : App(parent) {
+   CALCULADORA = 1;
    init();
 }
 
@@ -49,10 +50,10 @@ WWidget *CalculadoraApp::calculadora(){
 	"<input type='button' value='Calcular' onClick='calcular()'/>"
 	;
         
-    WText *wtext = new WText(WString(tabela, UTF8), XHTMLUnsafeText);
+    WText *wtext = new WText(WString(corpo, UTF8), XHTMLUnsafeText);
     return wtext;
 }
 
-string TimelineApp::getTitulo(){
+string CalculadoraApp::getTitulo(){
    return "PractWave - Calculadora";
 }
