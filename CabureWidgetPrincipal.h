@@ -56,6 +56,8 @@ private:
   void contaBancariaApp();
   Wt::WContainerWidget* showCaixaApp();
   void caixaApp();
+  Wt::WContainerWidget* showCalculadoraApp();
+  void calculadoraApp();
 };
 
 

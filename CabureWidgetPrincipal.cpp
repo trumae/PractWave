@@ -26,6 +26,7 @@
 #include "apps/Fornecedor/FornecedorApp.h"
 #include "apps/ContaBancaria/ContaBancariaApp.h"
 #include "apps/Caixa/CaixaApp.h"
+#include "apps/Calculadora/CalculadoraApp.h"
 
 using namespace Wt;
 
@@ -338,6 +339,9 @@ void CabureWidgetPrincipal::createUI() {
 
     TileFornecedor *tileFornecedor = new TileFornecedor();
     tileFornecedor->clicked().connect(this, &CabureWidgetPrincipal::fornecedorApp);
+   
+    TileCalculadora *tileCalculadora = new TileCalculadora();
+    tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
 
     TileContaBancaria *tileContaBancaria = new TileContaBancaria();
     tileContaBancaria->clicked().connect(this, &CabureWidgetPrincipal::contaBancariaApp);
@@ -388,6 +392,7 @@ void CabureWidgetPrincipal::createUI() {
      "     ${caixa}"
      "     ${loja}"
      "     ${mensagem}"
+     "     ${calculadora}"
      "      </div>"
      //"       <h4>" + WString(cabure->name, UTF8) + "</h4>"
      "    </div>"
@@ -403,6 +408,7 @@ void CabureWidgetPrincipal::createUI() {
      t->bindWidget("caixa", tileCaixa);
      t->bindWidget("loja", tileLoja);
      t->bindWidget("mensagem", tileMensagem);
+     t->bindWidget("calculadora", tileCalculadora);
 }
 
 void CabureWidgetPrincipal::viewHome(){
@@ -458,6 +464,7 @@ void CabureWidgetPrincipal::fornecedorApp(){
    showFornecedorApp();
 }
 
+<<<<<<< HEAD
 WContainerWidget* CabureWidgetPrincipal::showContaBancariaApp() {
   googleAnalyticsLogger("/banco");
   clear();
@@ -478,5 +485,16 @@ WContainerWidget* CabureWidgetPrincipal::showCaixaApp() {
 
 void CabureWidgetPrincipal::caixaApp(){
    showCaixaApp();
+}
+
+WContainerWidget* CabureWidgetPrincipal::showCalculadoraApp() {
+   googleAnalyticsLogger("/calculadora");
+   clear();
+   WContainerWidget *ret = new CalculadoraApp(this);
+   return ret;
+}
+
+void CabureWidgetPrincipal::calculadoraApp(){
+   showCalculadoraApp();
 }
 
