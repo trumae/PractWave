@@ -7,11 +7,14 @@ TileCalculadora::TileCalculadora() {
     clear();
     WTemplate *tileCalculadora = new WTemplate(this);
     tileCalculadora->setTemplateText(
-       "     <div class='tile bg-color-yellow'>"
+       "     <div class='tile bg-color-greenLight'>"
        "       <div class='tile-content'>"
-       "          <h2>Calculadora</h2>"
+       "          <img class='icon' src='apps/Calculadora/tile.png'/>"
        "       </div>"
-       "    </div>"
+       "       <div class='brand'>"
+       "          <span class='name'>Calculadora</span>"
+       "       </div>"
+       "     </div>"
     );
 }
 

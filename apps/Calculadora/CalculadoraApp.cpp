@@ -30,30 +30,22 @@ void CalculadoraApp::init(){
 
 WWidget *CalculadoraApp::calculadora(){
     CabureApplication *app = CabureApplication::cabureApplication();
+    
+	app->useStyleSheet("/apps/Calculadora/calculadora.css");
  
 	app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
 	app->require("/apps/Calculadora/calculadora.js");
 
     string corpo = 
-	"Valor 1 <div class='input-control text'>"
-	"<input id='valor1' type='text'/>"
-	"<button class='helper'></button>"
+	"<div id='conteudoCalculadora' class='conteudoCalculadora'>"
 	"</div>"
-	"Valor 2 <div class='input-control text'>"
-	"<input id='valor2' type='text'/>"
-	"<button class='helper'></button>"
-	"</div>"
-	"Valor 3 <div class='input-control text'>"
-	"<input id='valor3' type='text'/>"
-	"<button class='helper'></button>"
-	"</div>"
-	"<input type='button' value='Calcular' onClick='calcular()'/>"
 	;
-        
+        	
     WText *wtext = new WText(WString(corpo, UTF8), XHTMLUnsafeText);
+	app->doJavaScript("initCalculadora()");
     return wtext;
 }
 
 string CalculadoraApp::getTitulo(){
-   return "PractWave - Calculadora";
+   return "Calculadora";
 }
