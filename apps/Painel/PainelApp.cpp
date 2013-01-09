@@ -54,7 +54,7 @@ void PainelApp::init(){
 }
 
 std::string PainelApp::getTitulo() {
-    return "PractWave - Painel";
+    return "Painel";
 }
 
 Wt::WWidget *PainelApp::Painel() {

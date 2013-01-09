@@ -3,6 +3,14 @@ body {
     padding-bottom: 40px;
 }
 
+.mensagem {
+    color: #ffffff !important;
+    background-color: #00a300 !important;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .loading {
   background: none;
   border: 0px;

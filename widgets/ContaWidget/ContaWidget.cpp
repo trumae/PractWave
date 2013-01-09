@@ -72,7 +72,7 @@ void ContaWidget::viewHome(){
     Moeda cred(credito);
     new ItemContaWidget(listagem, this, id_diario, data, descricao, deb, cred);
   }
-  WText *fimTabela = new WText("</tbody></table></div></div>", Wt::XHTMLUnsafeText, this);
+  WText *fimTabela = new WText("</tbody></table></div></div>", Wt::XHTMLUnsafeText, listagem);
 }
 
 

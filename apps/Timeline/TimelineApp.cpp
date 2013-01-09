@@ -51,5 +51,5 @@ WWidget *TimelineApp::timeline(){
 }
 
 string TimelineApp::getTitulo(){
-   return "PractWave - Timeline";
+   return "Timeline";
 }

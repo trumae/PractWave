@@ -57,8 +57,25 @@ void ClienteApp::constroiTabela(){
   adicionaTransicao(CONTACLIENTE, LISTACLIENTES, "back",
 		    boost::bind(&ClienteApp::fazNada, this, nullptr),
 		    boost::bind(&ClienteApp::guardOk, this));  
-
-
+  adicionaTransicao(CONTACLIENTE, DADOSCLIENTE, "dados",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(DADOSCLIENTE, CONTACLIENTE, "back",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(DADOSCLIENTE, CONTACLIENTE, "cancel",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(INICIAIS, ADICIONACLIENTE, "adiciona",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(ADICIONACLIENTE, INICIAIS, "back",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  adicionaTransicao(ADICIONACLIENTE, INICIAIS, "cancel",
+		    boost::bind(&ClienteApp::fazNada, this, nullptr),
+		    boost::bind(&ClienteApp::guardOk, this));  
+  
 }
 
 void ClienteApp::init(){
@@ -67,11 +84,7 @@ void ClienteApp::init(){
 }
 
 string ClienteApp::getTitulo() {
-  return "PractWave - Clientes";
-}
-
-WWidget* ClienteApp::EAdicionaCliente() {
-  return nullptr;
+  return "Clientes";
 }
 
 WWidget* ClienteApp::EIniciais() {
@@ -79,29 +92,30 @@ WWidget* ClienteApp::EIniciais() {
   CabureApplication *app = CabureApplication::cabureApplication();
   
   WText *addButton = new WText(
-			       "<div class='tile double bg-color-orange'>"
-			       "   <div class='tile-content'>"
-			       "     <h2>Adiciona Cliente</h2>"
-			       "   </div>"
-			       "</div>", Wt::XHTMLUnsafeText );
-  addButton->clicked().connect(this, &ClienteApp::formAdicionaCliente);
+			       "<button class='command-button default bg-color-greenDark'>"
+			       "Adiciona Cliente"
+			       "<small>Clique aqui para adicionar um novo cliente</small>"
+			       "</button>", Wt::XHTMLUnsafeText );
+  addButton->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "adiciona"));
   
-  WText *searchButton = new WText(
-				  "<div class='tile double bg-color-green'>"
-				  "   <div class='tile-content'>"
-				  "     <h2>Busca Cliente</h2>"
-				  "   </div>"
-				  "</div>", Wt::XHTMLUnsafeText );
-  
+  /*  WText *searchButton = new WText(
+				  "<button class='command-button default'>"
+				  "Busca Cliente"
+				  "</button>", Wt::XHTMLUnsafeText );
+  */
+
   WTemplate *comandos = new WTemplate();
   comandos->setTemplateText(
 			    "<div class='grid'>"
-			    "  <div class='row'>${add}${search}</div>"
+			    "  <div class='row'>"
+			    "${add}"
+			    //"${search}"
+			    "</div>"
 			    "</div>"
 			    , Wt::XHTMLUnsafeText
 			    );
   comandos->bindWidget("add", addButton);
-  comandos->bindWidget("search", searchButton);
+  //comandos->bindWidget("search", searchButton);
   
   container->addWidget(comandos);
   cppdb::session &db = app->db_;
@@ -137,7 +151,6 @@ void ClienteApp::setInicialAtual(string ini){
 }
 
 WWidget* ClienteApp::EListaClientes() {
-  //void ClienteApp::processInicial(string inicial) {
   CabureApplication *app = CabureApplication::cabureApplication();
   Contabilidade *contabilidade = app->contabilidade_;
   
@@ -178,61 +191,65 @@ void ClienteApp::setClienteAtual(int id, int idconta){
 }
 
 WWidget* ClienteApp::EDadosCliente(){
-  return nullptr;
+  CabureApplication *app = CabureApplication::cabureApplication();
+  Cliente cli = app->clientes_->getClientePorId(idCliente_);
+
+  WPushButton *btnSave = new WPushButton("Salvar");
+  btnSave->setStyleClass("fg-color-white bg-color-blue");
+  btnSave->clicked().connect(this, &ClienteApp::saveCliente);
+  
+  WPushButton *btnCancel = new WPushButton("Cancelar");
+  btnCancel->setStyleClass("fg-color-white bg-color-orange");
+  btnCancel->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "cancel"));
+
+  WTemplate *t = new WTemplate();
+  t->setTemplateText(
+		     "${conteudo}"
+		     "<div class=grid>"
+		     "  <div class='row'>"
+		     "    ${save}${cancel}"
+		     "  </div>"
+		     "</div>", Wt::XHTMLUnsafeText);		 
+  
+  t->bindWidget("save", btnSave);
+  t->bindWidget("cancel", btnCancel);
+  t->bindWidget("conteudo", createFormCliente(cli));
+
+  return t;
 }
 
 WWidget* ClienteApp::EContaCliente(){
   WContainerWidget *molduraConta = new WContainerWidget();
-  molduraConta->addWidget(new ContaCliente(molduraConta, idContaCliente_));
+  molduraConta->addWidget(new ContaCliente(molduraConta, idContaCliente_, this/*App*/, CONTACLIENTE, DADOSCLIENTE));
   return molduraConta;
 }
 
 // Formularios de edicao e adicao
-
-void ClienteApp::formAdicionaCliente(){
+WWidget* ClienteApp::EAdicionaCliente() {
   Cliente cli;
-  clear();
 
-  Wt::WAnchor *back = new Wt::WAnchor();
-  back->setStyleClass("back-button big page-back");
-  back->setInline(true);
-  back->clicked().connect(this, &ClienteApp::init);
-
-  WPushButton *btnSave = new WPushButton();
-  btnSave->setStyleClass("btn btn-primary");
-  btnSave->setText("Adicionar");
+  WPushButton *btnSave = new WPushButton("Adicionar");
+  btnSave->setStyleClass("fg-color-white bg-color-blue");
   btnSave->clicked().connect(this, &ClienteApp::adicionaCliente);
   
   WPushButton *btnCancel = new WPushButton("Cancelar");
-  btnCancel->setStyleClass("btn");
-  btnCancel->clicked().connect(this, &ClienteApp::init );
+  btnCancel->setStyleClass("fg-color-white bg-color-orange");
+  btnCancel->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "cancel"));
 
-  WTemplate *t = new WTemplate(this);
+  WTemplate *t = new WTemplate();
   t->setTemplateText(
-		     "<div class='page secondary'>"
-		     "   <div class='page-header'>"
-		     "      <div class='page-header-content'>"
-		     "          <h1>${titulo}</h1>"
-		     "          ${backButton}"
-		     "      </div>"
-		     "   </div>"
-		     "   <div class='page-region'>"
-		     "      <div class='page-region-content'>"
-		     "      ${conteudo}"
-		     "      <div class=grid>"
-		     "        <div class='row'>"
-		     "         ${save}${cancel}"
-		     "        </div>"
-		     "      </div>"
-		     "      </div>"
-		     "   </div>"
+		     "${conteudo}"
+		     "<div class=grid>"
+		     "  <div class='row'>"
+		     "    ${save}${cancel}"
+		     "  </div>"
 		     "</div>", Wt::XHTMLUnsafeText);		 
   
-  t->bindString("titulo", "Cadastra novo cliente");
   t->bindWidget("save", btnSave);
   t->bindWidget("cancel", btnCancel);
-  t->bindWidget("backButton", back);
   t->bindWidget("conteudo", createFormCliente(cli));
+
+  return t;
 }
 
 WWidget* ClienteApp::createFormCliente(Cliente cli) {
@@ -266,7 +283,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Nome</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${nome}"
-		     "        <button class='helper'></button>"
+		     //"        <button class='helper'></button>"
 		     "    </div>"
 		     "    <div class=''span1>(obrigat&oacute;rio)</div>"
 		     "  </div>"
@@ -275,7 +292,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Endere&ccedil;o</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${endereco}"
-		     "        <button class='helper'></button>"
+		     //"        <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 
@@ -283,7 +300,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Bairro</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${bairro}"
-		     "        <button class='helper'></button>"
+		     //"        <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 
@@ -291,7 +308,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Cidade</div>"
 		     "    <div class='input-control text span6'>"
 		     "          ${cidade}"
-		     "        <button class='helper'></button>"
+		     //"        <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 
@@ -299,7 +316,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Estado</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${estado}"
-		     "        <button class='helper'></button>"
+		     //"        <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 
@@ -307,7 +324,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>CEP</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${CEP}"
-		     "       <button class='helper'></button>"
+		     //"       <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"		     
 
@@ -315,7 +332,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Telefone</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${telefone}"
-		     "       <button class='helper'></button>"
+		     //"       <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 		     
@@ -323,7 +340,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>Celular</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${celular}"
-		     "       <button class='helper'></button>"
+		     //"       <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 		   
@@ -331,7 +348,7 @@ WWidget* ClienteApp::createFormCliente(Cliente cli) {
 		     "    <div class='span2'>E-mail</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${email}"
-		     "       <button class='helper'></button>"
+		     //"       <button class='helper'></button>"
 		     "    </div>"
 		     "  </div>"
 		     
@@ -373,13 +390,13 @@ void ClienteApp::adicionaCliente(){
 		editObservacao_->text().toUTF8());
     
     if(c->adiciona(cli)) {
-      init();
-      //setMessage("Novo cliente adicionado com sucesso!", "alert-success");
+      setEstado(INICIAIS);
+      setMessage("Novo cliente adicionado com sucesso!");
     } else {
-      //setMessage("Erro ao adicionar novo cliente", "alert-error");
+      setErrorMessage("Erro ao adicionar novo cliente");
     }
   } else {
-    //setMessage("O nome do cliente &eacute; obrigat&oacute;rio!", "alert-error");
+    setErrorMessage("O nome do cliente &eacute; obrigat&oacute;rio!");
   }
 }
 
@@ -400,13 +417,13 @@ void ClienteApp::saveCliente(){
 		editObservacao_->text().toUTF8());
     cli.id = editandoId;
     if(c->salvar(cli)) {
-      init();
-      //setMessage("Cliente editado com sucesso!", "alert-success");
+      setEstado(CONTACLIENTE);      
+      setMessage("Cliente editado com sucesso!");
     } else {
-      //setMessage("Erro ao editar novo cliente", "alert-error");
+      setErrorMessage("Erro ao editar novo cliente");
     }
   } else {
-    //setMessage("O nome do cliente &eacute; obrigat&oacute;rio!", "alert-error");
+    setErrorMessage("O nome do cliente &eacute; obrigat&oacute;rio!");
   }
 }
 

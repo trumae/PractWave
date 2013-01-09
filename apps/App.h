@@ -5,6 +5,7 @@
 #include <Wt/WTemplate>
 #include <Wt/WAnchor>
 #include <Wt/WText>
+#include <Wt/WMessageBox>
 #include <string>
 #include <vector>
 #include <map>
@@ -29,39 +30,12 @@ class App : public Wt::WContainerWidget {
   int START;
 
   Wt::WWidget *conteudo_;
-
-  virtual void trataEvento(std::string nome) {
-    int estadoantigo = estado_;
-    for(Transicao trans : tabela) {
-      if(trans.current == estado_ && trans.event == nome){
-	if(trans.guard()) {
-	  trans.action();	
-	  estado_ = trans.next;
-	  if(estadoantigo != estado_) {
-	    if(estado_ == START ) {
-	      CabureApplication *app = CabureApplication::cabureApplication();
-	      app->principal_->viewHome();
-	      return;
-	    }
-	    conteudo_ = (estados[estado_])();
-	    desenha();
-	  }
-	  return;
-	}
-      }
-    }
-    std::cerr << "Transicao nao encontrada" << std::endl;
-  };
+  Wt::WText *msg_;
 
   virtual void init() = 0;
   virtual std::string getTitulo() = 0;
   bool guardOk() { return true;}
   void fazNada(void *d) { } 
-  void setEstado(int e) { 
-    estado_ = e; 
-    conteudo_ = (estados[estado_])();
-    desenha();
-  }
 
   void adicionaEstado(int i, boost::function <Wt::WWidget *()> fun) {
     estados[i] = fun;
@@ -85,6 +59,8 @@ class App : public Wt::WContainerWidget {
     back->setInline(true);
     back->clicked().connect(boost::bind(&App::trataEvento, this, "back"));
     
+    msg_ = new Wt::WText("");
+
     std::string tpl(
 		    "<div class='page secondary'>"
 		    "   <div class='page-header'>"
@@ -95,6 +71,7 @@ class App : public Wt::WContainerWidget {
 		    "   </div>"
 		    "   <div class='page-region'>"
 		    "      <div class='page-region-content'>"
+		    "      ${mensagem}"
 		    "      ${conteudo}<br/><br/>"
 		    "      </div>"
 		    "   </div>"
@@ -106,11 +83,54 @@ class App : public Wt::WContainerWidget {
     wtemplate->bindWidget("backButton", back);
     wtemplate->bindString("titulo", getTitulo());
     wtemplate->bindWidget("conteudo", conteudo_);
+    wtemplate->bindWidget("mensagem", msg_);
+  }
+
+  void trataEvento(std::string nome) {
+    int estadoantigo = estado_;
+    for(Transicao trans : tabela) {
+      if(trans.current == estado_ && trans.event == nome){
+	if(trans.guard()) {
+	  trans.action();	
+	  estado_ = trans.next;
+	  if(estadoantigo != estado_) {
+	    if(estado_ == START ) {
+	      CabureApplication *app = CabureApplication::cabureApplication();
+	      app->principal_->viewHome();
+	      return;
+	    }
+	    conteudo_ = (estados[estado_])();
+	    desenha();
+	  }
+	  return;
+	}
+      }
+    }
+    std::cerr << "Transicao nao encontrada" << std::endl;
+  }
+
+  void setErrorMessage(std::string msg) {
+    Wt::WMessageBox::show("Erro", msg, Wt::Ok);
+  }
+
+
+  void setMessage(std::string msg) {
+    msg_->setText(std::string("<div class='grid'>"
+			      "   <div class='row'>"
+			      "      <div class='mensagem span12'>")
+		  + msg +
+		  "</div></div></div>");
+    msg_->setTextFormat(Wt::XHTMLUnsafeText);
   }
 
  public:
  App(Wt::WContainerWidget *p) : Wt::WContainerWidget(p) {
     START  = 0;
+  }
+  void setEstado(int e) { 
+    estado_ = e; 
+    conteudo_ = (estados[estado_])();
+    desenha();
   }
 };
 
