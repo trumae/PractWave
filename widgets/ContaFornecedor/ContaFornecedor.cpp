@@ -12,33 +12,33 @@
 #include "../../logic/Moeda.h"
 #include "../../logic/Timeline.h"
 #include "../AjusteContaWidget/AjusteContaWidget.h"
-#include "ContaCliente.h"
+#include "ContaFornecedor.h"
 
 using namespace Wt;
 
-ContaCliente::ContaCliente(WContainerWidget *parent,
-                           int idconta,
-			   App *app,
-			   int estadoRetorno,
-			   int estadoDadosCliente):
+ContaFornecedor::ContaFornecedor(WContainerWidget *parent,
+				 int idconta,
+				 App *app,
+				 int estadoRetorno,
+				 int estadoDadosFornecedor):
   WContainerWidget(parent),
   idconta_(idconta),
   app_(app),
   estadoRetorno_(estadoRetorno),
-  estadoDadosCliente_(estadoDadosCliente){
+  estadoDadosFornecedor_(estadoDadosFornecedor){
   ajuste_ = new AjusteContaWidget(idconta_);
   viewHome();
   }
 
-ContaCliente::~ContaCliente() {
+ContaFornecedor::~ContaFornecedor() {
   delete ajuste_;
 }
 
-void ContaCliente::goDadosCliente(){
-  app_->setEstado(estadoDadosCliente_);
+void ContaFornecedor::goDadosFornecedor(){
+  app_->setEstado(estadoDadosFornecedor_);
 }
 
-void ContaCliente::viewHome() {
+void ContaFornecedor::viewHome() {
   CabureApplication *cabure = CabureApplication::cabureApplication();
   cppdb::session db = cabure->db_;
 
@@ -46,27 +46,27 @@ void ContaCliente::viewHome() {
 
   WText *anotarBtn = new WText(
 			       "<button class='command-button bg-color-orangeDark default'>"
-			       "Anotar"
-			       "<small>Anote na conta do cliente</small>"
+			       "Comprar"
+			       "<small>Anote compra na conta do fornecedor</small>"
 			       "</button>",
 			       Wt::XHTMLUnsafeText);
-  anotarBtn->clicked().connect(this, &ContaCliente::anotar);
+  anotarBtn->clicked().connect(this, &ContaFornecedor::comprar);
 
   WText *receberBtn = new WText(
 				"<button class='command-button bg-color-blueDark default'>"
-				"Receber"
-				"<small>Registre um recebimento na conta</small>"
+				"Pagar"
+				"<small>Registre um pagamento na conta</small>"
 				"</button>",
 				Wt::XHTMLUnsafeText);
-  receberBtn->clicked().connect(this, &ContaCliente::receber);
+  receberBtn->clicked().connect(this, &ContaFornecedor::pagar);
 
   WText *dadosBtn = new WText(
 			      "<button class='command-button bg-color-greenDark default'>"
 			      "Dados"
-			      "<small>Veja/Edite os dados do cliente</small>"
+			      "<small>Veja/Edite os dados do fornecedor</small>"
 			      "</button>",
 				Wt::XHTMLUnsafeText);
-  dadosBtn->clicked().connect(this, &ContaCliente::goDadosCliente);
+  dadosBtn->clicked().connect(this, &ContaFornecedor::goDadosFornecedor);
 
   WWidget *ajusteBtn;
   if(app_ != nullptr){
@@ -91,37 +91,37 @@ void ContaCliente::viewHome() {
   conta_ = new ContaWidget(this, idconta_);
 }
 
-void ContaCliente::trataCancela() {
+void ContaFornecedor::trataCancela() {
   viewHome();
 }
 
-void ContaCliente::trataAnotarOk() {
+void ContaFornecedor::trataComprarOk() {
   CabureApplication *cabure = CabureApplication::cabureApplication();
-  Clientes *clientes = cabure->clientes_;
+  Fornecedores *fornecedores = cabure->fornecedores_;
   if(valor->validate() == WValidator::Valid) {
     Moeda m(valor->text().narrow());
     // monta e realiza lancamento
-    clientes->vender(idconta_,
-		     descricao->text().toUTF8(),
-		     m.valInt());
+    fornecedores->comprar(idconta_,
+			  descricao->text().toUTF8(),
+			  m.valInt());
     viewHome();
   }
 }
 
-void ContaCliente::trataReceberOk() {
-  CabureApplication *cabure = CabureApplication::cabureApplication();
-  Clientes *clientes = cabure->clientes_;
+void ContaFornecedor::trataPagarOk() {
+  /*  CabureApplication *cabure = CabureApplication::cabureApplication();
+  Fornecedores *fornecedores = cabure->fornecedores_;
   if(valor->validate() == WValidator::Valid) {
     Moeda m(valor->text().narrow());
     // monta e realiza lancamento
-    clientes->receber(idconta_,
-		      descricao->text().toUTF8(),
-		      m.valInt());
+    fornecedores->pagar(idconta_,
+		    descricao->text().toUTF8(),
+		    m.valInt());
     viewHome();
-  }
+    }*/
 }
 
-void ContaCliente::anotar() {
+void ContaFornecedor::comprar() {
   clear();
   descricao = new WLineEdit();
   valor = new WLineEdit();
@@ -129,14 +129,14 @@ void ContaCliente::anotar() {
 
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
-  ok->clicked().connect(this, &ContaCliente::trataAnotarOk);
+  ok->clicked().connect(this, &ContaFornecedor::trataComprarOk);
   Wt::WPushButton *cancel = new WPushButton("Cancela");
   cancel->setStyleClass("bg-color-orange fg-color-white");
-  cancel->clicked().connect(this, &ContaCliente::trataCancela);
+  cancel->clicked().connect(this, &ContaFornecedor::trataCancela);
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Anotar para cliente</h2>"
+		     "<h2>Anotar para fornecedor</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
 		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
@@ -161,7 +161,7 @@ void ContaCliente::anotar() {
   t->bindWidget("cancel", cancel);
 }
 
-void ContaCliente::receber() {
+void ContaFornecedor::pagar() {
   clear();
   descricao = new WLineEdit();
   valor = new WLineEdit();
@@ -169,14 +169,14 @@ void ContaCliente::receber() {
 
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
-  ok->clicked().connect(this, &ContaCliente::trataReceberOk);
+  ok->clicked().connect(this, &ContaFornecedor::trataPagarOk);
   Wt::WPushButton *cancel = new WPushButton("Cancela");
   cancel->setStyleClass("bg-color-orange fg-color-white");
-  cancel->clicked().connect(this, &ContaCliente::trataCancela);
+  cancel->clicked().connect(this, &ContaFornecedor::trataCancela);
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Receber de cliente</h2>"
+		     "<h2>Pagar fornecedor</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
 		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"

@@ -50,6 +50,8 @@ private:
   void timelineApp();
   Wt::WContainerWidget* showClienteApp();
   void clienteApp();
+  Wt::WContainerWidget* showFornecedorApp();
+  void fornecedorApp();
 };
 
 
