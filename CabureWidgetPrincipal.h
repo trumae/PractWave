@@ -54,6 +54,8 @@ private:
   void fornecedorApp();
   Wt::WContainerWidget* showContaBancariaApp();
   void contaBancariaApp();
+  Wt::WContainerWidget* showCaixaApp();
+  void caixaApp();
 };
 
 

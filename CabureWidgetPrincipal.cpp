@@ -25,6 +25,7 @@
 #include "apps/Cliente/ClienteApp.h"
 #include "apps/Fornecedor/FornecedorApp.h"
 #include "apps/ContaBancaria/ContaBancariaApp.h"
+#include "apps/Caixa/CaixaApp.h"
 
 using namespace Wt;
 
@@ -340,15 +341,9 @@ void CabureWidgetPrincipal::createUI() {
 
     TileContaBancaria *tileContaBancaria = new TileContaBancaria();
     tileContaBancaria->clicked().connect(this, &CabureWidgetPrincipal::contaBancariaApp);
-
-    WTemplate *tileCaixa = new WTemplate();
-    tileCaixa->setTemplateText(
-       "     <div class='tile double bg-color-pink'>"
-       "       <div class='tile-content'>"
-       "          <h2>Caixa</h2>"
-       "       </div>"
-       "    </div>"
-    );
+    
+    TileCaixa *tileCaixa = new TileCaixa();
+    tileCaixa->clicked().connect(this, &CabureWidgetPrincipal::caixaApp);
 
     WTemplate *tileLoja = new WTemplate();
     tileLoja->setTemplateText(
@@ -357,7 +352,7 @@ void CabureWidgetPrincipal::createUI() {
        "          <img class='icon' src='images/Market128.png'/>"
        "       </div>"
        "       <div class='brand'>"
-       "          <span class='name'>Loja</span>"
+       "          <span class='name'>Loja(n&atilde;o implementado)</span>"
        "       </div>"
        "    </div>"
     );
@@ -369,7 +364,7 @@ void CabureWidgetPrincipal::createUI() {
        "          <img class='icon' src='images/Mail128.png'/>"
        "       </div>"
        "       <div class='brand'>"
-       "          <span class='name'>Mensagem</span>"
+       "          <span class='name'>Mensagem(n&atilde;o implementado)</span>"
        "          <span class='badge'>0</span>"
        "       </div>"
        "    </div>"
@@ -472,5 +467,16 @@ WContainerWidget* CabureWidgetPrincipal::showContaBancariaApp() {
 
 void CabureWidgetPrincipal::contaBancariaApp(){
    showContaBancariaApp();
+}
+
+WContainerWidget* CabureWidgetPrincipal::showCaixaApp() {
+  googleAnalyticsLogger("/caixa");
+  clear();
+  WContainerWidget *ret = new CaixaApp(this);
+  return ret;
+}
+
+void CabureWidgetPrincipal::caixaApp(){
+   showCaixaApp();
 }
 
