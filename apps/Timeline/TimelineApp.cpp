@@ -38,13 +38,17 @@ WWidget *TimelineApp::timeline(){
     vector<ItemTimeline> vitem;
     app->timeline_->getTodosTimelineComLimite(vitem, 30);
 
-    string tabela = "<table class='striped'>";
+    string tabela = 
+      "<div class='grid'>"
+      "<div class='row'>"
+      "<table class='span12 striped'>";
     for(ItemTimeline item: vitem) {
       tabela += "<tr><td>" +
 	      item.descricao +
 	      "</td></tr>"; 
     }
-    tabela += "</table>";
+    tabela += 
+      "</div></div></table>";
         
     WText *wtext = new WText(WString(tabela, UTF8), XHTMLUnsafeText);
     return wtext;

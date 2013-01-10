@@ -24,6 +24,7 @@
 #include "apps/Timeline/TimelineApp.h"
 #include "apps/Cliente/ClienteApp.h"
 #include "apps/Fornecedor/FornecedorApp.h"
+#include "apps/ContaBancaria/ContaBancariaApp.h"
 
 using namespace Wt;
 
@@ -337,14 +338,8 @@ void CabureWidgetPrincipal::createUI() {
     TileFornecedor *tileFornecedor = new TileFornecedor();
     tileFornecedor->clicked().connect(this, &CabureWidgetPrincipal::fornecedorApp);
 
-    WTemplate *tileBanco = new WTemplate();
-    tileBanco->setTemplateText(
-       "     <div class='tile double bg-color-blue'>"
-       "       <div class='tile-content'>"
-       "          <h2>Banco</h2>"
-       "       </div>"
-       "    </div>"
-    );
+    TileContaBancaria *tileContaBancaria = new TileContaBancaria();
+    tileContaBancaria->clicked().connect(this, &CabureWidgetPrincipal::contaBancariaApp);
 
     WTemplate *tileCaixa = new WTemplate();
     tileCaixa->setTemplateText(
@@ -409,7 +404,7 @@ void CabureWidgetPrincipal::createUI() {
      t->bindWidget("timeline", tileTimeline);
      t->bindWidget("cliente", tileCliente);
      t->bindWidget("fornecedor", tileFornecedor);
-     t->bindWidget("banco", tileBanco);
+     t->bindWidget("banco", tileContaBancaria);
      t->bindWidget("caixa", tileCaixa);
      t->bindWidget("loja", tileLoja);
      t->bindWidget("mensagem", tileMensagem);
@@ -466,5 +461,16 @@ WContainerWidget* CabureWidgetPrincipal::showFornecedorApp() {
 
 void CabureWidgetPrincipal::fornecedorApp(){
    showFornecedorApp();
+}
+
+WContainerWidget* CabureWidgetPrincipal::showContaBancariaApp() {
+  googleAnalyticsLogger("/banco");
+  clear();
+  WContainerWidget *ret = new ContaBancariaApp(this);
+  return ret;
+}
+
+void CabureWidgetPrincipal::contaBancariaApp(){
+   showContaBancariaApp();
 }
 

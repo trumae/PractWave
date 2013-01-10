@@ -40,7 +40,7 @@ void ContaWidget::viewHome(){
 			       "  </div>"
 
 			       "  <div class='row'>"
-			       "  <table class='striped hovered'>"
+			       "  <table class='striped hovered span12'>"
 			       "   <thead>"
 			       "     <th class='right'>Data</th>"
 			       "     <th>Descri&ccedil;&atilde;o</th>"
