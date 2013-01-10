@@ -26,6 +26,7 @@ class ContaBancariaApp : public App {
   Wt::WWidget *retiradaBanco();
   Wt::WWidget *retiradaCaixaBanco();
 
+  void constroiTabela();
  public:
   ContaBancariaApp(Wt::WContainerWidget *parent);
 };

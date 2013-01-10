@@ -30,34 +30,80 @@ ContaBancariaApp::ContaBancariaApp(WContainerWidget *parent)
   init();
 }
 
-void ContaBancariaApp::init(){
-  adicionaEstado(LISTABANCO, boost::bind(&ContaBancariaApp::listaBanco, this));
+void ContaBancariaApp::constroiTabela() {
+  //limpa vetores
+  tabela.clear();
+  estados.clear();
   
+  // Estados
+  adicionaEstado(LISTABANCO,         boost::bind(&ContaBancariaApp::listaBanco, this));
+  adicionaEstado(ADICIONABANCO,      boost::bind(&ContaBancariaApp::adicionaBanco, this));
+  adicionaEstado(CONTABANCO,         boost::bind(&ContaBancariaApp::contaBanco, this));
+  adicionaEstado(DADOSBANCO,         boost::bind(&ContaBancariaApp::dadosBanco, this));
+  adicionaEstado(RETIRADABANCO,      boost::bind(&ContaBancariaApp::retiradaBanco, this));
+  adicionaEstado(RETIRADACAIXABANCO,   boost::bind(&ContaBancariaApp::retiradaCaixaBanco, this));  
+
+  // Transicoes
   adicionaTransicao(LISTABANCO, START, "back",
 		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
 		    boost::bind(&ContaBancariaApp::guardOk, this));
+}
+
+void ContaBancariaApp::init(){
+  constroiTabela();
   setEstado(LISTABANCO);
 }
 
 WWidget *ContaBancariaApp::listaBanco(){
     CabureApplication *app = CabureApplication::cabureApplication();
-    vector<ItemTimeline> vitem;
-    app->timeline_->getTodosTimelineComLimite(vitem, 30);
+    ContasBancarias *contasBancarias = app->contasBancarias_;
+    Contabilidade *contabilidade = app->contabilidade_;
 
-    string tabela = 
-      "<div class='grid'>"
-      "<div class='row'>"
-      "<table class='span12 striped'>";
-    for(ItemTimeline item: vitem) {
-      tabela += "<tr><td>" +
-	      item.descricao +
-	      "</td></tr>"; 
+    WContainerWidget *container = new WContainerWidget();
+
+    WText *addButton = new WText(
+				 "<button class='command-button default bg-color-greenDark'>"
+				 "Adiciona Conta Banc&aacute;ria"
+				 "<small>Clique aqui para adicionar uma nova conta banc&aacute;ria</small>"
+				 "</button>", Wt::XHTMLUnsafeText );
+    addButton->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "adiciona"));
+    
+    WTemplate *comandos = new WTemplate();
+    comandos->setTemplateText(
+			      "<div class='grid'>"
+			      "  <div class='row'>"
+			      "${add}"			      
+			      "</div>"
+			      "</div>"
+			      , Wt::XHTMLUnsafeText
+			      );
+    comandos->bindWidget("add", addButton);
+    container->addWidget(comandos);
+
+    std::vector < ContaBancaria > vc;
+    contasBancarias->getTodosContasBancarias(vc);
+
+    constroiTabela();
+    for(ContaBancaria c : vc) {
+      string conteudo = "";
+      int saldoconta = contabilidade->getSaldoContaFolha(c.idconta);
+      Moeda saldo(saldoconta);
+
+      conteudo = "<div class='tile double bg-color-orange'>"
+	"   <div class='tile-content'>"
+	"     <h3>" + c.nome + " </h3>"
+	"   </div>"
+	"   <div class='brand'>"
+	"     <span class='name'>"
+	+ saldo.valStr() +
+	"     </span>"
+	"   </div>"
+	"</div>";
+      WText *wtext = new WText(WString(conteudo, UTF8), XHTMLUnsafeText);
+      container->addWidget(wtext);
     }
-    tabela += 
-      "</div></div></table>";
-        
-    WText *wtext = new WText(WString(tabela, UTF8), XHTMLUnsafeText);
-    return wtext;
+
+    return container;
 }
 
 Wt::WWidget *ContaBancariaApp::adicionaBanco(){
