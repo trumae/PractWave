@@ -464,7 +464,6 @@ void CabureWidgetPrincipal::fornecedorApp(){
    showFornecedorApp();
 }
 
-<<<<<<< HEAD
 WContainerWidget* CabureWidgetPrincipal::showContaBancariaApp() {
   googleAnalyticsLogger("/banco");
   clear();
