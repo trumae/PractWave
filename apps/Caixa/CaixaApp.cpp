@@ -66,6 +66,14 @@ Wt::WWidget *CaixaApp::retiradaDeposito(){
   return nullptr;
 }
 
+void CaixaApp::fazRetirada(){
+}
+
+void CaixaApp::fazRetiradaDeposito(){
+}
+
 string CaixaApp::getTitulo(){
    return "Caixa";
 }
+
+

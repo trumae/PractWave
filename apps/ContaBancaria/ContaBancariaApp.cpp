@@ -30,6 +30,9 @@ ContaBancariaApp::ContaBancariaApp(WContainerWidget *parent)
   init();
 }
 
+ContaBancariaApp::~ContaBancariaApp(){
+}
+
 void ContaBancariaApp::constroiTabela() {
   //limpa vetores
   tabela.clear();
@@ -89,7 +92,7 @@ WWidget *ContaBancariaApp::listaBanco(){
       int saldoconta = contabilidade->getSaldoContaFolha(c.idconta);
       Moeda saldo(saldoconta);
 
-      conteudo = "<div class='tile double bg-color-orange'>"
+      conteudo = "<div class='tile double bg-color-blue'>"
 	"   <div class='tile-content'>"
 	"     <h3>" + c.nome + " </h3>"
 	"   </div>"
@@ -126,6 +129,76 @@ Wt::WWidget *ContaBancariaApp::retiradaCaixaBanco(){
   return nullptr;
 }
 
+void ContaBancariaApp::adicionaContaBancaria(){
+}
+
+void ContaBancariaApp::salvaContaBancaria(){
+}
+
+void ContaBancariaApp::retirada(){
+}
+
+void ContaBancariaApp::retiradaContaBancaria(){
+}
+
+void ContaBancariaApp::entraContaBanco(){ /* aloca ajusteConta e seta iddaconta */
+  ajuste_ = new AjusteContaWidget(codContaBancaria_);
+}
+
+void ContaBancariaApp::backContaBanco(){ /* libera ajustaConta */ 
+  delete ajuste_;
+}
+
+WWidget *ContaBancariaApp::createFormContaBancaria (ContaBancaria cb){
+  editNome_ = new Wt::WLineEdit();
+  editNome_->setText(WString(cb.nome, UTF8));
+  editNome_->setMaxLength(100);
+  editAgencia_ = new Wt::WLineEdit();
+  editAgencia_->setText(WString(cb.agencia, UTF8));
+  editNumero_ = new Wt::WLineEdit();
+  editNumero_->setText(WString(cb.numero, UTF8));
+  editTelefone_ = new Wt::WLineEdit();
+  editTelefone_->setText(WString(cb.telefone, UTF8));
+  
+  WTemplate *t = new WTemplate(this);
+  t->setTemplateText("<form class='form-horizontal'>"
+		     "  <fieldset>"
+		     "    <legend>${titulo}</legend>"
+		     "    <div class='control-group'> <!-- nome -->"
+		     "      <label class='control-label' for='nome'>Nome</label>"
+		     "      <div class='controls'>"
+		     "        ${nome} (obrigat&oacute;rio)"
+		     "      </div>"
+		     "    </div>"
+		     "    <div class='control-group'> <!-- agencia -->"
+		     "      <label class='control-label' for='agencia'>Agencia</label>"
+		     "      <div class='controls'>"
+		     "        ${agencia}"
+		     "      </div>"
+		     "    </div>"
+		     "    <div class='control-group'> <!-- numero -->"
+		     "      <label class='control-label' for='numero'>Numero</label>"
+		     "      <div class='controls'>"
+		     "        ${numero}"
+		     "      </div>"
+		     "    </div>"
+		     "    <div class='control-group'> <!-- telefone -->"
+		     "      <label class='control-label' for='telefone'>Telefone</label>"
+		     "      <div class='controls'>"
+		     "        ${telefone}"
+		     "      </div>"
+		     "    </div>"
+		     "<div class='well'>"
+		     "${save} ${cancel}"
+		     "</div>"
+		     "  </fieldset>"
+		     "</form>", Wt::XHTMLUnsafeText);
+    t->bindWidget("nome", editNome_);
+    t->bindWidget("agencia", editAgencia_);
+    t->bindWidget("numero", editNumero_);
+    t->bindWidget("telefone", editTelefone_);
+    return t;
+}
 
 string ContaBancariaApp::getTitulo(){
    return "Contas Banc&aacute;rias";

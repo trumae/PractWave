@@ -157,7 +157,7 @@ WWidget* FornecedorApp::EListaFornecedores() {
     int saldoconta = contabilidade->getSaldoContaFolha(idconta);
     Moeda saldo(saldoconta);
     
-    string buffer = "<div class='tile double bg-color-orangeDark'>"
+    string buffer = "<div class='tile double bg-color-purple'>"
       "   <div class='tile-content'>"
       "     <h3>" + nome + " </h3>"
       "   </div>"

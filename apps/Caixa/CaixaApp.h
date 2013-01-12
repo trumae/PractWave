@@ -20,6 +20,9 @@ class CaixaApp : public App {
   Wt::WWidget *retirada();
   Wt::WWidget *retiradaDeposito();
 
+  void fazRetirada();
+  void fazRetiradaDeposito();
+
  public:
   CaixaApp(Wt::WContainerWidget *parent);
 };
