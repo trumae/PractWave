@@ -4,7 +4,7 @@
 #include<sstream>
 #include<exception>
 
-#include "../CabureApplication.h"
+#include "../core/CabureApplication.h"
 #include "Moeda.h"
 
 Clientes::Clientes(cppdb::session& d, 

@@ -1,0 +1,7 @@
+add_subdirectory (Caixa)
+add_subdirectory (Calculadora)
+add_subdirectory (Cliente)
+add_subdirectory (ContaBancaria)
+add_subdirectory (Fornecedor)
+add_subdirectory (Painel)
+add_subdirectory (Timeline)

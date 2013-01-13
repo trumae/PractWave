@@ -5,7 +5,7 @@
 #include <cppdb/frontend.h>
 
 #include "ContaWidget.h"
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "../../logic/Contabilidade.h"
 #include "../../logic/Moeda.h"
 #include "ItemContaWidget.h"

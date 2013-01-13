@@ -19,14 +19,14 @@
 #include "CabureApplication.h"
 #include "CabureUserManager.h"
 #include "CabureWidgetPrincipal.h"
-#include "logic/Notificacao.h"
-#include "apps/Painel/PainelApp.h"
-#include "apps/Timeline/TimelineApp.h"
-#include "apps/Cliente/ClienteApp.h"
-#include "apps/Fornecedor/FornecedorApp.h"
-#include "apps/ContaBancaria/ContaBancariaApp.h"
-#include "apps/Caixa/CaixaApp.h"
-#include "apps/Calculadora/CalculadoraApp.h"
+#include "../logic/Notificacao.h"
+#include "../apps/Painel/PainelApp.h"
+#include "../apps/Timeline/TimelineApp.h"
+#include "../apps/Cliente/ClienteApp.h"
+#include "../apps/Fornecedor/FornecedorApp.h"
+#include "../apps/ContaBancaria/ContaBancariaApp.h"
+#include "../apps/Caixa/CaixaApp.h"
+#include "../apps/Calculadora/CalculadoraApp.h"
 
 using namespace Wt;
 

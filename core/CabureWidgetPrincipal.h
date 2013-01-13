@@ -10,9 +10,9 @@
 #include <Wt/Auth/FacebookService>
 #include <Wt/WLineEdit>
 
-#include "logic/Contabilidade.h"
-#include "logic/Clientes.h"
-#include "logic/ContasBancarias.h"
+#include "../logic/Contabilidade.h"
+#include "../logic/Clientes.h"
+#include "../logic/ContasBancarias.h"
 //#include "CabureMenu.h"
 
 extern Wt::Auth::AuthService authServiceGoogle;

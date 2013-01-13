@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "../../logic/Clientes.h"
 #include "../../logic/Fornecedores.h"
 #include "../../logic/Contabilidade.h"

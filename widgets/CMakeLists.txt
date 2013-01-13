@@ -1,0 +1,4 @@
+add_subdirectory(ContaWidget)
+add_subdirectory(AjusteContaWidget)
+add_subdirectory(ContaCliente)
+add_subdirectory(ContaFornecedor)

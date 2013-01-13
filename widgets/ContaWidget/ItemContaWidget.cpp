@@ -6,7 +6,7 @@
 #include <Wt/WMessageBox>
 
 #include "ItemContaWidget.h"
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "../../logic/Contabilidade.h"
 #include "../../logic/Timeline.h"
 

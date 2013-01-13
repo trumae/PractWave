@@ -4,7 +4,7 @@
 #include<sstream>
 #include<exception>
 
-#include "../CabureApplication.h"
+#include "../core/CabureApplication.h"
 #include "Moeda.h"
 
 Fornecedores::Fornecedores(cppdb::session& d,

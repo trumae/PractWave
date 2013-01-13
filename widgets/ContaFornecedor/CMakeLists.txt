@@ -1,0 +1,1 @@
+add_library(WidgetContaFornecedor ContaFornecedor.cpp)

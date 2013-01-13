@@ -5,7 +5,7 @@
 #include <Wt/WMessageBox>
 
 #include "AjusteContaWidget.h"
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "../../logic/Moeda.h"
 
 using namespace Wt;

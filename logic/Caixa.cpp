@@ -3,7 +3,7 @@
 #include "Contabilidade.h"
 #include "Timeline.h"
 
-#include "../CabureApplication.h"
+#include "../core/CabureApplication.h"
 #include "Moeda.h"
 
 Caixa::Caixa(cppdb::session& d, Contabilidade *c, Timeline* t)

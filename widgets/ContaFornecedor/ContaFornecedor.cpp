@@ -8,7 +8,7 @@
 #include <Wt/WComboBox>
 #include <Wt/WValidator>
 #include <Wt/WLengthValidator>
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "../../logic/Moeda.h"
 #include "../../logic/Timeline.h"
 #include "../AjusteContaWidget/AjusteContaWidget.h"

@@ -5,13 +5,13 @@
 #include <string>
 #include <cppdb/frontend.h>
 
-#include "logic/Contabilidade.h"
-#include "logic/Clientes.h"
-#include "logic/Fornecedores.h"
-#include "logic/ContasBancarias.h"
-#include "logic/Timeline.h"
-#include "logic/Caixa.h"
-#include "logic/meusdados.h"
+#include "../logic/Contabilidade.h"
+#include "../logic/Clientes.h"
+#include "../logic/Fornecedores.h"
+#include "../logic/ContasBancarias.h"
+#include "../logic/Timeline.h"
+#include "../logic/Caixa.h"
+#include "../logic/meusdados.h"
 
 #include "CabureWidgetPrincipal.h"
 

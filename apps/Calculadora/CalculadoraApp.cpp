@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "../../CabureApplication.h"
+#include "../../core/CabureApplication.h"
 #include "CalculadoraApp.h"
 
 using namespace Wt;

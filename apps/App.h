@@ -11,7 +11,7 @@
 #include <map>
 #include <iostream>
 
-#include "../CabureApplication.h"
+#include "../core/CabureApplication.h"
 
 struct Transicao {
   int current;

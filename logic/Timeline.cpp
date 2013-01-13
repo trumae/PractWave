@@ -4,7 +4,7 @@
 #include<sstream>
 #include<exception>
 
-#include "../CabureApplication.h"
+#include "../core/CabureApplication.h"
 
 Timeline::Timeline(cppdb::session& d, Contabilidade *c)
   : db_(d), 

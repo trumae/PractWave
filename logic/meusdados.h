@@ -3,7 +3,7 @@
 
 #include <cppdb/frontend.h>
 #include <iostream>
-#include "../CabureUserManager.h"
+#include "../core/CabureUserManager.h"
 
 class MeusDados {
 	public:
