@@ -13,6 +13,7 @@ using namespace std;
 
 AjusteContaWidget::AjusteContaWidget(int conta) :
   conta_(conta) {
+  titulo_ = "";
 }
 
 Wt::WWidget *AjusteContaWidget::getButton() {
@@ -26,9 +27,53 @@ Wt::WWidget *AjusteContaWidget::getButton() {
   return button;
 }
 
-void AjusteContaWidget::ajuste() {
+Wt::WWidget *AjusteContaWidget::getButtonApp() {
+  Wt::WText *button = new Wt::WText(
+				    "<button class='command-button bg-color-pinkDark default'>"
+				    "Ajuste"
+				    "<small>Fa&ccedil;a ajustes no Saldo da conta</small>"
+				    "</button>",
+				    Wt::XHTMLUnsafeText);
+  button->clicked().connect(this, &AjusteContaWidget::ajusteApp);
+  return button;
+}
+
+void AjusteContaWidget::ajuste(){
+  widgetPai_->clear();
+  widgetPai_->addWidget(getAjusteConteudo());
+}
+
+void AjusteContaWidget::ajusteApp(){
   widgetPai_->clear();
 
+  Wt::WAnchor *back = new Wt::WAnchor();
+  back->setStyleClass("back-button big page-back");
+  back->setInline(true);
+  back->clicked().connect(this, &AjusteContaWidget::trataCancela);
+  
+  std::string tpl(
+		  "<div class='page secondary'>"
+		  "   <div class='page-header'>"
+		  "      <div class='page-header-content'>"
+		  "          <h1>${titulo}</h1>"
+		  "          ${backButton}"
+		  "      </div>"
+		  "   </div>"
+		  "   <div class='page-region'>"
+		  "      <div class='page-region-content'>"
+		  "      ${conteudo}<br/><br/>"
+		  "      </div>"
+		  "   </div>"
+		  "</div>");
+    
+  Wt::WTemplate *wtemplate = new Wt::WTemplate(widgetPai_);
+  wtemplate->setTemplateText(tpl);
+  wtemplate->bindWidget("backButton", back);
+  wtemplate->bindString("titulo", titulo_);
+  wtemplate->bindWidget("conteudo", getAjusteConteudo());
+}
+
+WWidget* AjusteContaWidget::getAjusteConteudo() {
   descricao = new WLineEdit();
   valor = new WLineEdit();
   valor->setValidator(Moeda::newWValidator());
@@ -41,7 +86,7 @@ void AjusteContaWidget::ajuste() {
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &AjusteContaWidget::trataCancela);
 
-  WTemplate *t = new WTemplate(widgetPai_);
+  WTemplate *t = new WTemplate();
   t->setTemplateText(
 		     "<h1>Ajuste</h1>"
 		     "<div class='alerta'>"
@@ -74,6 +119,8 @@ void AjusteContaWidget::ajuste() {
   t->bindWidget("valor", valor);
   t->bindWidget("ok", ok);
   t->bindWidget("cancel", cancel);
+
+  return t;
 }
 
 void AjusteContaWidget::trataOk() {

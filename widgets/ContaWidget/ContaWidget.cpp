@@ -40,15 +40,13 @@ void ContaWidget::viewHome(){
 			       "  </div>"
 
 			       "  <div class='row'>"
-			       "  <table class='striped hovered span12'>"
-			       "   <thead>"
-			       "     <th class='right'>Data</th>"
-			       "     <th>Descri&ccedil;&atilde;o</th>"
-			       "     <th class='right'>${cabDebito}</th>"
-			       "     <th class='right'>${cabCredito}</th>"
-			       "     <th></th>"
-			       "   </thead>"
-			       "   </tbody>", XHTMLUnsafeText);
+			       "  <table class='striped span12'>"
+			       "   <tr>"
+			       "     <td class='right'><b>Data</b></td>"
+			       "     <td><b>Descri&ccedil;&atilde;o</b></td>"
+			       "     <td class='right'><b>${cabDebito}</b></td>"
+			       "     <td class='right'><b>${cabCredito}</b></td>"
+			       "     <td></td></tr>", XHTMLUnsafeText);
   cablistagem->bindString("nomeconta",
 			  WString(contabilidade->getNomePorId(codconta_), UTF8));
   cablistagem->bindString("saldo", msaldo.valStr());
@@ -72,7 +70,7 @@ void ContaWidget::viewHome(){
     Moeda cred(credito);
     new ItemContaWidget(listagem, this, id_diario, data, descricao, deb, cred);
   }
-  WText *fimTabela = new WText("</tbody></table></div></div>", Wt::XHTMLUnsafeText, listagem);
+  WText *fimTabela = new WText("</table></div></div>", Wt::XHTMLUnsafeText, listagem);
 }
 
 

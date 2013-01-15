@@ -22,17 +22,17 @@ class ContaBancariaApp : public App {
   virtual std::string getTitulo();
   virtual void init();
 
-  Wt::WWidget *listaBanco();
-  Wt::WWidget *adicionaBanco();
-  Wt::WWidget *contaBanco();
-  Wt::WWidget *dadosBanco();
-  Wt::WWidget *retiradaBanco();
-  Wt::WWidget *retiradaCaixaBanco();
+  Wt::WWidget *EListaBanco();
+  Wt::WWidget *EAdicionaBanco();
+  Wt::WWidget *EContaBanco();
+  Wt::WWidget *EDadosBanco();
+  Wt::WWidget *ERetiradaBanco();
+  Wt::WWidget *ERetiradaCaixaBanco();
 
-  void adicionaContaBancaria();
-  void salvaContaBancaria();
-  void retirada();
-  void retiradaContaBancaria();
+  void TAdicionaContaBancaria();
+  void TSalvaContaBancaria();
+  void TRetirada();
+  void TRetiradaCaixa();
 
   AjusteContaWidget *ajuste_;
   Wt::WLineEdit *buscaEdit;
@@ -41,15 +41,15 @@ class ContaBancariaApp : public App {
   Wt::WLineEdit *editAgencia_;
   Wt::WLineEdit *editNumero_;
   Wt::WLineEdit *editTelefone_;
-  int editandoId;
 
-  Wt::WWidget *createFormContaBancaria (ContaBancaria cb);
+  Wt::WWidget *createFormContaBancaria ();
   void constroiTabela();
 
   int idconta_;
   int codContaBancaria_;
-  void entraContaBanco(); /* aloca ajusteConta e seta iddaconta */
-  void backContaBanco(); /* libera ajustaConta */ 
+  ContaBancaria cb_;
+  void TEntraContaBanco(int id); /* aloca ajusteConta e seta iddaconta */
+  void TBackContaBanco(); /* libera ajustaConta */ 
  public:
   ContaBancariaApp(Wt::WContainerWidget *parent);
   ~ContaBancariaApp();

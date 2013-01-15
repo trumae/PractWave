@@ -15,6 +15,9 @@
 #include "../../logic/ContasBancarias.h"
 #include "ContaBancariaApp.h"
 
+#include "../../widgets/AjusteContaWidget/AjusteContaWidget.h"
+#include "../../widgets/ContaWidget/ContaWidget.h"
+
 using namespace Wt;
 using namespace std;
 
@@ -39,16 +42,55 @@ void ContaBancariaApp::constroiTabela() {
   estados.clear();
   
   // Estados
-  adicionaEstado(LISTABANCO,         boost::bind(&ContaBancariaApp::listaBanco, this));
-  adicionaEstado(ADICIONABANCO,      boost::bind(&ContaBancariaApp::adicionaBanco, this));
-  adicionaEstado(CONTABANCO,         boost::bind(&ContaBancariaApp::contaBanco, this));
-  adicionaEstado(DADOSBANCO,         boost::bind(&ContaBancariaApp::dadosBanco, this));
-  adicionaEstado(RETIRADABANCO,      boost::bind(&ContaBancariaApp::retiradaBanco, this));
-  adicionaEstado(RETIRADACAIXABANCO,   boost::bind(&ContaBancariaApp::retiradaCaixaBanco, this));  
+  adicionaEstado(LISTABANCO,         boost::bind(&ContaBancariaApp::EListaBanco, this));
+  adicionaEstado(ADICIONABANCO,      boost::bind(&ContaBancariaApp::EAdicionaBanco, this));
+  adicionaEstado(CONTABANCO,         boost::bind(&ContaBancariaApp::EContaBanco, this));
+  adicionaEstado(DADOSBANCO,         boost::bind(&ContaBancariaApp::EDadosBanco, this));
+  adicionaEstado(RETIRADABANCO,      boost::bind(&ContaBancariaApp::ERetiradaBanco, this));
+  adicionaEstado(RETIRADACAIXABANCO,   boost::bind(&ContaBancariaApp::ERetiradaCaixaBanco, this));  
 
   // Transicoes
   adicionaTransicao(LISTABANCO, START, "back",
 		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(LISTABANCO, ADICIONABANCO, "adiciona",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(ADICIONABANCO, LISTABANCO, "back",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(ADICIONABANCO, LISTABANCO, "cancel",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(ADICIONABANCO, LISTABANCO, "salvaBanco",
+		    boost::bind(&ContaBancariaApp::TAdicionaContaBancaria, this),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(CONTABANCO, LISTABANCO, "back",
+		    boost::bind(&ContaBancariaApp::TBackContaBanco, this),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(CONTABANCO, RETIRADABANCO, "retirada",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADABANCO, CONTABANCO, "back",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(CONTABANCO, RETIRADACAIXABANCO, "retiradaCaixa",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADACAIXABANCO, CONTABANCO, "back",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(CONTABANCO, DADOSBANCO, "dados",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(DADOSBANCO, CONTABANCO, "back",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(DADOSBANCO, CONTABANCO, "cancel",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(DADOSBANCO, CONTABANCO, "salvaBanco",
+		    boost::bind(&ContaBancariaApp::TSalvaContaBancaria, this),
 		    boost::bind(&ContaBancariaApp::guardOk, this));
 }
 
@@ -57,7 +99,7 @@ void ContaBancariaApp::init(){
   setEstado(LISTABANCO);
 }
 
-WWidget *ContaBancariaApp::listaBanco(){
+WWidget *ContaBancariaApp::EListaBanco(){
     CabureApplication *app = CabureApplication::cabureApplication();
     ContasBancarias *contasBancarias = app->contasBancarias_;
     Contabilidade *contabilidade = app->contabilidade_;
@@ -103,96 +145,235 @@ WWidget *ContaBancariaApp::listaBanco(){
 	"   </div>"
 	"</div>";
       WText *wtext = new WText(WString(conteudo, UTF8), XHTMLUnsafeText);
+
+      wtext->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "contabanco" + c.id));
+      adicionaTransicao(LISTABANCO, CONTABANCO, "contabanco" + c.id,
+		      boost::bind(&ContaBancariaApp::TEntraContaBanco, this, c.id),
+		      boost::bind(&ContaBancariaApp::guardOk, this));  
+
       container->addWidget(wtext);
     }
 
     return container;
 }
 
-Wt::WWidget *ContaBancariaApp::adicionaBanco(){
+Wt::WWidget *ContaBancariaApp::EAdicionaBanco(){
+  ContaBancaria cb;
+
+  cb_ = cb; //zera dados da conta bancaria
+  WPushButton *btnSave = new WPushButton("Adicionar");
+  btnSave->setStyleClass("fg-color-white bg-color-blue");
+  btnSave->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "salvaBanco"));
+  
+  WPushButton *btnCancel = new WPushButton("Cancelar");
+  btnCancel->setStyleClass("fg-color-white bg-color-orange");
+  btnCancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
+
+  WTemplate *t = new WTemplate();
+  t->setTemplateText(
+		     "${conteudo}"
+		     "<div class=grid>"
+		     "  <div class='row'>"
+		     "    ${save}${cancel}"
+		     "  </div>"
+		     "</div>", Wt::XHTMLUnsafeText);		 
+  
+  t->bindWidget("conteudo", createFormContaBancaria());
+  t->bindWidget("save", btnSave);
+  t->bindWidget("cancel", btnCancel);
+
+  return t;
+}
+
+Wt::WWidget *ContaBancariaApp::EContaBanco(){
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+
+  WText *retiradaBtn = new WText(
+                               "<button class='command-button bg-color-orangeDark default'>"
+                               "Retirada"
+                               "<small>Retirada para pagar despesas</small>"
+                               "</button>",
+                               Wt::XHTMLUnsafeText);
+  retiradaBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "retirada"));
+
+  
+  WText *retiradaCaixaBtn = new WText(
+                                "<button class='command-button bg-color-blueDark default'>"
+                                "Retirada para Caixa"
+                                "<small>Retirada de dinheiro para caixa</small>"
+                                "</button>",
+                                Wt::XHTMLUnsafeText);
+  retiradaCaixaBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "retiradaCaixa"));
+  
+  WText *dadosBtn = new WText(
+                              "<button class='command-button bg-color-greenDark default'>"
+                              "Dados"
+                              "<small>Veja/Edite os dados da conta banc&aacute;ria</small>"
+                              "</button>",
+                                Wt::XHTMLUnsafeText);
+  dadosBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "dados"));
+
+  WContainerWidget *container = new WContainerWidget();
+  WTemplate *tt = new WTemplate();
+  tt->setTemplateText("<div>"
+			     "${retirada}"
+			     "${retiradaCaixa}"
+			     "${dados}"
+                             "${ajuste}"			   
+                             "</div>", XHTMLUnsafeText);
+  tt->bindWidget("retirada", retiradaBtn);
+  tt->bindWidget("retiradaCaixa", retiradaCaixaBtn);
+  tt->bindWidget("dados", dadosBtn);
+  tt->bindWidget("ajuste", ajuste_->getButtonApp());
+  container->addWidget(tt);
+  new ContaWidget(container, idconta_);
+
+  return container;
+}
+
+Wt::WWidget *ContaBancariaApp::EDadosBanco(){
+  WPushButton *btnSave = new WPushButton("Salvar");
+  btnSave->setStyleClass("fg-color-white bg-color-blue");
+  btnSave->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "salvaBanco"));
+  
+  WPushButton *btnCancel = new WPushButton("Cancelar");
+  btnCancel->setStyleClass("fg-color-white bg-color-orange");
+  btnCancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
+
+  WTemplate *t = new WTemplate();
+  t->setTemplateText(
+		     "${conteudo}"
+		     "<div class=grid>"
+		     "  <div class='row'>"
+		     "    ${save}${cancel}"
+		     "  </div>"
+		     "</div>", Wt::XHTMLUnsafeText);		 
+  
+  t->bindWidget("conteudo", createFormContaBancaria());
+  t->bindWidget("save", btnSave);
+  t->bindWidget("cancel", btnCancel);
+
+  return t;
+}
+
+Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   return nullptr;
 }
 
-Wt::WWidget *ContaBancariaApp::contaBanco(){
+Wt::WWidget *ContaBancariaApp::ERetiradaCaixaBanco(){
   return nullptr;
 }
 
-Wt::WWidget *ContaBancariaApp::dadosBanco(){
-  return nullptr;
+/////////// acoes  //////////////
+
+void ContaBancariaApp::TAdicionaContaBancaria(){
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  ContasBancarias *c = cabure->contasBancarias_;
+  
+  if(editNome_->text().narrow() != "") {
+    ContaBancaria cb(editNome_->text().toUTF8(),
+		     editAgencia_->text().toUTF8(),
+		     editNumero_->text().toUTF8(),
+		     editTelefone_->text().toUTF8());
+    
+    if(c->adiciona(cb)) {
+      setMessage("Nova conta banc&aacute;ria adicionada com sucesso!");
+    } else {
+      setErrorMessage("Erro ao adicionar nova conta banc&aacute;ria");
+      estado_ = ADICIONABANCO; // retorna pro estado ADICIONABANCO
+    }
+  } else {
+    setErrorMessage("Um nome para a conta banc&aacute;ria &eacute; obrigat&oacute;rio!");
+    estado_ = ADICIONABANCO; // retorna pro estado ADICIONABANCO
+  }
 }
 
-Wt::WWidget *ContaBancariaApp::retiradaBanco(){
-  return nullptr;
+void ContaBancariaApp::TSalvaContaBancaria(){
+    CabureApplication *cabure = CabureApplication::cabureApplication();
+    ContasBancarias *c = cabure->contasBancarias_;
+
+    if(editNome_->text().narrow() != "") {
+        ContaBancaria cb(editNome_->text().toUTF8(),
+                         editAgencia_->text().toUTF8(),
+                         editNumero_->text().toUTF8(),
+                         editTelefone_->text().toUTF8());
+        cb.id = cb_.id;
+        if(c->salvar(cb)){
+            setMessage("Conta banc&aacute;ria editada com sucesso!");
+	    cb_ = cb; //copia novos valores para cb_
+        } else {
+            setErrorMessage("Erro ao editar conta banc&aacute;ria");
+        }
+    } else {
+        setErrorMessage("Um nome para a conta banc&aacute;ria &eacute; obrigat&oacute;rio!");
+	estado_ = DADOSBANCO;
+    }
 }
 
-Wt::WWidget *ContaBancariaApp::retiradaCaixaBanco(){
-  return nullptr;
+void ContaBancariaApp::TRetirada(){
 }
 
-void ContaBancariaApp::adicionaContaBancaria(){
+void ContaBancariaApp::TRetiradaCaixa(){
 }
 
-void ContaBancariaApp::salvaContaBancaria(){
+void ContaBancariaApp::TEntraContaBanco(int id){ /* aloca ajusteConta e seta iddaconta */
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  ContasBancarias *c = cabure->contasBancarias_;
+
+  codContaBancaria_ = id;
+  cb_ = c->getContaBancariaPorId(id);
+  idconta_ = cb_.idconta;
+  
+  ajuste_ = new AjusteContaWidget(idconta_);
+  ajuste_->setWidgetPai(this);
+  ajuste_->setApp(this);
+  ajuste_->setTituloApp("Contas Banc&aacute;rias");
+  ajuste_->setEstadoRetorno(CONTABANCO);
 }
 
-void ContaBancariaApp::retirada(){
-}
-
-void ContaBancariaApp::retiradaContaBancaria(){
-}
-
-void ContaBancariaApp::entraContaBanco(){ /* aloca ajusteConta e seta iddaconta */
-  ajuste_ = new AjusteContaWidget(codContaBancaria_);
-}
-
-void ContaBancariaApp::backContaBanco(){ /* libera ajustaConta */ 
+void ContaBancariaApp::TBackContaBanco(){ /* libera ajustaConta */ 
   delete ajuste_;
 }
 
-WWidget *ContaBancariaApp::createFormContaBancaria (ContaBancaria cb){
+WWidget *ContaBancariaApp::createFormContaBancaria (){
   editNome_ = new Wt::WLineEdit();
-  editNome_->setText(WString(cb.nome, UTF8));
+  editNome_->setText(WString(cb_.nome, UTF8));
   editNome_->setMaxLength(100);
   editAgencia_ = new Wt::WLineEdit();
-  editAgencia_->setText(WString(cb.agencia, UTF8));
+  editAgencia_->setText(WString(cb_.agencia, UTF8));
   editNumero_ = new Wt::WLineEdit();
-  editNumero_->setText(WString(cb.numero, UTF8));
+  editNumero_->setText(WString(cb_.numero, UTF8));
   editTelefone_ = new Wt::WLineEdit();
-  editTelefone_->setText(WString(cb.telefone, UTF8));
+  editTelefone_->setText(WString(cb_.telefone, UTF8));
   
-  WTemplate *t = new WTemplate(this);
-  t->setTemplateText("<form class='form-horizontal'>"
-		     "  <fieldset>"
-		     "    <legend>${titulo}</legend>"
-		     "    <div class='control-group'> <!-- nome -->"
-		     "      <label class='control-label' for='nome'>Nome</label>"
-		     "      <div class='controls'>"
-		     "        ${nome} (obrigat&oacute;rio)"
-		     "      </div>"
-		     "    </div>"
-		     "    <div class='control-group'> <!-- agencia -->"
-		     "      <label class='control-label' for='agencia'>Agencia</label>"
-		     "      <div class='controls'>"
+  WTemplate *t = new WTemplate();
+  t->setTemplateText("<div class='grid'>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Nome</div>"
+		     "     <div class='input-control text span6'>"
+		     "        ${nome}"
+		     "     </div>"
+		     "     <div class='span1'>(Obrigat&oacute;rio)</div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Agencia</div>"
+		     "     <div class='input-control text span6'>"
 		     "        ${agencia}"
-		     "      </div>"
-		     "    </div>"
-		     "    <div class='control-group'> <!-- numero -->"
-		     "      <label class='control-label' for='numero'>Numero</label>"
-		     "      <div class='controls'>"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>N&uacute;mero</div>"
+		     "     <div class='input-control text span6'>"
 		     "        ${numero}"
-		     "      </div>"
-		     "    </div>"
-		     "    <div class='control-group'> <!-- telefone -->"
-		     "      <label class='control-label' for='telefone'>Telefone</label>"
-		     "      <div class='controls'>"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Telefone</div>"
+		     "     <div class='input-control text span6'>"
 		     "        ${telefone}"
-		     "      </div>"
-		     "    </div>"
-		     "<div class='well'>"
-		     "${save} ${cancel}"
-		     "</div>"
-		     "  </fieldset>"
-		     "</form>", Wt::XHTMLUnsafeText);
+		     "     </div>"
+		     "  </div>"
+		     "</div>", Wt::XHTMLUnsafeText);
     t->bindWidget("nome", editNome_);
     t->bindWidget("agencia", editAgencia_);
     t->bindWidget("numero", editNumero_);

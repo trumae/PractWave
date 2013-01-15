@@ -98,24 +98,16 @@ WWidget* ClienteApp::EIniciais() {
 			       "</button>", Wt::XHTMLUnsafeText );
   addButton->clicked().connect(boost::bind(&ClienteApp::trataEvento, this, "adiciona"));
   
-  /*  WText *searchButton = new WText(
-				  "<button class='command-button default'>"
-				  "Busca Cliente"
-				  "</button>", Wt::XHTMLUnsafeText );
-  */
-
   WTemplate *comandos = new WTemplate();
   comandos->setTemplateText(
 			    "<div class='grid'>"
 			    "  <div class='row'>"
 			    "${add}"
-			    //"${search}"
 			    "</div>"
 			    "</div>"
 			    , Wt::XHTMLUnsafeText
 			    );
   comandos->bindWidget("add", addButton);
-  //comandos->bindWidget("search", searchButton);
   
   container->addWidget(comandos);
   cppdb::session &db = app->db_;

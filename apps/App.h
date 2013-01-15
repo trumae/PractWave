@@ -91,8 +91,8 @@ class App : public Wt::WContainerWidget {
     for(Transicao trans : tabela) {
       if(trans.current == estado_ && trans.event == nome){
 	if(trans.guard()) {
-	  trans.action();	
 	  estado_ = trans.next;
+	  trans.action();	
 	  if(estadoantigo != estado_) {
 	    if(estado_ == START ) {
 	      CabureApplication *app = CabureApplication::cabureApplication();
@@ -112,7 +112,6 @@ class App : public Wt::WContainerWidget {
   void setErrorMessage(std::string msg) {
     Wt::WMessageBox::show("Erro", msg, Wt::Ok);
   }
-
 
   void setMessage(std::string msg) {
     msg_->setText(std::string("<div class='grid'>"

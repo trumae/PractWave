@@ -20,16 +20,23 @@ class AjusteContaWidget : public Wt::WObject {
     estadoRetorno_ = est;
   }
   Wt::WWidget *getButton();
+  Wt::WWidget *getButtonApp();
+  void setTituloApp(std::string s) {
+    titulo_ = s;
+  }
  private:
   int conta_;
   Wt::WContainerWidget *widgetPai_;
   App *app_;
   int estadoRetorno_;
+  std::string titulo_;
 
   Wt::WLineEdit *descricao;
   Wt::WLineEdit *valor;
 
+  Wt::WWidget* getAjusteConteudo();
   void ajuste();
+  void ajusteApp();
   void trataOk();
   void trataCancela();
   void ajusteAction(std::string descricao, int valor);
