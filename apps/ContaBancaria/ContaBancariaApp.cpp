@@ -92,6 +92,18 @@ void ContaBancariaApp::constroiTabela() {
   adicionaTransicao(DADOSBANCO, CONTABANCO, "salvaBanco",
 		    boost::bind(&ContaBancariaApp::TSalvaContaBancaria, this),
 		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADABANCO, CONTABANCO, "cancel",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADABANCO, CONTABANCO, "fazRetirada",
+		    boost::bind(&ContaBancariaApp::TRetirada, this),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADACAIXABANCO, CONTABANCO, "cancel",
+		    boost::bind(&ContaBancariaApp::fazNada, this, nullptr),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
+  adicionaTransicao(RETIRADACAIXABANCO, CONTABANCO, "fazRetiradaCaixa",
+		    boost::bind(&ContaBancariaApp::TRetiradaCaixa, this),
+		    boost::bind(&ContaBancariaApp::guardOk, this));
 }
 
 void ContaBancariaApp::init(){
@@ -265,11 +277,12 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   valor->setValidator(Moeda::newWValidator());
   
   Wt::WPushButton *ok = new WPushButton("Ok");
-  ok->setStyleClass("btn btn-primary");
-  //ok->clicked().connect(this, &ContaBanco::trataRetiradaOk);
+  ok->setStyleClass("bg-color-blue fg-color-white");
+  ok->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "fazRetirada"));
+  
   Wt::WPushButton *cancel = new WPushButton("Cancela");
-  cancel->setStyleClass("btn");
-  //  cancel->clicked().connect(this, &ContaBanco::trataCancela);
+  cancel->setStyleClass("bg-color-orange fg-color-white");
+  cancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
 
   centros = new WComboBox();
   std::vector<std::string> nomes;
@@ -280,35 +293,30 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   }
   
   WTemplate *t = new WTemplate();
-  t->setTemplateText(
-		     "<form class='form-horizontal'>"
-		     "  <fieldset>"
-		     "    <legend>Dados da retirada</legend>"
-		     "    <div class='control-group'> <!-- descricao -->"
-		     "      <label class='control-label' for='nome'>"
-		     "        Descri&ccedil;&atilde;o</label>"
-		     "      <div class='controls'>"
+  t->setTemplateText("<h2>Retirada</h2>"
+		     "<div class='grid'>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "     <div class='input-control text span6'>"
 		     "        ${descricao}"
-		     "      </div>"
-		     "    </div>"
-		     "    <div class='control-group'> <!-- centro de custo -->"
-		     "      <label class='control-label' for='nome'>"
-		     "        Centro de Custo</label>"
-		     "      <div class='controls'>"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Centro de Custo</div>"
+		     "     <div class='input-control text span6'>"
 		     "        ${centrodecusto}"
-		     "      </div>"
-		     "    </div>"
-		     "    <div class='control-group'> <!-- valor -->"
-		     "      <label class='control-label' for='nome'>Valor</label>"
-		     "      <div class='controls'>"
-		     "        ${valor}"
-		     "      </div>"
-		     "    </div>"
-		     "  </fieldset>"
-		     "<div class='well'>"
-		     "   ${ok}${cancel}"
-		     "</div>"
-		     "</form>", XHTMLUnsafeText);
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Valor</div>"
+		     "     <div class='input-control text span6'>"
+		     "       ${valor}"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     ${ok}${cancel}"
+		     "  </div>"
+		     "</div>", XHTMLUnsafeText);
   
   t->bindWidget("descricao", descricao);
   t->bindWidget("valor", valor);
@@ -320,7 +328,47 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
 }
 
 Wt::WWidget *ContaBancariaApp::ERetiradaCaixaBanco(){
-  return nullptr;
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  Contabilidade *contabilidade = cabure->contabilidade_;
+  
+  descricao = new WLineEdit();
+  valor = new WLineEdit();
+  valor->setValidator(Moeda::newWValidator());
+  
+  Wt::WPushButton *ok = new WPushButton("Ok");
+  ok->setStyleClass("bg-color-blue fg-color-white");
+  ok->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "fazRetiradaCaixa"));
+  
+  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  cancel->setStyleClass("bg-color-orange fg-color-white");
+  cancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
+  
+  WTemplate *t = new WTemplate();
+  t->setTemplateText("<h2>Retirada para caixa</h2>"
+		     "<div class='grid'>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "     <div class='input-control text span6'>"
+		     "        ${descricao}"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     <div class='span2'>Valor</div>"
+		     "     <div class='input-control text span6'>"
+		     "       ${valor}"
+		     "     </div>"
+		     "  </div>"
+		     "  <div class='row'>"
+		     "     ${ok}${cancel}"
+		     "  </div>"
+		     "</div>", XHTMLUnsafeText);
+  
+  t->bindWidget("descricao", descricao);
+  t->bindWidget("valor", valor);
+  t->bindWidget("ok", ok);
+  t->bindWidget("cancel", cancel);
+
+  return t;
 }
 
 /////////// acoes  //////////////
@@ -370,9 +418,36 @@ void ContaBancariaApp::TSalvaContaBancaria(){
 }
 
 void ContaBancariaApp::TRetirada(){
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  Contabilidade *contabilidade = cabure->contabilidade_;
+  ContasBancarias *contaBancaria = cabure->contasBancarias_;
+  if(valor->validate() == WValidator::Valid) {
+    Moeda m(valor->text().narrow());
+    // monta e realiza lancamento
+    contaBancaria->retiradaParaCentroCusto(descricao->text().toUTF8(),
+					   idconta_,
+					   contabilidade->getIdPorNome(centros->currentText().toUTF8()),
+					   m.valInt());
+  } else {
+    setErrorMessage("Formado do valor inv&aacute;lido");
+    estado_ = RETIRADABANCO;
+  }
 }
 
 void ContaBancariaApp::TRetiradaCaixa(){
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  ContasBancarias *contaBancaria = cabure->contasBancarias_;
+  if(valor->validate() == WValidator::Valid) {
+    Moeda m(valor->text().narrow());
+    // monta e realiza lancamento
+    contaBancaria->retiradaParaCaixa(
+				     descricao->text().toUTF8(),
+				     idconta_,
+				     m.valInt());
+  } else {
+    setErrorMessage("Formado do valor inv&aacute;lido");
+    estado_ = RETIRADACAIXABANCO;
+  }
 }
 
 void ContaBancariaApp::TEntraContaBanco(int id){ /* aloca ajusteConta e seta iddaconta */
