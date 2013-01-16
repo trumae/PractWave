@@ -4,6 +4,7 @@
 #include <Wt/WContainerWidget>
 #include <Wt/WLineEdit>
 #include <Wt/WPushButton>
+#include <Wt/WComboBox>
 #include <string>
 
 #include "../../logic/ContasBancarias.h"
@@ -41,6 +42,10 @@ class ContaBancariaApp : public App {
   Wt::WLineEdit *editAgencia_;
   Wt::WLineEdit *editNumero_;
   Wt::WLineEdit *editTelefone_;
+
+  Wt::WLineEdit *descricao;
+  Wt::WLineEdit *valor;
+  Wt::WComboBox *centros;
 
   Wt::WWidget *createFormContaBancaria ();
   void constroiTabela();

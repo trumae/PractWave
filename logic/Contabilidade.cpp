@@ -21,47 +21,46 @@ void Contabilidade::criaTabelas(){
       "   info text ) " << cppdb::exec;
     db_ << " create index if not exists nome_idx_unique_conta on conta (nome) " << cppdb::exec;
     db_ << " create index if not exists pai_idx_conta on conta (pai) " << cppdb::exec;
-    
-    db_ << " insert into conta values (null, 'ATIVO' ,'DEVEDORA',-1,0,'') " << cppdb::exec; 
-    db_ << " insert into conta values (null, 'PASSIVO' ,'CREDORA',-1,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'DISPONIVEL DE CURTO PRAZO' ,'DEVEDORA',1,0,'') " 
-	<< cppdb::exec;
-    db_ << " insert into conta values (null, 'RECEBER' ,'DEVEDORA',1,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'ESTOQUE' ,'DEVEDORA',1,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'CLIENTES' ,'DEVEDORA',1,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'PAGAR' ,'CREDORA',2,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'PATRIMONIO LIQUIDO' ,'CREDORA',2,0,'') " 
-	<< cppdb::exec;
-    db_ << " insert into conta values (null, 'CAIXA' ,'DEVEDORA',3,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'BANCOS' ,'DEVEDORA',3,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'RESULTADOS' ,'CREDORA',8,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'DESPESAS' ,'DEVEDORA',11,0,'') " << cppdb::exec;
-    db_ << " insert into conta values (null, 'RECEITAS' ,'CREDORA',11,0,'') " << cppdb::exec;
-    
-    db_ << " INSERT INTO conta VALUES (null,'FORNECEDORES','CREDORA',2,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'RECEITAS DE SERVICOS','CREDORA',13,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'RECEITAS DE PRODUTOS','CREDORA',13,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'RECEITAS FINANCEIRAS','CREDORA',13,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS FISCAIS','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM ALUGUEL','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM AGUA','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM LUZ','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM TELEFONE','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM INTERNET','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM SALARIOS','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS COM CARTAO','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'CUSTOS PRODUTOS VENDIDOS','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'CUSTOS COMISSAO FUNCIONARIOS','DEVEDORA',12,1,'')" 
-	<< cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'INSUMOS PARA SERVICOS','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESPESAS GERAIS','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'FRETE','DEVEDORA',12,1,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'DESCONTOS','DEVEDORA',12,1,'');" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'VENDA AVULSA','DEVEDORA',6,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'CARTAO','DEVEDORA',1,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'OBRAS','DEVEDORA',1,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'CREDIARIO','DEVEDORA',1,0,'')" << cppdb::exec;
-    db_ << " INSERT INTO conta VALUES (null,'AJUSTES','CREDORA',11,0,'')" << cppdb::exec;
+
+    adicionaContaSeNaoExiste("ATIVO",  "DEVEDORA", -1, 0, "");   
+    adicionaContaSeNaoExiste("PASSIVO",  "CREDORA", -1, 0, "");   
+    adicionaContaSeNaoExiste("DISPONIVEL DE CURTO PRAZO",  "DEVEDORA", 1, 0, "");   
+
+    adicionaContaSeNaoExiste("RECEBER",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("ESTOQUE",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("CLIENTES",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("PAGAR",  "CREDORA", 2, 0, "");   
+    adicionaContaSeNaoExiste("PATRIMONIO LIQUIDO",  "CREDORA", 2, 0, "");   
+    adicionaContaSeNaoExiste("CAIXA",  "DEVEDORA", 3, 0, "");   
+    adicionaContaSeNaoExiste("BANCOS",  "DEVEDORA", 3, 0, "");   
+    adicionaContaSeNaoExiste("RESULTADOS",  "DEVEDORA", 8, 0, "");   
+    adicionaContaSeNaoExiste("DESPESAS",  "DEVEDORA", 11, 0, "");   
+    adicionaContaSeNaoExiste("RECEITAS",  "CREDORA", 11, 0, "");   
+
+    adicionaContaSeNaoExiste("FORNECEDORES",  "CREDORA", 2, 0, "");   
+    adicionaContaSeNaoExiste("RECEITAS DE SERVICOS",  "CREDORA", 13, 0, "");   
+    adicionaContaSeNaoExiste("RECEITAS DE PRODUTOS",  "CREDORA", 13, 0, "");   
+    adicionaContaSeNaoExiste("RECEITAS FINANCEIRAS",  "CREDORA", 13, 0, "");   
+    adicionaContaSeNaoExiste("DESPESAS FISCAIS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM ALUGUEL",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM AGUA",  "DEVEDORA", 12, 1, "");       
+    adicionaContaSeNaoExiste("DESPESAS COM LUZ",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM TELEFONE",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM INTERNET",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM SALARIO",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS COM CARTAO",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("CUSTOS PRODUTOS VENDIDOS",  "DEVEDORA", 12, 1, "");       
+    adicionaContaSeNaoExiste("CUSTOS COMISSAO FUNCIONARIOS",  "DEVEDORA", 12, 1, "");   
+
+    adicionaContaSeNaoExiste("INSUMOS PARA SERVICOS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESPESAS GERAIS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("FRETE",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DESCONTOS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("VENDA AVULSA",  "DEVEDORA", 6, 0, "");   
+    adicionaContaSeNaoExiste("CARTAO",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("OBRAS",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("CREDIARIO",  "DEVEDORA", 1, 0, "");   
+    adicionaContaSeNaoExiste("AJUSTES",  "CREDORA", 11, 1, "");   
 
     //cria tabela diario
     
@@ -84,6 +83,27 @@ void Contabilidade::criaTabelas(){
 
   } catch(std::exception &e) {
     std::cerr << e.what() << std::endl;
+  }
+}
+
+int Contabilidade::adicionaContaSeNaoExiste(std::string nome, 
+				  std::string natureza, 
+				  int pai, 
+				  int centrodecusto, 
+				  std::string info){
+  try{
+    cppdb::result res = db_ << "select id from conta where nome = ?" 
+			    << nome << cppdb::row;
+    if(!res.empty()){
+      return res.get<int>("id");
+    } else {      
+      cppdb::statement stat = db_ << "insert into conta values (null, ?,?,?,?,?)" 
+				  << nome << natureza << pai << centrodecusto << info
+				  << cppdb::exec;
+      return stat.last_insert_id();
+    }
+  } catch(...){
+    return -1;
   }
 }
 

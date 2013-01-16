@@ -257,7 +257,66 @@ Wt::WWidget *ContaBancariaApp::EDadosBanco(){
 }
 
 Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
-  return nullptr;
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  Contabilidade *contabilidade = cabure->contabilidade_;
+  
+  descricao = new WLineEdit();
+  valor = new WLineEdit();
+  valor->setValidator(Moeda::newWValidator());
+  
+  Wt::WPushButton *ok = new WPushButton("Ok");
+  ok->setStyleClass("btn btn-primary");
+  //ok->clicked().connect(this, &ContaBanco::trataRetiradaOk);
+  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  cancel->setStyleClass("btn");
+  //  cancel->clicked().connect(this, &ContaBanco::trataCancela);
+
+  centros = new WComboBox();
+  std::vector<std::string> nomes;
+  std::vector<std::string>::iterator itNomes;
+  contabilidade->getNomesCentrosDeCusto(nomes);
+  for(itNomes = nomes.begin(); itNomes < nomes.end(); itNomes++) {
+    centros->addItem(*itNomes);
+  }
+  
+  WTemplate *t = new WTemplate();
+  t->setTemplateText(
+		     "<form class='form-horizontal'>"
+		     "  <fieldset>"
+		     "    <legend>Dados da retirada</legend>"
+		     "    <div class='control-group'> <!-- descricao -->"
+		     "      <label class='control-label' for='nome'>"
+		     "        Descri&ccedil;&atilde;o</label>"
+		     "      <div class='controls'>"
+		     "        ${descricao}"
+		     "      </div>"
+		     "    </div>"
+		     "    <div class='control-group'> <!-- centro de custo -->"
+		     "      <label class='control-label' for='nome'>"
+		     "        Centro de Custo</label>"
+		     "      <div class='controls'>"
+		     "        ${centrodecusto}"
+		     "      </div>"
+		     "    </div>"
+		     "    <div class='control-group'> <!-- valor -->"
+		     "      <label class='control-label' for='nome'>Valor</label>"
+		     "      <div class='controls'>"
+		     "        ${valor}"
+		     "      </div>"
+		     "    </div>"
+		     "  </fieldset>"
+		     "<div class='well'>"
+		     "   ${ok}${cancel}"
+		     "</div>"
+		     "</form>", XHTMLUnsafeText);
+  
+  t->bindWidget("descricao", descricao);
+  t->bindWidget("valor", valor);
+  t->bindWidget("centrodecusto", centros);
+  t->bindWidget("ok", ok);
+  t->bindWidget("cancel", cancel);
+
+  return t;
 }
 
 Wt::WWidget *ContaBancariaApp::ERetiradaCaixaBanco(){

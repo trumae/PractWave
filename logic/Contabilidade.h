@@ -16,7 +16,12 @@ class Contabilidade {
   Contabilidade(cppdb::session& d);
   
   void criaTabelas();
-  
+
+  int adicionaContaSeNaoExiste(std::string nome, 
+			       std::string natureza, 
+			       int pai, 
+			       int centrodecusto, 
+			       std::string info);
   int adicionaConta(std::string nome, 
 		     std::string natureza, 
 		     int pai, 
