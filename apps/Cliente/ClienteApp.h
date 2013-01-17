@@ -23,7 +23,6 @@ class ClienteApp : public App {
   int idCliente_;
   int idContaCliente_;
  protected:
-
   void setInicialAtual(std::string ini);
   void setClienteAtual(int id, int idconta);
   void constroiTabela();

@@ -109,16 +109,30 @@ void ContaFornecedor::trataComprarOk() {
 }
 
 void ContaFornecedor::trataPagarOk() {
-  /*  CabureApplication *cabure = CabureApplication::cabureApplication();
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  Contabilidade *contabilidade = cabure->contabilidade_;
   Fornecedores *fornecedores = cabure->fornecedores_;
+  ContasBancarias *contasBancarias = cabure->contasBancarias_;
+  ContaBancaria banco;
+  
   if(valor->validate() == WValidator::Valid) {
     Moeda m(valor->text().narrow());
-    // monta e realiza lancamento
-    fornecedores->pagar(idconta_,
-		    descricao->text().toUTF8(),
-		    m.valInt());
-    viewHome();
-    }*/
+    long long saldo = contabilidade->getSaldoContaFolha(
+							contabilidade->getIdPorNome("CAIXA"));
+    if(saldo - m.valInt() < 0 && origemDinheiro->currentIndex() == 0) {
+      WMessageBox::show("Erro", "O saldo do caixa n&atilde;o pode ficar negativo!", Ok);
+    } else {
+      if(bancos->currentText() != "")
+	banco = contasBancarias->getContaBancariaPorNome(bancos->currentText().toUTF8());
+      // monta e realiza lancamento
+      fornecedores->pagar(idconta_,
+                          descricao->text().toUTF8(),
+                          m.valInt(),
+			  origemDinheiro->currentIndex(),
+			  banco);
+      viewHome();
+    }
+  }
 }
 
 void ContaFornecedor::comprar() {
@@ -162,6 +176,9 @@ void ContaFornecedor::comprar() {
 }
 
 void ContaFornecedor::pagar() {
+  CabureApplication *cabure = CabureApplication::cabureApplication();
+  ContasBancarias *contasBancarias = cabure->contasBancarias_;
+
   clear();
   descricao = new WLineEdit();
   valor = new WLineEdit();
@@ -174,18 +191,48 @@ void ContaFornecedor::pagar() {
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &ContaFornecedor::trataCancela);
 
+  bancos = new WComboBox();
+  std::vector<ContaBancaria> nomes;
+  std::vector<ContaBancaria>::iterator itNomes;
+  contasBancarias->getTodosContasBancarias(nomes);
+  for(itNomes = nomes.begin(); itNomes < nomes.end(); itNomes++) {
+    bancos->addItem(WString((*itNomes).nome, UTF8));
+  }
+  
+  origemDinheiro = new WComboBox();
+  origemDinheiro->addItem("Caixa");
+  if(nomes.size() > 0)
+    origemDinheiro->addItem("Banco");
+  origemDinheiro->sactivated().connect(this, &ContaFornecedor::exibirEsconderBancos);
+  
+  bancosTemplate = new WTemplate(this);
+  bancosTemplate->setTemplateText("<div class='row'>"
+				  "  <div class='span2'>Banco</div>"
+				  "  <div class='input-control text span6'>"
+				  "      ${bancos}"
+				  "  </div>"
+				  "</div>", XHTMLUnsafeText);
+  bancosTemplate->bindWidget("bancos", bancos);
+
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
 		     "<h2>Pagar fornecedor</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+		     "    <div class='span2'>Descri&ccedil;&atilde;o</div>"
 		     "    <div class='input-control text span4'> <!-- descricao -->"
 		     "        ${descricao}"
 		     "    </div>"
 		     "  </div>"
+		     "  <div class='row'>"
+		     "    <div class='span2'>Dinheiro de </div>"
+		     "    <div class='input-control text span6'>"
+		     "        ${origemDinheiro}"
+		     "    </div>"
+		     "  </div>"
+		     "  ${bancosTemplate}"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Valor</div>"
+		     "    <div class='span2'>Valor</div>"
 		     "    <div class='input-control text span4'> <!-- valor -->"
 		     "        ${valor}"
 		     "    </div>"
@@ -194,10 +241,21 @@ void ContaFornecedor::pagar() {
 		     "   ${ok}${cancel}"
 		     "</div>", XHTMLUnsafeText);
 
+  t->bindWidget("origemDinheiro", origemDinheiro);
+  t->bindWidget("bancosTemplate", bancosTemplate);
   t->bindWidget("descricao", descricao);
   t->bindWidget("valor", valor);
   t->bindWidget("ok", ok);
   t->bindWidget("cancel", cancel);
+
+  bancosTemplate->setHidden(true);
+}
+
+void ContaFornecedor::exibirEsconderBancos(){
+  if(origemDinheiro->currentIndex() == 1)
+    bancosTemplate->setHidden(false);
+  else
+    bancosTemplate->setHidden(true);
 }
 
 
