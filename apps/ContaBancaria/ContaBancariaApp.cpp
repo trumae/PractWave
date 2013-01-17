@@ -47,7 +47,7 @@ void ContaBancariaApp::constroiTabela() {
   adicionaEstado(CONTABANCO,         boost::bind(&ContaBancariaApp::EContaBanco, this));
   adicionaEstado(DADOSBANCO,         boost::bind(&ContaBancariaApp::EDadosBanco, this));
   adicionaEstado(RETIRADABANCO,      boost::bind(&ContaBancariaApp::ERetiradaBanco, this));
-  adicionaEstado(RETIRADACAIXABANCO,   boost::bind(&ContaBancariaApp::ERetiradaCaixaBanco, this));  
+  adicionaEstado(RETIRADACAIXABANCO, boost::bind(&ContaBancariaApp::ERetiradaCaixaBanco, this));  
 
   // Transicoes
   adicionaTransicao(LISTABANCO, START, "back",
