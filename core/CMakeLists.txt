@@ -27,6 +27,10 @@ link_directories(${PRACTWAVVE2_SOURCE_DIR}/apps/Painel)
 include_directories(${PRACTWAVE2_SOURCE_DIR}/apps/Timeline)
 link_directories(${PRACTWAVVE2_SOURCE_DIR}/apps/Timeline)
 
+#Ads
+include_directories(${PRACTWAVE2_SOURCE_DIR}/cabureAds)
+link_directories(${PRACTWAVVE2_SOURCE_DIR}/cabureAds)
+
 
 add_executable (practwave2 CabureApplication.cpp  CabureUserManager.cpp  CabureWidgetPrincipal.cpp  caburewt.cpp)
 #geral
@@ -46,6 +50,9 @@ target_link_libraries(practwave2 WidgetContaWidget)
 target_link_libraries(practwave2 WidgetAjustaContaWidget)
 target_link_libraries(practwave2 WidgetContaCliente)
 target_link_libraries(practwave2 WidgetContaFornecedor)
+
+#Ads
+target_link_libraries(practwave2 Ads)
 
 #aplicativos core
 target_link_libraries(practwave2 PainelApp)

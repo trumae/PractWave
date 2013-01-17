@@ -11,48 +11,57 @@
 #include <Wt/WTextArea>
 #include <Wt/WTemplate>
 #include <Wt/WHBoxLayout>
+
+#include <stdlib.h>
+
 #include "AdsAnuncio.h"
 #include "AdsApplication.h"
 
 using namespace Wt;
+
+static std::vector<std::string> cores = {
+  "bg-color-blueDark",
+  "bg-color-greenDark",
+  "bg-color-pinkDark",
+  "bg-color-orangeDark",  
+  "bg-color-purple"
+};
 
 AdsAnuncio::AdsAnuncio(WContainerWidget *parent) : WContainerWidget(parent) {
 }
 
 void AdsAnuncio::renderUI() {
     clear();
-    decorationStyle().setBorder(WBorder(WBorder::Solid, WBorder::Thin), Bottom);
-    setMinimumSize(WLength(234), WLength(100));
-    setMaximumSize(WLength(234), WLength(100));
-    resize(WLength(234), WLength(100));
     //titulo
     WAnchor *a = new WAnchor(WLink(link_), titulo_, this);
     a->setTarget(TargetNewWindow);
-    a->setMargin(WLength(20), Left);
-    new WBreak(this);
 
     //imagem
     WImage *img = new WImage(imagem_);
     img->setMinimumSize(WLength(90), WLength(70));
     img->setMaximumSize(WLength(90), WLength(70));
     img->resize(WLength(90), WLength(70));
+    img->addStyleClass("place-right");
     img->setInline(true);
 
     //texto
     WText *texto = new WText(texto_);
-    texto->setMinimumSize(WLength(120), WLength(70));
-    texto->setMaximumSize(WLength(120), WLength(70));
-    texto->resize(WLength(120), WLength(90));
-    texto->addStyleClass("textoads");
 
     //layout
-    WContainerWidget *conteiner = new WContainerWidget(this);
-    //WHBoxLayout *layout = new WHBoxLayout();
-    //layout->addWidget(img);
-    //layout->addWidget(texto);
-    //conteiner->setLayout(layout, AlignTop | AlignJustify);
-    conteiner->addWidget(img);
-    conteiner->addWidget(texto);
+    WTemplate *container = new WTemplate(this);
+    container->setTemplateText(std::string("<div class='tile double ") + cores[rand() % cores.size()] + "'>"
+			       "   <div class='tile-content'>"
+			       "     ${imagem}"
+			       "     <h4>${titulo}</h4>"
+			       "     <p>${texto}</p>"
+			       "   </div>"
+			       "   <div class='brand'>"
+			       "     <span class='name'>@Publicidade</span> "
+			       "   </div>"
+			       "</div>", Wt::XHTMLUnsafeText);
+    container->bindWidget("imagem", img);
+    container->bindWidget("titulo", a);
+    container->bindWidget("texto", texto);
 }
 
 void AdsAnuncio::editarTitulo(){

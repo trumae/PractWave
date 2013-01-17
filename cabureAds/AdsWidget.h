@@ -12,7 +12,6 @@ class AdsWidget : public WContainerWidget {
      AdsWidget(WContainerWidget *parent);
      AdsWidget();
    private:
-     WHBoxLayout *layout_;
      void renderUI();
 };
 

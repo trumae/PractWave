@@ -35,8 +35,6 @@ void AdsEditor::renderUI() {
     new WText("<h3>Lista de Anuncios</h3>",this);
 
     Wt::WContainerWidget *w = new Wt::WContainerWidget(this);
-    w->resize(600, WLength::Auto);
-
     WVBoxLayout *layout = new Wt::WVBoxLayout();
     cppdb::result res = db <<
                         "select id, titulo, url, imagem, texto "

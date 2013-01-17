@@ -29,6 +29,8 @@
 #include "../apps/ContaBancaria/ContaBancariaApp.h"
 #include "../apps/Caixa/CaixaApp.h"
 #include "../apps/Calculadora/CalculadoraApp.h"
+#include "../cabureAds/AdsAnuncio.h"
+#include "../cabureAds/AdsWidgetBuilder.h"
 
 using namespace Wt;
 
@@ -385,7 +387,14 @@ void CabureWidgetPrincipal::createUI() {
     );
     tiles.push_back(tileMensagem);
 
+    //inicio do processamento do vector
+    int numAnuncios = tiles.size() / 4;
+    for(int i = 0; i < numAnuncios; i++) {
+      std::vector<WWidget *>::iterator it = tiles.begin();
+      tiles.insert(it + (rand() % tiles.size()), AdsWidgetBuilder::createAdsAnuncio());
+    }
 
+    //construcao da template
     std::string templateTiles = "";
     int i = 0;
     for(WWidget *widget : tiles) {
