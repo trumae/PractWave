@@ -3,6 +3,7 @@
 
 #include <string>
 #include <Wt/WContainerWidget>
+#include <Wt/WComboBox>
 #include "../../logic/Contabilidade.h"
 #include "../ContaWidget/ContaWidget.h"
 #include "../../logic/Fornecedores.h"
@@ -17,8 +18,11 @@ class ContaFornecedor : public Wt::WContainerWidget {
  private:
   ContaWidget *conta_;
   int idconta_;
-
   AjusteContaWidget *ajuste_;
+  Wt::WComboBox *bancos;
+  Wt::WComboBox *origemDinheiro;
+  Wt::WTemplate *bancosTemplate;
+  void exibirEsconderBancos();
 
   App *app_;
   int estadoRetorno_;
