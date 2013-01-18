@@ -32,10 +32,6 @@ AdsAnuncio::AdsAnuncio(WContainerWidget *parent) : WContainerWidget(parent) {
 
 void AdsAnuncio::renderUI() {
     clear();
-    //titulo
-    WAnchor *a = new WAnchor(WLink(link_), titulo_, this);
-    a->setTarget(TargetNewWindow);
-
     //imagem
     WImage *img = new WImage(imagem_);
     img->setMinimumSize(WLength(90), WLength(70));
@@ -49,18 +45,20 @@ void AdsAnuncio::renderUI() {
 
     //layout
     WTemplate *container = new WTemplate(this);
-    container->setTemplateText(std::string("<div class='tile double ") + cores[rand() % cores.size()] + "'>"
+    container->setTemplateText(std::string("<a href='") + link_  + "' target='_blank'>" 
+			       "<div class='tile double " 
+			       + cores[rand() % cores.size()] + 
+			       "'>"
 			       "   <div class='tile-content'>"
 			       "     ${imagem}"
-			       "     <h4>${titulo}</h4>"
+			       "     <h4>" + titulo_  + "</h4>"
 			       "     <p>${texto}</p>"
 			       "   </div>"
 			       "   <div class='brand'>"
 			       "     <span class='name'>@Publicidade</span> "
 			       "   </div>"
-			       "</div>", Wt::XHTMLUnsafeText);
+			       "</div></a>", Wt::XHTMLUnsafeText);
     container->bindWidget("imagem", img);
-    container->bindWidget("titulo", a);
     container->bindWidget("texto", texto);
 }
 

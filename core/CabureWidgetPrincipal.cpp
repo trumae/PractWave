@@ -325,7 +325,7 @@ void CabureWidgetPrincipal::informeSobreConvite(const Wt::Auth::Identity& identi
 }
 
 void CabureWidgetPrincipal::createUI() {
-    //CabureApplication *cabure = CabureApplication::cabureApplication();
+    CabureApplication *cabure = CabureApplication::cabureApplication();
     clear();
 
     std::vector<WWidget *> tiles;
@@ -360,7 +360,7 @@ void CabureWidgetPrincipal::createUI() {
     tiles.push_back(tileCalculadora);
 
 
-    WTemplate *tileLoja = new WTemplate();
+    /*    WTemplate *tileLoja = new WTemplate();
     tileLoja->setTemplateText(
        "     <div class='tile icon bg-color-green'>"
        "       <div class='tile-content'>"
@@ -386,9 +386,10 @@ void CabureWidgetPrincipal::createUI() {
        "    </div>"
     );
     tiles.push_back(tileMensagem);
+    */
 
     //inicio do processamento do vector
-    int numAnuncios = tiles.size() / 4;
+    int numAnuncios = tiles.size() / TILES_POR_ANUNCIO;
     for(int i = 0; i < numAnuncios; i++) {
       std::vector<WWidget *>::iterator it = tiles.begin();
       tiles.insert(it + (rand() % tiles.size()), AdsWidgetBuilder::createAdsAnuncio());
@@ -403,25 +404,41 @@ void CabureWidgetPrincipal::createUI() {
     }
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-		       std::string("<div class='page secondary'>"
-				   "  <div class='page-header'>"
-				   "    <div class='page-header-content'>"
-				   "      <h1>PractWave</h1>"
-				   "    </div>"
-				   "  </div>"
-				   "  <div class='page-region'>"
-				   "     <div class='page-region-content'>")
-		       + templateTiles + 
-		       "      </div>"
-		       //"       <h4>" + WString(cabure->name, UTF8) + "</h4>"
+		       std::string() +"<div class='page secondary'>"
+		       "  <div class='page-header'>"
+		       "    <div class='page-header-content'>"
+		       "      <h1>PractWave</h1>"
+		       
+		       "<div class='user-login'>"
+		       "  <a href='#'>"
+		       "  <div class='name'>"
+		       "    <span class='last-name'>"
+		       + WString(cabure->name, UTF8) +
+		       "    </span>"
+		       "  </div>"
+		       "  <div class='avatar'>"
+		       "    <img src='images/myface.jpg'/>"
+		       "  </div>"
+		       "  </a>"
+		       "</div>"		       
+		       
 		       "    </div>"
 		       "  </div>"
+		       "  <div class='page-region'>"
+		       "     <div class='page-region-content tiles'>"
+		       "        <div class='tile-group tile-drag'>"
+		       + templateTiles + 
+		       "      </div>"		      
+		       "    </div>"
+		       "   </div>"
+		       " </div>"
 		       "</div>", Wt::XHTMLUnsafeText);
     i = 0;
     for(WWidget *widget : tiles) {
       t->bindWidget(std::string("tile") + boost::lexical_cast<std::string>(i), widget);
       i++;
     }
+    cabure->doJavaScript("initMainMenu()");
 }
 
 void CabureWidgetPrincipal::viewHome(){

@@ -9,6 +9,7 @@
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <vector>
+#include <stdlib.h>
 
 #include "../../core/CabureApplication.h"
 #include "../../logic/Clientes.h"
@@ -18,6 +19,8 @@
 #include "../../logic/Timeline.h"
 #include "../../widgets/ContaWidget/ContaWidget.h"
 #include "../../widgets/ContaCliente/ContaCliente.h"
+#include "../../cabureAds/AdsAnuncio.h"
+#include "../../cabureAds/AdsWidgetBuilder.h"
 #include "ClienteApp.h"
 #include <cppdb/frontend.h>
 #include <boost/lexical_cast.hpp>
@@ -172,6 +175,9 @@ WWidget* ClienteApp::EListaClientes() {
     adicionaTransicao(LISTACLIENTES, CONTACLIENTE, "cliente" + id,
 		      boost::bind(&ClienteApp::setClienteAtual, this, id, idconta),
 		      boost::bind(&ClienteApp::guardOk, this));  
+    //adiciona propaganda
+    if(((float) rand()) / ((float) RAND_MAX) <= PROB_ANUNCIO)
+      container->addWidget(AdsWidgetBuilder::createAdsAnuncio());
     container->addWidget(tt);
   }
   return container;

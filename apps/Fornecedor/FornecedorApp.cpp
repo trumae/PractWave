@@ -18,6 +18,8 @@
 #include "../../logic/Timeline.h"
 #include "../../widgets/ContaWidget/ContaWidget.h"
 #include "../../widgets/ContaFornecedor/ContaFornecedor.h"
+#include "../../cabureAds/AdsAnuncio.h"
+#include "../../cabureAds/AdsWidgetBuilder.h"
 #include "FornecedorApp.h"
 #include <cppdb/frontend.h>
 #include <boost/lexical_cast.hpp>
@@ -172,6 +174,9 @@ WWidget* FornecedorApp::EListaFornecedores() {
     adicionaTransicao(LISTAFORNECEDORES, CONTAFORNECEDOR, "fornecedor" + id,
 		      boost::bind(&FornecedorApp::setFornecedorAtual, this, id, idconta),
 		      boost::bind(&FornecedorApp::guardOk, this));  
+    //adiciona propaganda
+    if(((float) rand()) / ((float) RAND_MAX) <= PROB_ANUNCIO)
+      container->addWidget(AdsWidgetBuilder::createAdsAnuncio());
     container->addWidget(tt);
   }
   return container;

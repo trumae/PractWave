@@ -15,6 +15,10 @@
 
 #include "CabureWidgetPrincipal.h"
 
+#define TILES_POR_ANUNCIO       4
+#define PROB_ANUNCIO          0.3
+
+
 class CabureApplication : public Wt::WApplication {
 public:
   CabureApplication(const Wt::WEnvironment& env);
