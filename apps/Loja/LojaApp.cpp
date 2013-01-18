@@ -32,9 +32,6 @@ WWidget *LojaApp::loja(){
     CabureApplication *app = CabureApplication::cabureApplication();
     
 	app->useStyleSheet("/apps/Loja/loja.css");
- 
-	app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
-	app->require("/javascript/carousel.js");
 	app->require("/apps/Loja/loja.js");
 
 	WTemplate *loja = new WTemplate();

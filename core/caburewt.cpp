@@ -34,6 +34,7 @@ WApplication *createApplication(const WEnvironment& env) {
     app->require("http://www.google-analytics.com/ga.js");
     app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
     app->require("javascript/tile-slider.js");
+	app->require("javascript/carousel.js");
     app->require("javascript/practwave.js");
 
 
