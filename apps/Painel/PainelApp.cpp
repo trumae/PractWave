@@ -22,26 +22,26 @@ PainelApp::PainelApp(WContainerWidget *parent)
   
   CabureApplication *app = CabureApplication::cabureApplication();
   
-    app->clientes_->getTodosClientes(clientes_);
-    sort(clientes_.begin(), clientes_.end(),
-    [](const Cliente &a, const Cliente &b) {
-        CabureApplication *app = CabureApplication::cabureApplication();
-        Contabilidade *contabilidade = app->contabilidade_;
-        return contabilidade->getSaldoContaFolha(a.idconta) >
-               contabilidade->getSaldoContaFolha(b.idconta);
-    });
-
-    app->fornecedores_->getTodosFornecedores(fornecedores_);
-    sort(fornecedores_.begin(), fornecedores_.end(),
-    [](const Fornecedor &a, const Fornecedor &b) {
-
-        CabureApplication *app = CabureApplication::cabureApplication();
-        Contabilidade *contabilidade = app->contabilidade_;
-        return contabilidade->getSaldoContaFolha(a.idconta) >
-               contabilidade->getSaldoContaFolha(b.idconta);
-    });
-
-    init();
+  app->clientes_->getTodosClientes(clientes_);
+  sort(clientes_.begin(), clientes_.end(),
+       [](const Cliente &a, const Cliente &b) {
+	 CabureApplication *app = CabureApplication::cabureApplication();
+	 Contabilidade *contabilidade = app->contabilidade_;
+	 return contabilidade->getSaldoContaFolha(a.idconta) >
+	   contabilidade->getSaldoContaFolha(b.idconta);
+       });
+  
+  app->fornecedores_->getTodosFornecedores(fornecedores_);
+  sort(fornecedores_.begin(), fornecedores_.end(),
+       [](const Fornecedor &a, const Fornecedor &b) {
+	 
+	 CabureApplication *app = CabureApplication::cabureApplication();
+	 Contabilidade *contabilidade = app->contabilidade_;
+	 return contabilidade->getSaldoContaFolha(a.idconta) >
+	   contabilidade->getSaldoContaFolha(b.idconta);
+       });
+  
+  init();
 }
 
 void PainelApp::init(){

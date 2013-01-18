@@ -32,8 +32,6 @@ WWidget *CalculadoraApp::calculadora(){
     CabureApplication *app = CabureApplication::cabureApplication();
     
 	app->useStyleSheet("/apps/Calculadora/calculadora.css");
- 
-	app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
 	app->require("/apps/Calculadora/calculadora.js");
 
     string corpo = 

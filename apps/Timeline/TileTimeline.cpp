@@ -7,7 +7,7 @@ TileTimeline::TileTimeline() {
     clear();
     WTemplate *tilePainel = new WTemplate(this);
     tilePainel->setTemplateText(
-       "     <div class='tile bg-color-yellow'>"
+       "     <div class='tile bg-color-orange'>"
        "       <div class='tile-content'>"
        "          <h2>Timeline</h2>"
        "       </div>"

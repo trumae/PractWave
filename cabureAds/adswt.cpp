@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <Wt/WServer>
 #include <Wt/WText>
+#include <Wt/WLoadingIndicator>
+#include <Wt/WOverlayLoadingIndicator>
 
 #include "AdsApplication.h"
 #include "AdsManage.h"
@@ -18,14 +20,15 @@ WApplication *createApplication(const WEnvironment& env){
   app->addMetaHeader("author","trumae@gmail.com");
 
   //inclue CSS
-  app->useStyleSheet("css/bootstrap.min.css"); 
-  app->useStyleSheet("css/bootstrap-responsive.css"); 
-  app->useStyleSheet("css/media-fluid.css"); 
-  app->useStyleSheet("css/cabure.css"); 
-
-  //carrega Javascripts
-  app->require("lib/jquery-1.7.2.min.js");
-  app->require("lib/bootstrap.min.js");
+  app->useStyleSheet("css/practwave.css");
+  app->useStyleSheet("css/modern.css");
+  app->useStyleSheet("css/modern-responsive.css");
+  
+  //loadinIndicator
+  WApplication::instance()->styleSheet().addRule("body", "margin: 0px");
+  WLoadingIndicator *loading = new Wt::WOverlayLoadingIndicator("loading");
+  loading->setMessage("Carregando");
+  app->setLoadingIndicator(loading);
 
   //cria Widget Principal
   new AdsManage(app->root());

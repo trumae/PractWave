@@ -17,6 +17,8 @@
 
 #include "../../widgets/AjusteContaWidget/AjusteContaWidget.h"
 #include "../../widgets/ContaWidget/ContaWidget.h"
+#include "../../cabureAds/AdsAnuncio.h"
+#include "../../cabureAds/AdsWidgetBuilder.h"
 
 using namespace Wt;
 using namespace std;
@@ -163,6 +165,9 @@ WWidget *ContaBancariaApp::EListaBanco(){
 		      boost::bind(&ContaBancariaApp::TEntraContaBanco, this, c.id),
 		      boost::bind(&ContaBancariaApp::guardOk, this));  
 
+      //adiciona propaganda
+      if(((float) rand()) / ((float) RAND_MAX) <= PROB_ANUNCIO)
+	container->addWidget(AdsWidgetBuilder::createAdsAnuncio());
       container->addWidget(wtext);
     }
 

@@ -12,7 +12,9 @@
 #include <Wt/WAnchor>
 
 #include <boost/xpressive/xpressive.hpp>
+#include <boost/lexical_cast.hpp>
 #include <iostream>
+#include <vector>
 
 #include <cppdb/frontend.h>
 
@@ -28,6 +30,8 @@
 #include "../apps/Caixa/CaixaApp.h"
 #include "../apps/Calculadora/CalculadoraApp.h"
 #include "../apps/Loja/LojaApp.h"
+#include "../cabureAds/AdsAnuncio.h"
+#include "../cabureAds/AdsWidgetBuilder.h"
 
 using namespace Wt;
 
@@ -322,37 +326,45 @@ void CabureWidgetPrincipal::informeSobreConvite(const Wt::Auth::Identity& identi
 }
 
 void CabureWidgetPrincipal::createUI() {
-    //CabureApplication *cabure = CabureApplication::cabureApplication();
+    CabureApplication *cabure = CabureApplication::cabureApplication();
     clear();
 
-    //WCssDecorationStyle& decoration=cabure->root()->decorationStyle();
-    //decoration.setBackgroundImage("http://br.bing.com/az/hprichbg?p=rb\%2fMidwestCardinal_ROW12109954041_1366x768.jpg");
+    std::vector<WWidget *> tiles;
 
     // modulos padrao
     TilePainel *tilePainel = new TilePainel();
     tilePainel->clicked().connect(this, &CabureWidgetPrincipal::painelApp);
+    tiles.push_back(tilePainel);
 
     TileTimeline *tileTimeline = new TileTimeline();
     tileTimeline->clicked().connect(this, &CabureWidgetPrincipal::timelineApp);
+    tiles.push_back(tileTimeline);
 
     TileCliente *tileCliente = new TileCliente();
     tileCliente->clicked().connect(this, &CabureWidgetPrincipal::clienteApp);
+    tiles.push_back(tileCliente);
 
     TileFornecedor *tileFornecedor = new TileFornecedor();
     tileFornecedor->clicked().connect(this, &CabureWidgetPrincipal::fornecedorApp);
+    tiles.push_back(tileFornecedor);
    
-    TileCalculadora *tileCalculadora = new TileCalculadora();
-    tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
-
     TileContaBancaria *tileContaBancaria = new TileContaBancaria();
     tileContaBancaria->clicked().connect(this, &CabureWidgetPrincipal::contaBancariaApp);
+    tiles.push_back(tileContaBancaria);
     
     TileCaixa *tileCaixa = new TileCaixa();
     tileCaixa->clicked().connect(this, &CabureWidgetPrincipal::caixaApp);
+    tiles.push_back(tileCaixa);
+
+    TileCalculadora *tileCalculadora = new TileCalculadora();
+    tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
+    tiles.push_back(tileCalculadora);
     
 	TileLoja *tileLoja = new TileLoja();
     tileLoja->clicked().connect(this, &CabureWidgetPrincipal::lojaApp);
+    tiles.push_back(tileLoja);
 
+	/*
     WTemplate *tileMensagem = new WTemplate();
     tileMensagem->setTemplateText(
        "     <div class='tile icon bg-color-greenDark'>"
@@ -365,42 +377,60 @@ void CabureWidgetPrincipal::createUI() {
        "       </div>"
        "    </div>"
     );
+    tiles.push_back(tileMensagem);
+    */
 
+    //inicio do processamento do vector
+    int numAnuncios = tiles.size() / TILES_POR_ANUNCIO;
+    for(int i = 0; i < numAnuncios; i++) {
+      std::vector<WWidget *>::iterator it = tiles.begin();
+      tiles.insert(it + (rand() % tiles.size()), AdsWidgetBuilder::createAdsAnuncio());
+    }
+
+    //construcao da template
+    std::string templateTiles = "";
+    int i = 0;
+    for(WWidget *widget : tiles) {
+      templateTiles += std::string("${tile")  + boost::lexical_cast<std::string>(i) + "}";
+      i ++;
+    }
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-     "<div class='page secondary'>"
-     "  <div class='page-header'>"
-     "    <div class='page-header-content'>"
-     "      <h1>PractWave</h1>"
-     "    </div>"
-     "  </div>"
-     "  <div class='page-region'>"
-     "     <div class='page-region-content'>"
-     "     ${painel}"
-     "     ${timeline}"
-     "     ${cliente}"
-     "     ${fornecedor}"
-     "     ${banco}"
-     "     ${caixa}"
-     "     ${loja}"
-     "     ${mensagem}"
-     "     ${calculadora}"
-     "      </div>"
-     //"       <h4>" + WString(cabure->name, UTF8) + "</h4>"
-     "    </div>"
-     "  </div>"
-     "</div>"
-     , Wt::XHTMLUnsafeText);
-
-     t->bindWidget("painel", tilePainel);
-     t->bindWidget("timeline", tileTimeline);
-     t->bindWidget("cliente", tileCliente);
-     t->bindWidget("fornecedor", tileFornecedor);
-     t->bindWidget("banco", tileContaBancaria);
-     t->bindWidget("caixa", tileCaixa);
-     t->bindWidget("loja", tileLoja);
-     t->bindWidget("mensagem", tileMensagem);
-     t->bindWidget("calculadora", tileCalculadora);
+		       std::string() +"<div class='page secondary'>"
+		       "  <div class='page-header'>"
+		       "    <div class='page-header-content'>"
+		       "      <h1>PractWave</h1>"
+		       
+		       "<div class='user-login'>"
+		       "  <a href='#'>"
+		       "  <div class='name'>"
+		       "    <span class='last-name'>"
+		       + WString(cabure->name, UTF8) +
+		       "    </span>"
+		       "  </div>"
+		       "  <div class='avatar'>"
+		       "    <img src='images/myface.jpg'/>"
+		       "  </div>"
+		       "  </a>"
+		       "</div>"		       
+		       
+		       "    </div>"
+		       "  </div>"
+		       "  <div class='page-region'>"
+		       "     <div class='page-region-content tiles'>"
+		       "        <div class='tile-group tile-drag'>"
+		       + templateTiles + 
+		       "      </div>"		      
+		       "    </div>"
+		       "   </div>"
+		       " </div>"
+		       "</div>", Wt::XHTMLUnsafeText);
+    i = 0;
+    for(WWidget *widget : tiles) {
+      t->bindWidget(std::string("tile") + boost::lexical_cast<std::string>(i), widget);
+      i++;
+    }
+    cabure->doJavaScript("initMainMenu()");
 }
 
 void CabureWidgetPrincipal::viewHome(){

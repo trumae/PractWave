@@ -7,6 +7,7 @@
 class AdsWidgetBuilder {
    public:
      static AdsWidget *createAdsWidget();
+     static AdsAnuncio *createAdsAnuncio();
 };
 
 #endif
