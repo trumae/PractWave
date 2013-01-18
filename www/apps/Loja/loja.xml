@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<messages>
+	<message id="htmlLoja">
+
+			<!-- Loja -->
+
+		<div id='Loja' class="conteudo" >
+			<div class="tile double bg-color-blue" id="TileEstoque">
+				<div class="brand">
+					<div class="badge busy"></div>
+				</div>
+			</div>
+			<div class="tile double bg-color-orange" id="TileCalculadora">
+				<div class='tile-content'>
+					<img class='icon' src='apps/Calculadora/tile.png'/>
+				</div>
+				<div class='brand'>
+					<span class='name'>Calculadora</span>
+				</div>
+				<div class="brand">
+					<div class="badge available"></div>
+				</div>
+			</div>
+			<div class="tile double bg-color-red" id="TileCheque">
+				<div class="brand">
+					<div class="badge busy"></div>
+				</div>
+			</div>
+			<div class="tile double bg-color-green" id="TileAgenda">
+				<div class="brand">
+					<div class="badge busy"></div>
+				</div>
+			</div>
+		</div>
+		
+
+			<!-- Calculadora -->
+
+			   		<div id="AppCalculadora"  class="span12 conteudo conteudoApp">
+			   			<div class="span12" style="background-color:#ccc;">
+			   		   		<div class="page snapped bg-color-blue" style="padding:15px">
+			   		   			<div>
+			   		   				<img style="text-align:center" src="apps/Calculadora/tile.png" />
+			   						<br/>
+			   						<button class="bg-color-green">Instalar</button>
+			   		   			</div>
+			   		   		</div>
+			   		   		<div class="page fill bg-color-blueLight" style="padding:15px">
+			   		   			<div>
+			   		   				<h3 style="text-align:center">Descri&ccedil;&atilde;o</h3>
+			   		   				<p>Este aplicativo trata-se de uma calculadora comum.</p>
+			   		   				<p>Suas funcionalidades s&atilde;o:</p>
+			   		   				<ul>
+			   							<li>Multiplicar</li>
+			   							<li>Dividir</li>
+			   							<li>Somar</li>
+			   							<li>Subtrair</li>
+			   						</ul>
+			   						<div class="carousel span5" style="height:300px" data-role="carousel">
+			   					    	<div class="slides">
+			   								<div class="slide image" id="slide1">
+			   									<img src="apps/Calculadora/image01.png" />
+			   								</div>
+			   								<div class="slide image" id="slide2">
+			   									<img src="apps/Calculadora/image02.png" />
+			   								</div>
+			   								<div class="slide image" id="slide3">
+			   									<img src="apps/Calculadora/image03.png" />
+			   								</div>
+			   							</div>
+			   							<span class="control left">‹</span>
+			   							<span class="control right">›</span>
+			   						</div>
+			   		   			</div>
+			   		   		</div>
+			   		   	</div>
+			   		</div>
+
+	</message>
+	<message id="ttt2">
+		<div>Teste</div>
+	</message>
+</messages>

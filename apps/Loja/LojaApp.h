@@ -12,7 +12,7 @@ class LojaApp : public App {
 
   virtual std::string getTitulo();
   virtual void init();
-  Wt::WWidget *calculadora();
+  Wt::WWidget *loja();
  public:
   LojaApp(Wt::WContainerWidget *parent);
 };

@@ -14,13 +14,13 @@ using namespace Wt;
 using namespace std;
 
 LojaApp::LojaApp(WContainerWidget *parent)
-    : App(parent) {
+    : App(parent){
    LOJA = 1;
    init();
 }
 
 void LojaApp::init(){
-  adicionaEstado(LOJA, boost::bind(&LojaApp::calculadora, this));
+  adicionaEstado(LOJA, boost::bind(&LojaApp::loja, this));
   
   adicionaTransicao(LOJA, START, "back",
 		    boost::bind(&LojaApp::fazNada, this, nullptr),
@@ -28,22 +28,22 @@ void LojaApp::init(){
   setEstado(LOJA);
 }
 
-WWidget *LojaApp::calculadora(){
+WWidget *LojaApp::loja(){
     CabureApplication *app = CabureApplication::cabureApplication();
     
 	app->useStyleSheet("/apps/Loja/loja.css");
  
 	app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
+	app->require("/javascript/carousel.js");
 	app->require("/apps/Loja/loja.js");
 
-    string corpo = 
-	"<div id='conteudoLoja' class='conteudoLoja'>"
-	"</div>"
-	;
+	WTemplate *loja = new WTemplate();
+
+    loja->setTemplateText( WString::tr("htmlLoja").toUTF8(), XHTMLUnsafeText);
         	
-    WText *wtext = new WText(WString(corpo, UTF8), XHTMLUnsafeText);
+   // WText *wtext = new WText(WString(corpo, UTF8), XHTMLUnsafeText);
 	app->doJavaScript("initLoja()");
-    return wtext;
+    return loja;
 }
 
 string LojaApp::getTitulo(){

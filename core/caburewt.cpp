@@ -16,7 +16,7 @@ WApplication *createApplication(const WEnvironment& env) {
     CabureApplication *app = new CabureApplication(env);
     app->setTitle("PractWave");
     //app->setCssTheme("Polished");
-    //app->messageResourceBundle().use(app->appRoot() + "strings");
+    app->messageResourceBundle().use(app->appRoot() + "www/apps/Loja/loja");
 
     //inclue Meta
     app->addMetaHeader("viewport", "width=device-width, initial-scale=1.0");
