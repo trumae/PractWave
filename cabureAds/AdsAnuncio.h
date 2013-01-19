@@ -13,12 +13,16 @@ class AdsAnuncio : public Wt::WContainerWidget {
       void editarURL();
       void editarImagem();
       void editarTexto();
+
+      void changeAtiva();
+      void deletaAnuncio();
       
       int id;
       std::string link_;
       std::string titulo_;
       std::string texto_;
       std::string imagem_;
+      int ativo_;
 };
 
 #endif

@@ -11,7 +11,7 @@
 #include <Wt/WTextArea>
 #include <Wt/WTemplate>
 #include <Wt/WHBoxLayout>
-
+#include <Wt/WMessageBox>
 #include <stdlib.h>
 
 #include "AdsAnuncio.h"
@@ -60,6 +60,33 @@ void AdsAnuncio::renderUI() {
 			       "</div></a>", Wt::XHTMLUnsafeText);
     container->bindWidget("imagem", img);
     container->bindWidget("texto", texto);
+}
+
+void AdsAnuncio::changeAtiva(){
+  AdsApplication *app = AdsApplication::adsApplication();
+  cppdb::session &db = app->db_;
+
+  cppdb::result res = db <<
+    "select ativo from anuncio where id = ?" << id;
+  while(res.next()){
+    res >> ativo_;
+    if(ativo_ == 1) 
+      db << "update anuncio set ativo = 0 where id = ?" << id << cppdb::exec;
+    else
+      db << "update anuncio set ativo = 1 where id = ?" << id << cppdb::exec;
+  }
+}
+
+void AdsAnuncio::deletaAnuncio(){
+  AdsApplication *app = AdsApplication::adsApplication();
+  cppdb::session &db = app->db_;
+  
+  StandardButton
+    result = WMessageBox::show("Confirma", "Deseja, realmente, deletar este anuncio? Voce deve atulizar a lista manualmente.",
+			       Ok | Cancel);
+  if(result == Ok) {
+    db << "delete from anuncio where id = ?" << id << cppdb::exec;
+  }
 }
 
 void AdsAnuncio::editarTitulo(){

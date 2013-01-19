@@ -20,15 +20,21 @@ AdsManage::AdsManage(Wt::WContainerWidget *parent) :
 void AdsManage::criaDB(){
     AdsApplication *app = AdsApplication::adsApplication(); 
     cppdb::session &db = app->db_;
-
-    db << "create table if not exists anuncio ( "
-	  "   id integer  not null primary key autoincrement, "
-	  "   titulo text not null, "
-	  "   url text not null, "
-	  "   imagem text, "
-	  "   texto text not null, "
-	  "   prio int not null default 10, "
-	  "   ate datetime default(date('now', '+1 month')), "
-	  "   grupo text) "  << cppdb::exec;	  
+    
+    try{
+      db << "create table if not exists anuncio ( "
+	"   id integer  not null primary key autoincrement, "
+	"   titulo text not null, "
+	"   url text not null, "
+	"   imagem text, "
+	"   texto text not null, "
+	"   prio int not null default 10, "
+	"   ate datetime default(date('now', '+1 month')), "
+	"   grupo text) "  << cppdb::exec;	  
+      
+      db << "alter table anuncio add column ativo integer not null default '1'" << cppdb::exec;
+    }catch(...) {
+      std::cerr << "Excecao ao criar/modificar banco de dados" << std::endl;
+    }
 }
 

@@ -23,7 +23,7 @@ AdsAnuncio *AdsWidgetBuilder::createAdsAnuncio(){
   
   cppdb::result res = db << 
     "select titulo, url, imagem, texto "
-    " from anuncio order by random() limit 1";
+    " from anuncio where ativo = 1 order by random() limit 1";
   while(res.next()){
     res >>  anuncio->titulo_ >> anuncio->link_ >>
       anuncio->imagem_ >> anuncio->texto_;
