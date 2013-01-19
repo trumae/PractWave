@@ -29,6 +29,7 @@
 #include "../apps/ContaBancaria/ContaBancariaApp.h"
 #include "../apps/Caixa/CaixaApp.h"
 #include "../apps/Calculadora/CalculadoraApp.h"
+#include "../apps/Loja/LojaApp.h"
 #include "../cabureAds/AdsAnuncio.h"
 #include "../cabureAds/AdsWidgetBuilder.h"
 
@@ -358,21 +359,12 @@ void CabureWidgetPrincipal::createUI() {
     TileCalculadora *tileCalculadora = new TileCalculadora();
     tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
     tiles.push_back(tileCalculadora);
-
-
-    /*    WTemplate *tileLoja = new WTemplate();
-    tileLoja->setTemplateText(
-       "     <div class='tile icon bg-color-green'>"
-       "       <div class='tile-content'>"
-       "          <img class='icon' src='images/Market128.png'/>"
-       "       </div>"
-       "       <div class='brand'>"
-       "          <span class='name'>Loja(n&atilde;o implementado)</span>"
-       "       </div>"
-       "    </div>"
-    );
-    tiles.push_back(tileLoja);
     
+	TileLoja *tileLoja = new TileLoja();
+    tileLoja->clicked().connect(this, &CabureWidgetPrincipal::lojaApp);
+    tiles.push_back(tileLoja);
+
+	/*
     WTemplate *tileMensagem = new WTemplate();
     tileMensagem->setTemplateText(
        "     <div class='tile icon bg-color-greenDark'>"
@@ -527,3 +519,13 @@ void CabureWidgetPrincipal::calculadoraApp(){
    showCalculadoraApp();
 }
 
+WContainerWidget* CabureWidgetPrincipal::showLojaApp() {
+   googleAnalyticsLogger("/loja");
+   clear();
+   WContainerWidget *ret = new LojaApp(this);
+   return ret;
+}
+
+void CabureWidgetPrincipal::lojaApp(){
+   showLojaApp();
+}

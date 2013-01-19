@@ -58,6 +58,8 @@ private:
   void caixaApp();
   Wt::WContainerWidget* showCalculadoraApp();
   void calculadoraApp();
+  Wt::WContainerWidget* showLojaApp();
+  void lojaApp();
 };
 
 

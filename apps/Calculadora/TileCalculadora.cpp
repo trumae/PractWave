@@ -7,7 +7,7 @@ TileCalculadora::TileCalculadora() {
     clear();
     WTemplate *tileCalculadora = new WTemplate(this);
     tileCalculadora->setTemplateText(
-       "     <div class='tile bg-color-greenLight'>"
+       "     <div class='tile icon bg-color-greenLight'>"
        "       <div class='tile-content'>"
        "          <img class='icon' src='apps/Calculadora/tile.png'/>"
        "       </div>"

@@ -16,7 +16,7 @@ WApplication *createApplication(const WEnvironment& env) {
     CabureApplication *app = new CabureApplication(env);
     app->setTitle("PractWave");
     //app->setCssTheme("Polished");
-    //app->messageResourceBundle().use(app->appRoot() + "strings");
+    app->messageResourceBundle().use(app->appRoot() + "www/apps/Loja/loja");
 
     //inclue Meta
     app->addMetaHeader("viewport", "width=device-width, initial-scale=1.0");
@@ -34,6 +34,7 @@ WApplication *createApplication(const WEnvironment& env) {
     app->require("http://www.google-analytics.com/ga.js");
     app->require("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
     app->require("javascript/tile-slider.js");
+	app->require("javascript/carousel.js");
     app->require("javascript/practwave.js");
 
 

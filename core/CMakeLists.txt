@@ -26,6 +26,8 @@ include_directories(${PRACTWAVE2_SOURCE_DIR}/apps/Painel)
 link_directories(${PRACTWAVVE2_SOURCE_DIR}/apps/Painel)
 include_directories(${PRACTWAVE2_SOURCE_DIR}/apps/Timeline)
 link_directories(${PRACTWAVVE2_SOURCE_DIR}/apps/Timeline)
+include_directories(${PRACTWAVE2_SOURCE_DIR}/apps/Loja)
+link_directories(${PRACTWAVVE2_SOURCE_DIR}/apps/Loja)
 
 #Ads
 include_directories(${PRACTWAVE2_SOURCE_DIR}/cabureAds)
@@ -64,4 +66,5 @@ target_link_libraries(practwave2 CaixaApp)
 
 # aplicativos
 target_link_libraries(practwave2 CalculadoraApp)
+target_link_libraries(practwave2 LojaApp)
 
