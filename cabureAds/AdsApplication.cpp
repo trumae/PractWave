@@ -4,7 +4,7 @@ using namespace Wt;
 
 AdsApplication::AdsApplication (const WEnvironment& env)
     : WApplication(env){
-  db_.open("sqlite3:db=ads.db");       
+  db_.open("sqlite3:db=ads2.db");       
 }
 
 AdsApplication::~AdsApplication() {

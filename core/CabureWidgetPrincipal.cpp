@@ -360,9 +360,9 @@ void CabureWidgetPrincipal::createUI() {
     tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
     tiles.push_back(tileCalculadora);
     
-	TileLoja *tileLoja = new TileLoja();
+    /*TileLoja *tileLoja = new TileLoja();
     tileLoja->clicked().connect(this, &CabureWidgetPrincipal::lojaApp);
-    tiles.push_back(tileLoja);
+    tiles.push_back(tileLoja);*/
 
 	/*
     WTemplate *tileMensagem = new WTemplate();
@@ -401,7 +401,7 @@ void CabureWidgetPrincipal::createUI() {
 		       "    <div class='page-header-content'>"
 		       "      <h1>PractWave</h1>"
 		       
-		       "<div class='user-login'>"
+		       /*		       "<div class='user-login'>"
 		       "  <a href='#'>"
 		       "  <div class='name'>"
 		       "    <span class='last-name'>"
@@ -412,7 +412,7 @@ void CabureWidgetPrincipal::createUI() {
 		       "    <img src='images/myface.jpg'/>"
 		       "  </div>"
 		       "  </a>"
-		       "</div>"		       
+		       "</div>"		       */
 		       
 		       "    </div>"
 		       "  </div>"

@@ -18,7 +18,7 @@ AdsAnuncio *AdsWidgetBuilder::createAdsAnuncio(){
   AdsAnuncio *anuncio = new AdsAnuncio();
   static cppdb::session db;
   if(!db.is_open())
-    db.open("sqlite3:db=ads.db");
+    db.open("sqlite3:db=ads2.db");
   
   
   cppdb::result res = db << 
