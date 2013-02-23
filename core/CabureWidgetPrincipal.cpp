@@ -50,9 +50,6 @@ CabureWidgetPrincipal::CabureWidgetPrincipal(WContainerWidget *parent)
        "     <div class='tile double bg-color-green'>"
        "       <div class='tile-content'>"
        "          <h2>Google</h2>"
-       "          <div class='brand'>"
-       "             <img class='icon-google'/>"
-       "          </div>"
        "       </div>"
        "    </div>"
     );
