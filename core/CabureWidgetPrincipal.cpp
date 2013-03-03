@@ -148,58 +148,20 @@ void CabureWidgetPrincipal::authenticatedFacebook(const Wt::Auth::Identity& iden
 
 void CabureWidgetPrincipal::authenticated(const Wt::Auth::Identity& identity) {
     CabureApplication *cabure = CabureApplication::cabureApplication();
-    //int idUsuario = -1;
-    //int conviteAceito = -1;
-    //cppdb::result res = userDB.db() << "select id, conviteaceito from user where email = ?"
-    //                    << identity.email() << cppdb::row;
+    int idUsuario = -1;
+    cppdb::result res = userDB.db() << "select id from user where email = ?"
+                        << identity.email() << cppdb::row;
 
     cabure->name = identity.name().toUTF8();
     cabure->email = identity.email();
     iniciaDBUser(identity.email());
 
-/*    if(!res.empty()) {
-        res >> idUsuario >> conviteAceito;
-
-        cabure->meusDados_->idUser = idUsuario;
-
-        cppdb::result res2 = userDB.db() << "SELECT * FROM dados_user WHERE id_user = ?"
-                             << idUsuario << cppdb::row;
-
-        if(res2.empty()) {
-            //insere novo usuario na tabela de dados do usuario
-            userDB.db() << "insert into dados_user(id_user, "
-                        "email_alternativo, profissao, cidade, estado) "
-                        "values(?,'','','','')"
-                        << idUsuario << cppdb::exec;
-        }
-
-        if(conviteAceito == 0) {
-            informeSobreConvite(identity);
-            return;
-        }
-
-    } else {
+    if(res.empty()) {
         //insere novo usuario
         userDB.db() << "insert into user(name, email) values(?,?)"
                     << identity.name().narrow() << identity.email() << cppdb::exec;
 
-        cppdb::result res1 = userDB.db() << "SELECT id FROM user WHERE email = ?"
-                             << identity.email() << cppdb::row;
-
-        if(!res1.empty()) {
-            res1 >> idUsuario;
-            cabure->meusDados_->idUser = idUsuario;
-            //insere novo usuario na tabela de dados do usuario
-            userDB.db() << "insert into dados_user(id_user, "
-                        "email_alternativo, profissao, cidade, estado) "
-                        "values(?,'','','','')"
-                        << idUsuario << cppdb::exec;
-        }
-
-        informeSobreConvite(identity);
-        return;
     }
-*/
     createUI();
 }
 
