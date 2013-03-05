@@ -315,11 +315,11 @@ void CabureWidgetPrincipal::createUI() {
     tileCaixa->clicked().connect(this, &CabureWidgetPrincipal::caixaApp);
     tiles.push_back(tileCaixa);
 
-    TileCalculadora *tileCalculadora = new TileCalculadora();
+    /*TileCalculadora *tileCalculadora = new TileCalculadora();
     tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
     tiles.push_back(tileCalculadora);
     
-    /*TileLoja *tileLoja = new TileLoja();
+    TileLoja *tileLoja = new TileLoja();
     tileLoja->clicked().connect(this, &CabureWidgetPrincipal::lojaApp);
     tiles.push_back(tileLoja);*/
 
@@ -355,7 +355,11 @@ void CabureWidgetPrincipal::createUI() {
     }
     WTemplate *t = new WTemplate(this);
     t->setTemplateText(
-		       std::string() +"<div class='page secondary'>"
+		       std::string() +
+		       //"<div class='charms bg-color-blue fg-color-white'>"
+		       //"Publicidade Aqui"
+		       //"</div>"
+		       "<div class='page secondary'>"
 		       "  <div class='page-header'>"
 		       "    <div class='page-header-content'>"
 		       "      <h1>PractWave</h1>"
@@ -389,6 +393,7 @@ void CabureWidgetPrincipal::createUI() {
       t->bindWidget(std::string("tile") + boost::lexical_cast<std::string>(i), widget);
       i++;
     }
+    
     cabure->doJavaScript("initMainMenu()");
 }
 
