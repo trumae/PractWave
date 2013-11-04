@@ -35,7 +35,7 @@ add_executable (practwave2 CabureApplication.cpp  CabureUserManager.cpp  CabureW
 #geral
 target_link_libraries(practwave2 m)
 target_link_libraries(practwave2 wt)
-target_link_libraries(practwave2 wtext)
+#target_link_libraries(practwave2 wtext)
 target_link_libraries(practwave2 wthttp)
 target_link_libraries(practwave2 boost_signals)
 target_link_libraries(practwave2 boost_system)
