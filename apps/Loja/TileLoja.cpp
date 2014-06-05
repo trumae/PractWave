@@ -7,7 +7,7 @@ TileLoja::TileLoja() {
     clear();
     WTemplate *tileLoja = new WTemplate(this);
     tileLoja->setTemplateText(
-       "     <div class='tile icon bg-color-green'>"
+       "     <div class='tile double icon bg-color-green'>"
        "       <div class='tile-content'>"
        "          <img class='icon' src='apps/Loja/tile.png'/>"
        "       </div>"

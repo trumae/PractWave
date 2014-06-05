@@ -317,11 +317,12 @@ void CabureWidgetPrincipal::createUI() {
 
     /*TileCalculadora *tileCalculadora = new TileCalculadora();
     tileCalculadora->clicked().connect(this, &CabureWidgetPrincipal::calculadoraApp);
-    tiles.push_back(tileCalculadora);
-    
+    tiles.push_back(tileCalculadora);    
+    */
+
     TileLoja *tileLoja = new TileLoja();
     tileLoja->clicked().connect(this, &CabureWidgetPrincipal::lojaApp);
-    tiles.push_back(tileLoja);*/
+    tiles.push_back(tileLoja);
 
 	/*
     WTemplate *tileMensagem = new WTemplate();
