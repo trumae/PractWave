@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+
+  <message id='tile-dashboard'>
+    Dashboard
+  </message>
+
+  <message id='login-message'>
+    Choose how to enter the PractWave
+  </message>
+
+  <message id='tile-Timeline'>
+    Timeline
+  </message>
+
+  <message id='tile-Customers'>
+    Customers
+  </message>
+  
+  <message id='tile-Suppliers'>
+    Suppliers
+  </message>
+
+  <message id='tile-Banks'>
+    Banks
+  </message>
+
+  <message id='tile-Cash'>
+    Cash
+  </message>
+
+  <message id='registered-customers'>
+    Registered customers
+  </message>
+
+  <message id='registered-suppliers'>
+    Registered suppliers
+  </message>
+
+  <message id='ads'>
+    @Ads
+  </message>
+  
+  <message id='total-receivables'>
+    Total receivables
+  </message>
+  
+  <message id='total-to-pay'>
+    Total to pay
+  </message>
+
+  <message id='without-data'>
+    Without+data
+  </message>
+  
+  <message id='receivables'>
+    Receivables
+  </message>
+  
+  <message id='to-pay'>
+    To+pay
+  </message>
+</messages>

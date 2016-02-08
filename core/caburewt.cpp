@@ -15,7 +15,8 @@ using namespace Wt::Dbo;
 WApplication *createApplication(const WEnvironment& env) {
   CabureApplication *app = new CabureApplication(env);
   app->setTitle("PractWave");
-  app->messageResourceBundle().use(app->appRoot() + "www/apps/Loja/loja");
+  app->messageResourceBundle().use(app->appRoot() + "messages");
+  app->setLocale("en");
 
   //inclue Meta
   app->addMetaHeader("viewport", "width=device-width, initial-scale=1.0");
@@ -27,13 +28,6 @@ WApplication *createApplication(const WEnvironment& env) {
   app->useStyleSheet("css/modern.css");
   app->useStyleSheet("css/modern-responsive.css");
 
-  /*
-     app->useStyleSheet("https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro.min.css");
-     app->useStyleSheet("https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-responsive.min.css");
-     app->useStyleSheet("https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-schemes.min.css");
-     app->useStyleSheet("https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-rtl.min.css");
-     app->useStyleSheet("https://cdn.rawgit.com/olton/Metro-UI-CSS/master/build/css/metro-icons.min.css");
-     */
   //carrega Javascripts
   app->require("google_conversion.js");
   app->require("http://www.googleadservices.com/pagead/conversion.js");

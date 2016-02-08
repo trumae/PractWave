@@ -9,7 +9,7 @@ TileFornecedor::TileFornecedor() {
     tilePainel->setTemplateText(
        "     <div class='tile double bg-color-purple'>"
        "       <div class='tile-content'>"
-       "          <h2>Fornecedor</h2>"
+       "          <h2>" +  tr("tile-Suppliers") + "</h2>"
        "       </div>"
        "    </div>"
     );

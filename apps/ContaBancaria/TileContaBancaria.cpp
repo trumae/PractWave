@@ -9,7 +9,7 @@ TileContaBancaria::TileContaBancaria() {
     tilePainel->setTemplateText(
        "     <div class='tile double bg-color-blue'>"
        "       <div class='tile-content'>"
-       "          <h2>Banco</h2>"
+       "          <h2>" + tr("tile-Banks") + "</h2>"
        "       </div>"
        "    </div>"
     );

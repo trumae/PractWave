@@ -54,32 +54,33 @@ void PainelApp::init(){
 }
 
 std::string PainelApp::getTitulo() {
-    return "Painel";
+    return tr("tile-dashboard").toUTF8();
 }
 
 Wt::WWidget *PainelApp::Painel() {
     CabureApplication *app = CabureApplication::cabureApplication();
     Contabilidade *contabilidade = app->contabilidade_;
     std::string tplInformacoes(
+        std::string() + 
         "        <div class='grid'>"
         "          <div class='row'>"
         "             <div class='span12'>"
         "         <div class='tile double bg-color-blue'>"
         "           <div class='tile-content'>"
-        "              <h2>Total a Receber</h2>"
+        "              <h2>" + tr("total-receivables").toUTF8() + "</h2>"
         "              <h2>R$ ${totalReceber}</h2>"
         "              <div class='brand'>"
-        "                <span class='name'>Clientes Cadastrados</span>"
+        "                <span class='name'>" + tr("registered-customers").toUTF8() + "</span>"
         "                <span class='badge'>${numClientes}</span>"
         "              </div>"
         "           </div>"
         "         </div>"
         "         <div class='tile double bg-color-red'>"
         "           <div class='tile-content'>"
-        "              <h2>Total a Pagar</h2>"
+        "              <h2>" + tr("total-to-pay").toUTF8() + "</h2>"
         "              <h2>R$ ${totalPagar}</h2>"
         "              <div class='brand'>"
-        "                <span class='name'>Fornecedores Cadastrados</span>"
+        "                <span class='name'>" + tr("registered-suppliers").toUTF8() + "</span>"
         "                <span class='badge'>${numFornecedores}</span>"
         "              </div>"
         "           </div>"
@@ -120,20 +121,22 @@ Wt::WWidget *PainelApp::Painel() {
 
         w = new WTemplate();
         std::string tplPainel = tplInformacoes;
+        tplPainel += "<div class=\"grid\">";
         if(clientes_.size() > 0)
             complementarTplDeve = contabilidade->getSaldoContaFolha(clientes_[0].idconta) != 0;
         if(fornecedores_.size() > 0)
             complementarTplDevo = contabilidade->getSaldoContaFolha(fornecedores_[0].idconta) != 0;
         if(complementarTplDeve) {
             tplPainel +=
-                "<br/>${chartDeve}";
+                "<div class='row'>  <div class='span8'> ${chartDeve} </div> </div>";
             chartDeve = new WImage(getUrlGrafico(QUEMMEDEVE));
         }
         if(complementarTplDevo) {
             tplPainel +=
-                "${chartDevo}";
+                "<div class='row'> <div class='span8'>  ${chartDevo} </div> </div>";
             chartDevo = new WImage(getUrlGrafico(PRAQUEMDEVO));
         }
+        tplPainel += "</div>";
         w->setTemplateText(
             tplPainel
             , XHTMLUnsafeText);
@@ -160,7 +163,7 @@ std::string PainelApp::getUrlGrafico(TipoGrafico tipoGrafico) {
     case QUEMMEDEVE:
         url += "&chco=224499";
         if(sizecli == 0) {
-            url += "&chtt=Ainda+sem+dados";
+            url += "&chtt=" + tr("without-data").toUTF8();
             return url;
         }
         if(sizecli == 1) {
@@ -194,12 +197,12 @@ std::string PainelApp::getUrlGrafico(TipoGrafico tipoGrafico) {
                    + boost::lexical_cast<string>(sum) ;
             url += "&chl=" + clientes_[0].nome + "|" + clientes_[1].nome + "|" + clientes_[2].nome + "|Outros";
         }
-        url += "&chtt=A+Receber+de+Clientes";
+        url += "&chtt=" + tr("receivables").toUTF8();
         break;
     case PRAQUEMDEVO:
         url += "&chco=AA0033";
         if(sizeforn == 0) {
-            url += "&chtt=Ainda+sem+dados";
+            url += "&chtt=" + tr("without-data").toUTF8();
             return url;
         }
         if(sizeforn == 1) {
@@ -233,7 +236,7 @@ std::string PainelApp::getUrlGrafico(TipoGrafico tipoGrafico) {
                    + boost::lexical_cast<string>(sum) ;
             url += "&chl=" + fornecedores_[0].nome + "|" + fornecedores_[1].nome + "|" + fornecedores_[2].nome + "|Outros";
         }
-        url += "&chtt=A+Pagar+para+Fornecedores";
+        url += "&chtt=" + tr("to-pay").toUTF8();
         break;
     }
     return url;

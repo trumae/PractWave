@@ -9,7 +9,7 @@ TileCliente::TileCliente() {
     tilePainel->setTemplateText(
        "     <div class='tile double bg-color-orangeDark'>"
        "       <div class='tile-content'>"
-       "          <h2>Cliente</h2>"
+       "          <h2>" + tr("tile-Customers") + "</h2>"
        "       </div>"
        "    </div>"
     );

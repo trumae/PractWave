@@ -22,14 +22,14 @@ TilePainel::TilePainel() {
 			      "     data-role='tile-slider' "
 			      "     data-param-period='3000'>"
 			      "  <div class='tile-content'>"
-			      "     <h2>Painel</h2>"
-			      "     <br><h4>Clientes Cadastrados: "
+			      "     <h2> " + tr("tile-dashboard") + "</h2>"
+			      "     <br><h4>" + tr("registered-customers") + " : " 
 			      + boost::lexical_cast<std::string>(clientes.size()) +
 			      "     </h4>"
 			      "  </div>"
 			      "  <div class='tile-content'>"
-			      "     <h2>Painel</h2>"
-			      "     <br><h4>Fornecedores Cadastrados: "
+			      "     <h2> " + tr("tile-dashboard") + "</h2>"
+			      "     <br><h4>" + tr("registered-suppliers") + " : "
 			      + boost::lexical_cast<std::string>(fornecedores.size()) +
 			      "     </h4>"
 			      "  </div>"

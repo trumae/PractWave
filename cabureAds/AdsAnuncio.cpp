@@ -55,7 +55,7 @@ void AdsAnuncio::renderUI() {
 			       "     <p>${texto}</p>"
 			       "   </div>"
 			       "   <div class='brand'>"
-			       "     <span class='name'>@Publicidade</span> "
+			       "     <span class='name'>" + tr("ads") + "</span> "
 			       "   </div>"
 			       "</div></a>", Wt::XHTMLUnsafeText);
     container->bindWidget("imagem", img);

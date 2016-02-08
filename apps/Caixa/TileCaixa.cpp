@@ -9,7 +9,7 @@ TileCaixa::TileCaixa() {
     tilePainel->setTemplateText(
        "     <div class='tile double bg-color-pink'>"
        "       <div class='tile-content'>"
-       "          <h2>Caixa</h2>"
+       "          <h2>" + tr("tile-Cash") + "</h2>"
        "       </div>"
        "    </div>"
     );

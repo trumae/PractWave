@@ -77,7 +77,7 @@ CabureWidgetPrincipal::CabureWidgetPrincipal(WContainerWidget *parent)
       "<div class='page  secondary'>"
       " <div class='page-header'>"
       "   <div class='page-header-content'>"
-      "     <h1>Escolha a forma de entrar no PractWave</h1>"
+      "     <h1>" + tr("login-message") + "</h1>"
       "   </div>"
       " </div>"						     
       " <div class='page-region'>"

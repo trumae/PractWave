@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+
+  <message id='tile-dashboard'>
+    Painel 
+  </message>
+
+  <message id='tile-Timeline'>
+    Hist&oacute;rico
+  </message>
+
+</messages>
