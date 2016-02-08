@@ -11,3 +11,5 @@ nohup.out
 cabureAds/adswt
 .project
 .cproject
+wt_config.xml
+build/
