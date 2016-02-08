@@ -9,7 +9,7 @@ TileTimeline::TileTimeline() {
     tilePainel->setTemplateText(
        "     <div class='tile double bg-color-orange'>"
        "       <div class='tile-content'>"
-       "          <h2>Timeline</h2>"
+       "          <h2>" + tr("tile-Timeline").toUTF8() + "</h2>"
        "       </div>"
        "    </div>"
     );

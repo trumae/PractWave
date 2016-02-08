@@ -55,5 +55,5 @@ WWidget *TimelineApp::timeline(){
 }
 
 string TimelineApp::getTitulo(){
-   return "Timeline";
+   return tr("tile-Timeline").toUTF8();
 }

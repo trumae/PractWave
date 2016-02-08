@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
 
+  <message id='loading'>
+    Loading
+  </message>
+
   <message id='tile-dashboard'>
     Dashboard
   </message>
@@ -11,6 +15,18 @@
 
   <message id='tile-Timeline'>
     Timeline
+  </message>
+
+  <message id='Customers'>
+    Customers
+  </message>
+
+  <message id='Suppliers'>
+    Suppliers
+  </message>
+
+  <message id='bank-account'>
+    Bank account 
   </message>
 
   <message id='tile-Customers'>
@@ -59,5 +75,127 @@
   
   <message id='to-pay'>
     To+pay
+  </message>
+
+  <message id='add-customer'>
+    Add Customer
+  </message>
+
+  <message id='msg-add-customer'>
+    Click here to add a new customer
+  </message>
+
+  <message id='add-supplier'>
+    Add Supplier 
+  </message>
+
+  <message id='msg-add-supplier'>
+    Click here to add a new supplier
+  </message>
+
+  <message id='add-bank'>
+    Add Bank Account
+  </message>
+
+  <message id='msg-add-bank'>
+    Click here to add a new bank account
+  </message>
+
+  <message id='withdrawal'>
+    Withdrawal for expenses
+  </message>
+
+  <message id='msg-withdrawal'>
+    Click here to withdrawal for expenses 
+  </message>
+
+  <message id='btn-add'>Add</message>
+  
+  <message id='btn-cancel'>Cancel</message>
+
+  <message id='btn-save'>Save</message>
+
+  <message id='required'>
+    Required
+  </message>
+
+  <message id='name'>
+    Name
+  </message>
+
+  <message id='address'>
+    Address
+  </message>
+
+  <message id='district'>
+    District
+  </message>
+
+  <message id='city'>
+    City
+  </message>
+
+  <message id='state'>
+    State
+  </message>
+
+  <message id='zip-code'>
+    Zip code
+  </message>
+
+  <message id='phone'>
+    Phone
+  </message>
+
+  <message id='mobile'>
+    Mobile
+  </message>
+
+  <message id='email'>
+    E-mail
+  </message>
+
+  <message id='note'>
+    Note
+  </message>
+
+  <message id='msg-new-customer-ok'>
+    New customer added with success!
+  </message>
+
+  <message id='msg-new-customer-fail'>
+    Error adding new customer!
+  </message>
+
+  <message id='msg-edit-customer-ok'>
+    New customer edited with success!
+  </message>
+
+  <message id='msg-edit-customer-fail'>
+    Error editing customer!
+  </message>
+
+  <message id='msg-customer-name-required'>
+    The customer name is required!
+  </message>
+
+  <message id='msg-new-supplier-ok'>
+    New supplier added with success!
+  </message>
+
+  <message id='msg-new-supplier-fail'>
+    Error adding new supplier!
+  </message>
+
+  <message id='msg-edit-supplier-ok'>
+    New supplier edited with success!
+  </message>
+
+  <message id='msg-edit-supplier-fail'>
+    Error editing supplier!
+  </message>
+
+  <message id='msg-supplier-name-required'>
+    The supplier name is required!
   </message>
 </messages>

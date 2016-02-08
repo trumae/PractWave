@@ -86,7 +86,7 @@ void FornecedorApp::init(){
 }
 
 string FornecedorApp::getTitulo() {
-  return "Fornecedores";
+  return tr("Suppliers").toUTF8();
 }
 
 WWidget* FornecedorApp::EIniciais() {
@@ -95,8 +95,8 @@ WWidget* FornecedorApp::EIniciais() {
   
   WText *addButton = new WText(
 			       "<button class='command-button default bg-color-greenDark'>"
-			       "Adiciona Fornecedor"
-			       "<small>Clique aqui para adicionar um novo fornecedor</small>"
+			       + tr("add-supplier").toUTF8() + 
+			       "<small>" + tr("msg-add-supplier").toUTF8() + "</small>"
 			       "</button>", Wt::XHTMLUnsafeText );
   addButton->clicked().connect(boost::bind(&FornecedorApp::trataEvento, this, "adiciona"));
 
@@ -191,11 +191,11 @@ WWidget* FornecedorApp::EDadosFornecedor(){
   CabureApplication *app = CabureApplication::cabureApplication();
   Fornecedor f = app->fornecedores_->getFornecedorPorId(idFornecedor_);
 
-  WPushButton *btnSave = new WPushButton("Salvar");
+  WPushButton *btnSave = new WPushButton(tr("btn-save").toUTF8());
   btnSave->setStyleClass("fg-color-white bg-color-blue");
   btnSave->clicked().connect(this, &FornecedorApp::saveFornecedor);
   
-  WPushButton *btnCancel = new WPushButton("Cancelar");
+  WPushButton *btnCancel = new WPushButton(tr("btn-cancel").toUTF8());
   btnCancel->setStyleClass("fg-color-white bg-color-orange");
   btnCancel->clicked().connect(boost::bind(&FornecedorApp::trataEvento, this, "cancel"));
 
@@ -225,11 +225,11 @@ WWidget* FornecedorApp::EContaFornecedor(){
 WWidget* FornecedorApp::EAdicionaFornecedor() {
   Fornecedor f;
 
-  WPushButton *btnSave = new WPushButton("Adicionar");
+  WPushButton *btnSave = new WPushButton(tr("btn-add"));
   btnSave->setStyleClass("fg-color-white bg-color-blue");
   btnSave->clicked().connect(this, &FornecedorApp::adicionaFornecedor);
   
-  WPushButton *btnCancel = new WPushButton("Cancelar");
+  WPushButton *btnCancel = new WPushButton(tr("btn-cancel"));
   btnCancel->setStyleClass("fg-color-white bg-color-orange");
   btnCancel->clicked().connect(boost::bind(&FornecedorApp::trataEvento, this, "cancel"));
 
@@ -277,71 +277,71 @@ WWidget* FornecedorApp::createFormFornecedor(Fornecedor f) {
   t->setTemplateText(
 		     "<div class='grid'>"
 		     "  <div class='row'>"
-		     "    <div class='span2'>Nome</div>"
+		     "    <div class='span2'>" + tr("name").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${nome}"
 		     "    </div>"
-		     "    <div class=''span1>(obrigat&oacute;rio)</div>"
+		     "    <div class=''span1>(" + tr("required").toUTF8() + ")</div>"
 		     "  </div>"
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>Endere&ccedil;o</div>"
+		     "    <div class='span2'>" + tr("address").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${endereco}"
 		     "    </div>"
 		     "  </div>"
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>Bairro</div>"
+		     "    <div class='span2'>" + tr("district").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${bairro}"
 		     "    </div>"
 		     "  </div>"
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>Cidade</div>"
+		     "    <div class='span2'>" + tr("city").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "          ${cidade}"
 		     "    </div>"
 		     "  </div>"
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>Estado</div>"
+		     "    <div class='span2'>" + tr("state").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${estado}"
 		     "    </div>"
 		     "  </div>"
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>CEP</div>"
+		     "    <div class='span2'>" + tr("zip-code").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${CEP}"
 		     "    </div>"
 		     "  </div>"		     
 
 		     "  <div class='row'>"
-		     "    <div class='span2'>Telefone</div>"
+		     "    <div class='span2'>" + tr("phone").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${telefone}"
 		     "    </div>"
 		     "  </div>"
 		     
 		     "  <div class='row'>"
-		     "    <div class='span2'>Celular</div>"
+		     "    <div class='span2'>" + tr("mobile").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${celular}"
 		     "    </div>"
 		     "  </div>"
 		   
 		     "  <div class='row'>"
-		     "    <div class='span2'>E-mail</div>"
+		     "    <div class='span2'>" + tr("email").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "       ${email}"
 		     "    </div>"
 		     "  </div>"
 		     
 		     "  <div class='row'>"
-		     "    <div class='span2'>Observa&ccedil;&atilde;o</div>"
+		     "    <div class='span2'>" + tr("note").toUTF8() + "</div>"
 		     "    <div class='input-control textarea span6'>"
 		     "       ${observacao}"		 
 		     "    </div>"
@@ -379,12 +379,12 @@ void FornecedorApp::adicionaFornecedor(){
     
     if(fornecedores->adiciona(f)) {
       setEstado(INICIAIS);
-      setMessage("Novo fornecedor adicionado com sucesso!");
+      setMessage(tr("msg-new-supplier-ok").toUTF8());
     } else {
-      setErrorMessage("Erro ao adicionar novo fornecedor");
+      setErrorMessage(tr("msg-new-supplier-fail").toUTF8());
     }
   } else {
-    setErrorMessage("O nome do fornecedor &eacute; obrigat&oacute;rio!");
+    setErrorMessage(tr("msg-supplier-name-required").toUTF8());
   }
 }
 
@@ -406,12 +406,12 @@ void FornecedorApp::saveFornecedor(){
     f.id = editandoId;
     if(fornecedores->salvar(f)) {
       setEstado(CONTAFORNECEDOR);      
-      setMessage("Fornecedor editado com sucesso!");
+      setMessage(tr("msg-edit-supplier-ok").toUTF8());
     } else {
-      setErrorMessage("Erro ao editar novo fornecedor");
+      setErrorMessage(tr("msg-edit-supplier-fail").toUTF8());
     }
   } else {
-    setErrorMessage("O nome do fornecedor &eacute; obrigat&oacute;rio!");
+    setErrorMessage(tr("msg-supplier-name-required").toUTF8());
   }
 }
 

@@ -4,6 +4,7 @@
 #include <Wt/Auth/GoogleService>
 #include <Wt/WLoadingIndicator>
 #include <Wt/WOverlayLoadingIndicator>
+#include <Wt/WString>
 
 #include "CabureUserManager.h"
 #include "CabureWidgetPrincipal.h"
@@ -41,7 +42,7 @@ WApplication *createApplication(const WEnvironment& env) {
   //loadinIndicator
   WApplication::instance()->styleSheet().addRule("body", "margin: 0px");
   WLoadingIndicator *loading = new Wt::WOverlayLoadingIndicator("loading");
-  loading->setMessage("Carregando");
+  loading->setMessage(WString::tr("loading").toUTF8());
   app->setLoadingIndicator(loading);
 
   //cria Widget Principal

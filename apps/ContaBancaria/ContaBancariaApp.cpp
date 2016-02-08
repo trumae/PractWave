@@ -122,8 +122,8 @@ WWidget *ContaBancariaApp::EListaBanco(){
 
     WText *addButton = new WText(
 				 "<button class='command-button default bg-color-greenDark'>"
-				 "Adiciona Conta Banc&aacute;ria"
-				 "<small>Clique aqui para adicionar uma nova conta banc&aacute;ria</small>"
+         + tr("add-bank").toUTF8() +
+				 "<small>" + tr("msg-add-bank").toUTF8() + "</small>"
 				 "</button>", Wt::XHTMLUnsafeText );
     addButton->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "adiciona"));
     
@@ -178,11 +178,11 @@ Wt::WWidget *ContaBancariaApp::EAdicionaBanco(){
   ContaBancaria cb;
 
   cb_ = cb; //zera dados da conta bancaria
-  WPushButton *btnSave = new WPushButton("Adicionar");
+  WPushButton *btnSave = new WPushButton(tr("btn-save"));
   btnSave->setStyleClass("fg-color-white bg-color-blue");
   btnSave->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "salvaBanco"));
   
-  WPushButton *btnCancel = new WPushButton("Cancelar");
+  WPushButton *btnCancel = new WPushButton(tr("btn-cancel"));
   btnCancel->setStyleClass("fg-color-white bg-color-orange");
   btnCancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
 
@@ -207,8 +207,8 @@ Wt::WWidget *ContaBancariaApp::EContaBanco(){
 
   WText *retiradaBtn = new WText(
                                "<button class='command-button bg-color-orangeDark default'>"
-                               "Retirada"
-                               "<small>Retirada para pagar despesas</small>"
+                               + tr("withdrawal").toUTF8() + 
+                               "<small>" + tr("msg-withdrawal").toUTF8() + "</small>"
                                "</button>",
                                Wt::XHTMLUnsafeText);
   retiradaBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "retirada"));
@@ -521,5 +521,5 @@ WWidget *ContaBancariaApp::createFormContaBancaria (){
 }
 
 string ContaBancariaApp::getTitulo(){
-   return "Contas Banc&aacute;rias";
+   return tr("bank-account").toUTF8();
 }
