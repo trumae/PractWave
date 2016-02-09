@@ -207,8 +207,8 @@ Wt::WWidget *ContaBancariaApp::EContaBanco(){
 
   WText *retiradaBtn = new WText(
                                "<button class='command-button bg-color-orangeDark default'>"
-                               + tr("withdrawal").toUTF8() + 
-                               "<small>" + tr("msg-withdrawal").toUTF8() + "</small>"
+                               + tr("withdrawal-expenses").toUTF8() + 
+                               "<small>" + tr("msg-withdrawal-expenses").toUTF8() + "</small>"
                                "</button>",
                                Wt::XHTMLUnsafeText);
   retiradaBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "retirada"));
@@ -216,16 +216,16 @@ Wt::WWidget *ContaBancariaApp::EContaBanco(){
   
   WText *retiradaCaixaBtn = new WText(
                                 "<button class='command-button bg-color-blueDark default'>"
-                                "Retirada para Caixa"
-                                "<small>Retirada de dinheiro para caixa</small>"
+                                + tr("withdrawal-cash").toUTF8() + 
+                                "<small>" + tr("msg-withdrawal-cash").toUTF8() + "</small>"
                                 "</button>",
                                 Wt::XHTMLUnsafeText);
   retiradaCaixaBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "retiradaCaixa"));
   
   WText *dadosBtn = new WText(
                               "<button class='command-button bg-color-greenDark default'>"
-                              "Dados"
-                              "<small>Veja/Edite os dados da conta banc&aacute;ria</small>"
+                              + tr("info").toUTF8() +
+                              "<small>" + tr("msg-info").toUTF8() + "</small>"
                               "</button>",
                                 Wt::XHTMLUnsafeText);
   dadosBtn->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "dados"));
@@ -249,11 +249,11 @@ Wt::WWidget *ContaBancariaApp::EContaBanco(){
 }
 
 Wt::WWidget *ContaBancariaApp::EDadosBanco(){
-  WPushButton *btnSave = new WPushButton("Salvar");
+  WPushButton *btnSave = new WPushButton(tr("btn-save").toUTF8());
   btnSave->setStyleClass("fg-color-white bg-color-blue");
   btnSave->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "salvaBanco"));
   
-  WPushButton *btnCancel = new WPushButton("Cancelar");
+  WPushButton *btnCancel = new WPushButton(tr("btn-cancel").toUTF8());
   btnCancel->setStyleClass("fg-color-white bg-color-orange");
   btnCancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
 
@@ -285,7 +285,7 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "fazRetirada"));
   
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
 
@@ -301,19 +301,19 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   t->setTemplateText("<h2>Retirada</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "     <div class='span2'>" + tr("description").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${descricao}"
 		     "     </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Centro de Custo</div>"
+		     "     <div class='span2'>" + tr("cost-center").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${centrodecusto}"
 		     "     </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Valor</div>"
+		     "     <div class='span2'>" + tr("value").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "       ${valor}"
 		     "     </div>"
@@ -344,21 +344,21 @@ Wt::WWidget *ContaBancariaApp::ERetiradaCaixaBanco(){
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "fazRetiradaCaixa"));
   
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(boost::bind(&ContaBancariaApp::trataEvento, this, "cancel"));
   
   WTemplate *t = new WTemplate();
-  t->setTemplateText("<h2>Retirada para caixa</h2>"
+  t->setTemplateText("<h2>" + tr("withdrawal-cash").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "     <div class='span2'>" + tr("description").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${descricao}"
 		     "     </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Valor</div>"
+		     "     <div class='span2'>" + tr("value").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "       ${valor}"
 		     "     </div>"
@@ -389,13 +389,13 @@ void ContaBancariaApp::TAdicionaContaBancaria(){
 		     editTelefone_->text().toUTF8());
     
     if(c->adiciona(cb)) {
-      setMessage("Nova conta banc&aacute;ria adicionada com sucesso!");
+      setMessage(tr("msg-new-bank-success").toUTF8());
     } else {
-      setErrorMessage("Erro ao adicionar nova conta banc&aacute;ria");
+      setErrorMessage(tr("msg-new-bank-fail").toUTF8());
       estado_ = ADICIONABANCO; // retorna pro estado ADICIONABANCO
     }
   } else {
-    setErrorMessage("Um nome para a conta banc&aacute;ria &eacute; obrigat&oacute;rio!");
+    setErrorMessage(tr("msg-bank-without-name").toUTF8());
     estado_ = ADICIONABANCO; // retorna pro estado ADICIONABANCO
   }
 }
@@ -411,14 +411,14 @@ void ContaBancariaApp::TSalvaContaBancaria(){
                          editTelefone_->text().toUTF8());
         cb.id = cb_.id;
         if(c->salvar(cb)){
-            setMessage("Conta banc&aacute;ria editada com sucesso!");
+            setMessage(tr("msg-edit-bank-success").toUTF8());
 	    cb_ = cb; //copia novos valores para cb_
         } else {
-            setErrorMessage("Erro ao editar conta banc&aacute;ria");
+            setErrorMessage(tr("msg-edit-bank-fail").toUTF8());
         }
     } else {
-        setErrorMessage("Um nome para a conta banc&aacute;ria &eacute; obrigat&oacute;rio!");
-	estado_ = DADOSBANCO;
+        setErrorMessage(tr("msg-bank-without-name").toUTF8());
+	      estado_ = DADOSBANCO;
     }
 }
 
@@ -434,7 +434,7 @@ void ContaBancariaApp::TRetirada(){
 					   contabilidade->getIdPorNome(centros->currentText().toUTF8()),
 					   m.valInt());
   } else {
-    setErrorMessage("Formado do valor inv&aacute;lido");
+    setErrorMessage(tr("msg-error-format-value").toUTF8());
     estado_ = RETIRADABANCO;
   }
 }
@@ -450,7 +450,7 @@ void ContaBancariaApp::TRetiradaCaixa(){
 				     idconta_,
 				     m.valInt());
   } else {
-    setErrorMessage("Formado do valor inv&aacute;lido");
+    setErrorMessage(tr("msg-error-format-value").toUTF8());
     estado_ = RETIRADACAIXABANCO;
   }
 }
@@ -466,7 +466,7 @@ void ContaBancariaApp::TEntraContaBanco(int id){ /* aloca ajusteConta e seta idd
   ajuste_ = new AjusteContaWidget(idconta_);
   ajuste_->setWidgetPai(this);
   ajuste_->setApp(this);
-  ajuste_->setTituloApp("Contas Banc&aacute;rias");
+  ajuste_->setTituloApp(getTitulo());
   ajuste_->setEstadoRetorno(CONTABANCO);
 }
 
@@ -488,26 +488,26 @@ WWidget *ContaBancariaApp::createFormContaBancaria (){
   WTemplate *t = new WTemplate();
   t->setTemplateText("<div class='grid'>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Nome</div>"
+		     "     <div class='span2'>" + tr("name").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${nome}"
 		     "     </div>"
-		     "     <div class='span1'>(Obrigat&oacute;rio)</div>"
+		     "     <div class='span1'>(" + tr("required").toUTF8() + ")</div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Agencia</div>"
+		     "     <div class='span2'>" + tr("agency").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${agencia}"
 		     "     </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>N&uacute;mero</div>"
+		     "     <div class='span2'>" + tr("number").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${numero}"
 		     "     </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "     <div class='span2'>Telefone</div>"
+		     "     <div class='span2'>" + tr("phone").toUTF8() + "</div>"
 		     "     <div class='input-control text span6'>"
 		     "        ${telefone}"
 		     "     </div>"

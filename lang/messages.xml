@@ -101,12 +101,52 @@
     Click here to add a new bank account
   </message>
 
-  <message id='withdrawal'>
+  <message id='withdrawal-expenses'>
     Withdrawal for expenses
   </message>
 
-  <message id='msg-withdrawal'>
+  <message id='msg-withdrawal-expenses'>
     Click here to withdrawal for expenses 
+  </message>
+
+  <message id='withdrawal-cash'>
+    Withdrawal for expenses
+  </message>
+
+  <message id='msg-withdrawal-cash'>
+    Click here to withdrawal for cash 
+  </message>
+
+  <message id='msg-new-bank-success'>
+    New account bank added with success
+  </message>
+
+  <message id='msg-new-bank-fail'>
+    Error adding new account bank
+  </message>
+
+  <message id='msg-bank-without-name'>
+    The name for account bank is required
+  </message>
+
+  <message id='msg-edit-bank-success'>
+    Account bank edited with success
+  </message>
+
+  <message id='msg-edit-bank-fail'>
+    Error editing account bank
+  </message>
+
+  <message id='msg-error-format-value'>
+     Invalid format of value
+  </message>
+
+  <message id='info'>
+    Info
+  </message>
+
+  <message id='msg-info'>
+    View/Edit bank info 
   </message>
 
   <message id='btn-add'>Add</message>
@@ -115,13 +155,9 @@
 
   <message id='btn-save'>Save</message>
 
-  <message id='required'>
-    Required
-  </message>
+  <message id='required'>Required</message>
 
-  <message id='name'>
-    Name
-  </message>
+  <message id='name'>Name</message>
 
   <message id='address'>
     Address
@@ -157,6 +193,26 @@
 
   <message id='note'>
     Note
+  </message>
+
+  <message id='description'>
+    Description
+  </message>
+
+  <message id='agency'>
+    Agency
+  </message>
+
+  <message id='number'>
+    Number
+  </message>
+
+  <message id='value'>
+    Value
+  </message>
+
+  <message id='cost-center'>
+    Cost center
   </message>
 
   <message id='msg-new-customer-ok'>
