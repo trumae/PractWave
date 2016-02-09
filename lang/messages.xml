@@ -57,6 +57,10 @@
     @Ads
   </message>
   
+  <message id='bank'>
+    Bank
+  </message>
+  
   <message id='total-receivables'>
     Total receivables
   </message>
@@ -115,6 +119,14 @@
 
   <message id='msg-withdrawal-cash'>
     Click here to withdrawal for cash 
+  </message>
+
+  <message id='deposit'>
+    Deposit
+  </message>
+
+  <message id='msg-deposit'>
+    Deposit bank account 
   </message>
 
   <message id='msg-new-bank-success'>
@@ -254,4 +266,23 @@
   <message id='msg-supplier-name-required'>
     The supplier name is required!
   </message>
+  
+  <message id='msg-needed-account-bank'>
+    You need an account bank
+  </message>
+
+  <message id='msg-not-negative-balance'>
+    The balance of cash can not be negative
+  </message>
+
+  <message id='confirm'>Confirm</message>
+
+  <message id='msg-delete-transaction'>
+    You are deleting a transaction. You want to continue?
+  </message>
+
+  <message id='msg-delete-transaction-success'>
+    The transaction with description '{1}' was deleted. 
+  </message>
+
 </messages>

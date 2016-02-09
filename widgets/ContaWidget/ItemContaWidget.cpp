@@ -53,18 +53,14 @@ void ItemContaWidget::removeLancamento(){
   Timeline *timeline = cabure->timeline_;
 
   StandardButton result = 
-    WMessageBox::show("Confirme", 
-		      "Voc&ecirc; est&aacute; apagando "
-		      "um lan&ccedil;amento! "
-		      "Deseja continuar?",
+    WMessageBox::show(tr("confirm").toUTF8(), 
+          tr("msg-delete-transaction").toUTF8(),
 		      Ok | Cancel);
 
   if(result == Ok) {
     contabilidade->removeLancamento(id_diario_);
-    ItemTimeline itemTimeline("", 
-			      "O lan&ccedil;amento com descri&ccedil;&atilde;o '" 
-			      + descricao_ + 
-			      "' foi removido." , 
+    ItemTimeline itemTimeline("",
+            tr("msg-delete-transaction-success").arg(descricao_).toUTF8(), 
 			      "ItemContaWidget::removeLancamento()",
 			      "");
     timeline->adiciona(itemTimeline);

@@ -77,8 +77,8 @@ WWidget *CaixaApp::EContaCaixa(){
   
   WText *retiradaBtn = new WText(
 				 "<button class='command-button bg-color-orangeDark default'>"
-				 "Retirada"
-				 "<small>Retirada para pagar despesas</small>"
+				 + tr("withdrawal-expenses").toUTF8() + 
+				 "<small>" + tr("msg-withdrawal-expenses").toUTF8() + "</small>"
 				 "</button>",
 				 Wt::XHTMLUnsafeText);
   retiradaBtn->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "retirada"));
@@ -86,8 +86,8 @@ WWidget *CaixaApp::EContaCaixa(){
   
   WText *retiradaDepositoBtn = new WText(
 				      "<button class='command-button bg-color-blueDark default'>"
-				      "Retirada para dep&oacute;sito"
-				      "<small>Retirada de dinheiro para deposito</small>"
+				      + tr("deposit").toUTF8() + 
+				      "<small>" + tr("msg-deposit").toUTF8() + "</small>"
 				      "</button>",
 				      Wt::XHTMLUnsafeText);
   retiradaDepositoBtn->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "retiradaDeposito"));
@@ -120,7 +120,7 @@ Wt::WWidget *CaixaApp::ERetirada(){
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "fazRetirada"));
 
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "back"));
   
@@ -133,22 +133,22 @@ Wt::WWidget *CaixaApp::ERetirada(){
   }
   WTemplate *t = new WTemplate();
     t->setTemplateText(
-        "<h2>Retirada do caixa</h2>"
+        "<h2>" + tr("withdrawal-expenses").toUTF8() + "</h2>"
 	"<div class='grid'>"
 	"   <div class='row'>"
-        "      <div class='span2'>Descri&ccedil;&atilde;o</div>"
+        "      <div class='span2'>" + tr("description").toUTF8() + "</div>"
         "      <div class='input-control text span6'>"
         "        ${descricao}"
         "      </div>"
         "   </div>"
         "   <div class='row'>"
-        "      <div class='span2'>Centro de Custo</div>"
+        "      <div class='span2'>" + tr("cost-center").toUTF8() + "</div>"
         "      <div class='input-control text span6'>"
         "         ${centrodecusto}"
         "      </div>"
         "   </div>"
         "   <div class='row'>"
-        "      <div class='span2'>Valor</div>"
+        "      <div class='span2'>" + tr("value").toUTF8() + "</div>"
         "      <div class='input-control text span6'>"
         "        ${valor}"
         "      </div>"
@@ -179,7 +179,7 @@ Wt::WWidget *CaixaApp::ERetiradaDeposito(){
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "fazRetiradaDeposito"));
 
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(boost::bind(&CaixaApp::trataEvento, this, "back"));
 
@@ -193,22 +193,22 @@ Wt::WWidget *CaixaApp::ERetiradaDeposito(){
   
   WTemplate *t = new WTemplate();
   t->setTemplateText(
-		     "<h2>Retirada para dep&oacute;sito</h2>"
+		     "<h2>" + tr("msg-deposit").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "   <div class='row'>"
-		     "      <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "      <div class='span2'>" + tr("description").toUTF8() + "</div>"
 		     "      <div class='input-control text span6'>"
 		     "        ${descricao}"
 		     "      </div>"
 		     "   </div>"
 		     "   <div class='row'>"
-		     "      <div class='span2'>Banco</div>"
+		     "      <div class='span2'>" + tr("bank").toUTF8() + "</div>"
 		     "      <div class='input-control text span6'>"
 		     "        ${bancos}"
 		     "      </div>"
 		     "   </div>"
 		     "   <div class='row'>"
-		     "      <div class='span2'>Valor</div>"
+		     "      <div class='span2'>" + tr("value").toUTF8() + "</div>"
 		     "      <div class='input-control text span6'>"
 		     "        ${valor}"
 		     "      </div>"
@@ -233,7 +233,7 @@ bool CaixaApp::CTemContasBancarias(){
   std::vector<ContaBancaria> nomes;
   contasBancarias->getTodosContasBancarias(nomes);
   if(nomes.size() == 0) {
-    setErrorMessage("Voc&ecirc; deve ter alguma conta banc&aacute;ria cadastrada!");
+    setErrorMessage(tr("msg-needed-account-bank").toUTF8());
     return false;
   }
   return true;
@@ -253,11 +253,11 @@ void CaixaApp::TFazRetirada(){
 		      contabilidade->getIdPorNome(centros->currentText().toUTF8()),
 		      m.valInt());
     } else {
-      setErrorMessage("O saldo do caixa n&atilde;o pode ficar negativo!");
+      setErrorMessage(tr("msg-not-negative-balance").toUTF8());
       estado_ = RETIRADA;
     }
   } else {
-    setErrorMessage("O formato do campo valor esta incorreto!");
+    setErrorMessage(tr("msg-error-format-value").toUTF8());
     estado_ = RETIRADA;
   }
 }
@@ -279,11 +279,11 @@ void CaixaApp::TFazRetiradaDeposito(){
       caixa->retiradaDepositoBanco(descricao->text().toUTF8(),
 				   banco.idconta, m.valInt());
     } else {
-      setErrorMessage("O saldo do caixa n&atilde;o pode ficar negativo!");
+      setErrorMessage(tr("msg-not-negative-balance").toUTF8());
       estado_ = RETIRADADEPOSITO;
     }
   } else {
-    setErrorMessage("O formato do campo valor esta incorreto!");
+    setErrorMessage(tr("msg-error-format-value").toUTF8());
     estado_ = RETIRADADEPOSITO;
   } 
 }
