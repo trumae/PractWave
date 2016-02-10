@@ -1,170 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
 
-  <message id='loading'>
-    Loading
-  </message>
+  <message id='loading'> Loading </message>
 
-  <message id='tile-dashboard'>
-    Dashboard
-  </message>
+  <message id='tile-dashboard'> Dashboard </message>
 
-  <message id='login-message'>
-    Choose how to enter the PractWave
-  </message>
+  <message id='login-message'> Choose how to enter the PractWave </message>
 
-  <message id='tile-Timeline'>
-    Timeline
-  </message>
+  <message id='tile-Timeline'> Timeline </message>
 
-  <message id='Customers'>
-    Customers
-  </message>
+  <message id='Customers'> Customers </message>
 
-  <message id='Suppliers'>
-    Suppliers
-  </message>
+  <message id='Suppliers'> Suppliers </message>
 
-  <message id='bank-account'>
-    Bank account 
-  </message>
+  <message id='bank-account'> Bank account </message>
 
-  <message id='tile-Customers'>
-    Customers
-  </message>
+  <message id='tile-Customers'> Customers </message>
   
-  <message id='tile-Suppliers'>
-    Suppliers
-  </message>
+  <message id='tile-Suppliers'> Suppliers </message>
 
-  <message id='tile-Banks'>
-    Banks
-  </message>
+  <message id='tile-Banks'> Banks </message>
 
-  <message id='tile-Cash'>
-    Cash
-  </message>
+  <message id='tile-Cash'> Cash </message>
 
   <message id='cash'>Cash</message>
 
-  <message id='registered-customers'>
-    Registered customers
-  </message>
+  <message id='registered-customers'> Registered customers </message>
 
-  <message id='registered-suppliers'>
-    Registered suppliers
-  </message>
+  <message id='registered-suppliers'> Registered suppliers </message>
 
-  <message id='ads'>
-    @Ads
-  </message>
+  <message id='ads'> @Ads </message>
   
-  <message id='bank'>
-    Bank
-  </message>
+  <message id='bank'>Bank</message>
   
-  <message id='total-receivables'>
-    Total receivables
-  </message>
+  <message id='total-receivables'> Total receivables </message>
   
-  <message id='total-to-pay'>
-    Total to pay
-  </message>
+  <message id='total-to-pay'> Total to pay </message>
 
-  <message id='without-data'>
-    Without+data
-  </message>
+  <message id='without-data'> Without+data </message>
   
-  <message id='receivables'>
-    Receivables
-  </message>
+  <message id='receivables'> Receivables </message>
   
-  <message id='to-pay'>
-    To+pay
-  </message>
+  <message id='to-pay'> To+pay </message>
 
-  <message id='add-customer'>
-    Add Customer
-  </message>
+  <message id='add-customer'> Add Customer </message>
 
-  <message id='msg-add-customer'>
-    Click here to add a new customer
-  </message>
+  <message id='msg-add-customer'> Click here to add a new customer </message>
 
-  <message id='add-supplier'>
-    Add Supplier 
-  </message>
+  <message id='add-supplier'> Add Supplier </message>
 
-  <message id='msg-add-supplier'>
-    Click here to add a new supplier
-  </message>
+  <message id='msg-add-supplier'> Click here to add a new supplier </message>
 
-  <message id='add-bank'>
-    Add Bank Account
-  </message>
+  <message id='add-bank'> Add Bank Account </message>
 
-  <message id='msg-add-bank'>
-    Click here to add a new bank account
-  </message>
+  <message id='msg-add-bank'> Click here to add a new bank account </message>
 
-  <message id='withdrawal-expenses'>
-    Withdrawal for expenses
-  </message>
+  <message id='withdrawal-expenses'> Withdrawal for expenses </message>
 
-  <message id='msg-withdrawal-expenses'>
-    Click here to withdrawal for expenses 
-  </message>
+  <message id='msg-withdrawal-expenses'> Click here to withdrawal for expenses </message>
 
-  <message id='withdrawal-cash'>
-    Withdrawal for cash
-  </message>
+  <message id='withdrawal-cash'> Withdrawal for cash </message>
 
-  <message id='msg-withdrawal-cash'>
-    Click here to withdrawal for cash 
-  </message>
+  <message id='msg-withdrawal-cash'> Click here to withdrawal for cash </message>
 
-  <message id='deposit'>
-    Deposit
-  </message>
+  <message id='deposit'> Deposit </message>
 
-  <message id='msg-deposit'>
-    Deposit bank account 
-  </message>
+  <message id='msg-deposit'> Deposit bank account </message>
 
-  <message id='msg-new-bank-success'>
-    New account bank added with success
-  </message>
+  <message id='msg-new-bank-success'> New account bank added with success </message>
 
-  <message id='msg-new-bank-fail'>
-    Error adding new account bank
-  </message>
+  <message id='msg-new-bank-fail'> Error adding new account bank </message>
 
-  <message id='msg-bank-without-name'>
-    The name for account bank is required
-  </message>
+  <message id='msg-bank-without-name'> The name for account bank is required </message>
 
-  <message id='msg-edit-bank-success'>
-    Account bank edited with success
-  </message>
+  <message id='msg-edit-bank-success'> Account bank edited with success </message>
 
-  <message id='msg-edit-bank-fail'>
-    Error editing account bank
-  </message>
+  <message id='msg-edit-bank-fail'> Error editing account bank </message>
 
-  <message id='msg-error-format-value'>
-     Invalid format of value
-  </message>
+  <message id='msg-error-format-value'> Invalid format of value </message>
 
-  <message id='info'>
-    Info
-  </message>
+  <message id='info'> Info </message>
 
-  <message id='msg-info'>
-    View/Edit bank info 
-  </message>
+  <message id='msg-info'> View/Edit bank info </message>
 
   <message id='btn-add'>Add</message>
-  
+
   <message id='btn-cancel'>Cancel</message>
 
   <message id='btn-save'>Save</message>
@@ -173,179 +93,107 @@
 
   <message id='name'>Name</message>
 
-  <message id='address'>
-    Address
-  </message>
+  <message id='address'> Address </message>
 
-  <message id='district'>
-    District
-  </message>
+  <message id='district'> District </message>
 
-  <message id='city'>
-    City
-  </message>
+  <message id='city'> City </message>
 
-  <message id='state'>
-    State
-  </message>
+  <message id='state'> State </message>
 
-  <message id='zip-code'>
-    Zip code
-  </message>
+  <message id='zip-code'> Zip code </message>
 
-  <message id='phone'>
-    Phone
-  </message>
+  <message id='phone'> Phone </message>
 
-  <message id='mobile'>
-    Mobile
-  </message>
+  <message id='mobile'> Mobile </message>
 
-  <message id='email'>
-    E-mail
-  </message>
+  <message id='email'> E-mail </message>
 
-  <message id='note'>
-    Note
-  </message>
+  <message id='note'> Note </message>
 
-  <message id='description'>
-    Description
-  </message>
+  <message id='description'> Description </message>
 
-  <message id='agency'>
-    Agency
-  </message>
+  <message id='agency'> Agency </message>
 
-  <message id='number'>
-    Number
-  </message>
+  <message id='number'> Number </message>
 
-  <message id='value'>
-    Value
-  </message>
+  <message id='value'> Value </message>
 
-  <message id='cost-center'>
-    Cost center
-  </message>
+  <message id='cost-center'> Cost center </message>
 
-  <message id='msg-new-customer-ok'>
-    New customer added with success!
-  </message>
+  <message id='msg-new-customer-ok'> New customer added with success! </message>
 
-  <message id='msg-new-customer-fail'>
-    Error adding new customer!
-  </message>
+  <message id='msg-new-customer-fail'> Error adding new customer! </message>
 
-  <message id='msg-edit-customer-ok'>
-    New customer edited with success!
-  </message>
+  <message id='msg-edit-customer-ok'> Customer edited with success! </message>
 
-  <message id='msg-edit-customer-fail'>
-    Error editing customer!
-  </message>
+  <message id='msg-edit-customer-fail'> Error editing customer! </message>
 
-  <message id='msg-customer-name-required'>
-    The customer name is required!
-  </message>
+  <message id='msg-customer-name-required'> The customer name is required! </message>
 
-  <message id='msg-new-supplier-ok'>
-    New supplier added with success!
-  </message>
+  <message id='msg-new-supplier-ok'> New supplier added with success! </message>
 
-  <message id='msg-new-supplier-fail'>
-    Error adding new supplier!
-  </message>
+  <message id='msg-new-supplier-fail'> Error adding new supplier! </message>
 
-  <message id='msg-edit-supplier-ok'>
-    New supplier edited with success!
-  </message>
+  <message id='msg-edit-supplier-ok'> New supplier edited with success! </message>
 
-  <message id='msg-edit-supplier-fail'>
-    Error editing supplier!
-  </message>
+  <message id='msg-edit-supplier-fail'> Error editing supplier! </message>
 
-  <message id='msg-supplier-name-required'>
-    The supplier name is required!
-  </message>
+  <message id='msg-supplier-name-required'> The supplier name is required! </message>
   
-  <message id='msg-needed-account-bank'>
-    You need an account bank
-  </message>
+  <message id='msg-needed-account-bank'> You need an account bank </message>
 
-  <message id='msg-not-negative-balance'>
-    The balance of cash can not be negative
-  </message>
+  <message id='msg-not-negative-balance'> The balance of cash can not be negative </message>
 
   <message id='confirm'>Confirm</message>
 
-  <message id='msg-delete-transaction'>
-    You are deleting a transaction. You want to continue?
-  </message>
+  <message id='msg-delete-transaction'> You are deleting a transaction. You want to continue? </message>
 
-  <message id='msg-delete-transaction-success'>
-    The transaction with description '{1}' was deleted. 
-  </message>
+  <message id='msg-delete-transaction-success'> The transaction with description '{1}' was deleted. </message>
 
   <message id='debit'>Debit</message>
   <message id='credit'>Credit</message>
   <message id='balance'>Balance</message>
   <message id='date'>Date</message>
 
-  <message id='buy'>Buy</message>
-  <message id='msg-buy'>
-    Register a purchase the vendor account
-  </message>
+  <message id='buy'> Buy </message>
+  <message id='msg-buy'> Register a purchase the vendor account </message>
 
-  <message id='pay'>Pay</message>
-  <message id='msg-pay'>
-    Register a payment to the supplier
-  </message>
+  <message id='pay'> Pay </message>
+  <message id='msg-pay'> Register a payment to the supplier </message>
 
-  <message id='msg-info-supplier'>
-    View/Edit the supplier informations
-  </message>
+  <message id='msg-info-supplier'> View/Edit the supplier informations </message>
 
-  <message id='msg-info-customer'>
-    View/Edit customer data
-  </message>
+  <message id='msg-info-customer'> View/Edit customer data </message>
 
-  <message id="money-from">
-    Money from
-  </message>
+  <message id="money-from"> Money from </message>
 
-  <message id='sell'>Sell</message>
-  <message id='msg-sell'>
-    Register a sale the customer's account
-  </message>
+  <message id='sell'> Sell </message>
+  <message id='msg-sell'> Register a sale the customer's account </message>
 
-  <message id='receive'>Receive</message>
-  <message id='msg-receive'>
-    register a receipt in the account
-  </message>
+  <message id='receive'> Receive </message>
+  <message id='msg-receive'> register a receipt in the account </message>
 
   <message id="fix">Fix</message>
   <message id="fixes">Fixes</message>
   <message id="fixed">Fixed</message>
-  <message id="msg-fix">
-    Fix the account balance
-  </message>
+  <message id="msg-fix"> Fix the account balance </message>
 
   <message id='careful'>Careful</message>
-  <message id='msg-careful'>
-    The fix command must be used with care. 
+  <message id='msg-careful'> The fix command must be used with care. 
     The excess utilization shows that some of its 
-    transactions are not being recorded.
-  </message>
+    transactions are not being recorded. </message>
 
-  <message id='fix-info'>
-    Fix information
-  </message>
+  <message id='fix-info'> Fix information </message>
 
-  <message id='value-required'>
-    A value is required
-  </message>
+  <message id='value-required'> A value is required </message>
 
   <message id='account'>Account</message>
 
+  <message id='was-add-in-cash'> was added on cash </message>
+
+  <message id='sell-for'> Sell for </message>
+
+  <message id='withdrawal'> Withdrawal </message>
+  <message id='sale'>Sale</message>
 </messages>

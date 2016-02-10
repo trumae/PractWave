@@ -41,26 +41,26 @@ void Contabilidade::criaTabelas(){
     adicionaContaSeNaoExiste("RECEITAS DE SERVICOS",  "CREDORA", 13, 0, "");   
     adicionaContaSeNaoExiste("RECEITAS DE PRODUTOS",  "CREDORA", 13, 0, "");   
     adicionaContaSeNaoExiste("RECEITAS FINANCEIRAS",  "CREDORA", 13, 0, "");   
-    adicionaContaSeNaoExiste("DESPESAS FISCAIS",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM ALUGUEL",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM AGUA",  "DEVEDORA", 12, 1, "");       
-    adicionaContaSeNaoExiste("DESPESAS COM LUZ",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM TELEFONE",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM INTERNET",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM SALARIO",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS COM CARTAO",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("CUSTOS PRODUTOS VENDIDOS",  "DEVEDORA", 12, 1, "");       
-    adicionaContaSeNaoExiste("CUSTOS COMISSAO FUNCIONARIOS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("TAX EXPENSES",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("RENTAL EXPENSES",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("COSTS OF WATER",  "DEVEDORA", 12, 1, "");       
+    adicionaContaSeNaoExiste("EXPENSES LIGHT",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("EXPENSES PHONE",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("EXPENDING ON INTERNET",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("ENPENSES OF STAFF",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("EXPENSES WITH CREDIT CARD",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("PRODUCTS COSTS",  "DEVEDORA", 12, 1, "");       
+    adicionaContaSeNaoExiste("SALES COMMISSION",  "DEVEDORA", 12, 1, "");   
 
-    adicionaContaSeNaoExiste("INSUMOS PARA SERVICOS",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESPESAS GERAIS",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("FRETE",  "DEVEDORA", 12, 1, "");   
-    adicionaContaSeNaoExiste("DESCONTOS",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("INPUT FOR SERVICES",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("GENERAL EXPENSES",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("FREIGHT",  "DEVEDORA", 12, 1, "");   
+    adicionaContaSeNaoExiste("DISCOUNTS",  "DEVEDORA", 12, 1, "");   
     adicionaContaSeNaoExiste("VENDA AVULSA",  "DEVEDORA", 6, 0, "");   
     adicionaContaSeNaoExiste("CARTAO",  "DEVEDORA", 1, 0, "");   
     adicionaContaSeNaoExiste("OBRAS",  "DEVEDORA", 1, 0, "");   
     adicionaContaSeNaoExiste("CREDIARIO",  "DEVEDORA", 1, 0, "");   
-    adicionaContaSeNaoExiste("AJUSTES",  "CREDORA", 11, 1, "");   
+    adicionaContaSeNaoExiste("FIX ACCOUNT",  "CREDORA", 11, 1, "");   
 
     //cria tabela diario
     

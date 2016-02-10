@@ -3,6 +3,7 @@
 #include<iostream>
 #include<sstream>
 #include<exception>
+#include<Wt/WString>
 
 #include "../core/CabureApplication.h"
 #include "ContasBancarias.h"
@@ -38,7 +39,7 @@ bool ContasBancarias::adiciona(ContaBancaria &c) {
     db_.begin();
     Contabilidade *cont = cabure->contabilidade_;
     try {
-        int idconta = cont->adicionaConta("BANCO " + c.nome,
+        int idconta = cont->adicionaConta(Wt::WString::tr("bank").toUTF8() + c.nome,
                                           "DEVEDORA",
                                           cont->getIdPorNome("BANCOS"),
                                           0, "");
@@ -49,7 +50,8 @@ bool ContasBancarias::adiciona(ContaBancaria &c) {
         c.id = stat.last_insert_id();
         //adiciona entrada no timeline
         ItemTimeline itemTimeline("",
-                                  "Adicionado o conta bancaria " + c.nome,
+                                  Wt::WString::tr("msg-new-bank-success").toUTF8() 
+                                  + c.nome,
                                   "ContasBancarias::adiciona(ContaBancaria &)",
                                   "");
         timeline_->adiciona(itemTimeline);
@@ -70,7 +72,8 @@ bool ContasBancarias::salvar(const ContaBancaria &c) {
             << c.nome << c.agencia << c.numero
             << c.telefone << c.id << cppdb::exec;
         ItemTimeline itemTimeline("",
-                                  "O cadastro da conta bancaria '" + c.nome + "' foi editado" ,
+                                  Wt::WString::tr("msg-edit-bank-success").toUTF8()
+                                  + c.nome ,
                                   "ContasBancarias::adiciona(ContaBancaria &)",
                                   "");
         timeline_->adiciona(itemTimeline);
@@ -162,7 +165,7 @@ void ContasBancarias::retiradaParaCentroCusto(
     std::string nomebanco = contabilidade_->getNomePorId(codcontabanco);
     std::string nomecentro = contabilidade_->getNomePorId(centro);
 
-    contabilidade_->setDescricaoLancamento("Retirada para '" +
+    contabilidade_->setDescricaoLancamento(Wt::WString::tr("withdrawal").toUTF8() +
                                            nomecentro + "'");
     contabilidade_->adicionaDebito(centro, valor, "");
     contabilidade_->adicionaCredito(codcontabanco, valor, "");
@@ -170,8 +173,8 @@ void ContasBancarias::retiradaParaCentroCusto(
 
     Moeda mval(valor);
     ItemTimeline itemTimeline("",
-                              "Retirada de '" + nomebanco + "' para '"
-                              + nomecentro + "' de R$ " +
+                              Wt::WString::tr("withdrawal").toUTF8() + " '" + nomebanco + "' para '"
+                              + nomecentro + "' $" +
                               mval.valStr() + " - " + descr,
                               "ContasBancarias::retiradaParaCentroCusto()",
                               "");
@@ -185,15 +188,17 @@ void ContasBancarias::retiradaParaCaixa(
 
     Moeda mval(valor);
     contabilidade_->setDescricaoLancamento(
-        "Retirada para caixa - " + descr);
+        Wt::WString::tr("cash").toUTF8() + 
+        Wt::WString::tr("withdrawal").toUTF8() + 
+        " - " + descr);
     contabilidade_->adicionaDebito(
         contabilidade_->getIdPorNome("CAIXA"), valor, "");
     contabilidade_->adicionaCredito(codcontabanco, valor, "");
     contabilidade_->lanca();
 
     ItemTimeline itemTimeline("",
-                              "Retirada de '" + nomebanco +
-                              "' para CAIXA de R$ " +
+                              Wt::WString::tr("withdrawal").toUTF8() + " '" + nomebanco +
+                              "' " + Wt::WString::tr("was-add-in-cash").toUTF8() + " $" +
                               mval.valStr() + " - "
                               + descr,
                               "ContasBancarias::retiradaParaCaixa()",

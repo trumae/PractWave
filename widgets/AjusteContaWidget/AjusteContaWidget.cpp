@@ -146,7 +146,7 @@ void AjusteContaWidget::ajusteAction(std::string descricao, int valor) {
   string natureza = contabilidade->getNaturezaPorId(conta_);
   string nome = contabilidade->getNomePorId(conta_);
   int diff = valor - contabilidade->getSaldoContaFolha(conta_);
-  int idAjuste = contabilidade->getIdPorNome("AJUSTES");
+  int idAjuste = contabilidade->getIdPorNome("FIX ACCOUNT");
   contabilidade->limpaLancamento();
   contabilidade->setDescricaoLancamento(WString::tr("fix").toUTF8() + " - " + descricao);
   if(natureza == "DEVEDORA") {

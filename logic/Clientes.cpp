@@ -3,6 +3,7 @@
 #include<iostream>
 #include<sstream>
 #include<exception>
+#include<Wt/WString>
 
 #include "../core/CabureApplication.h"
 #include "Moeda.h"
@@ -45,7 +46,7 @@ bool Clientes::adiciona(Cliente &c){
   db_.begin();
   Contabilidade *cont = cabure->contabilidade_;
   try{
-    int idconta = cont->adicionaConta("CLIENTE " + c.nome, 
+    int idconta = cont->adicionaConta(c.nome, 
 				      "DEVEDORA",
 				      cont->getIdPorNome("CLIENTES"),
 				      0, "");
@@ -57,7 +58,7 @@ bool Clientes::adiciona(Cliente &c){
     c.id = stat.last_insert_id();
 	//adiciona entrada no timeline
 	ItemTimeline itemTimeline("", 
-					"Adicionado o cliente " + c.nome, 
+					Wt::WString::tr("msg-new-customer-ok").toUTF8() + " " + c.nome, 
 					"Clientes::adiciona(Cliente &)",
 					"");
 	timeline_->adiciona(itemTimeline);
@@ -78,7 +79,7 @@ bool Clientes::salvar(const Cliente &c){
 	<< c.telefone << c.celular << c.email << c.observacao 
 	<< c.id << cppdb::exec;
 	ItemTimeline itemTimeline("", 
-			"O cadastro do cliente '" + c.nome + "' foi editado" , 
+			Wt::WString::tr("msg-edit-customer-ok").toUTF8() + " " + c.nome, 
 			"Clientes::adiciona(Cliente &)",
 			"");
 	timeline_->adiciona(itemTimeline);
@@ -172,7 +173,7 @@ void Clientes::vender(int idconta,
 
 	Moeda mval(valor);
     contabilidade_->setDescricaoLancamento(
-					"Venda - " + desc);
+					Wt::WString::tr("sell").toUTF8() + " - " + desc);
 	contabilidade_->adicionaDebito(idconta, valor, "");
 	contabilidade_->adicionaCredito(
 					contabilidade_->getIdPorNome("RECEITAS DE SERVICOS"),
@@ -180,13 +181,13 @@ void Clientes::vender(int idconta,
 	contabilidade_->lanca();
 
     ItemTimeline itemTimeline("",
-                              "Venda para "   
+                Wt::WString::tr("sell-for").toUTF8() 
 							  + contabilidade_->getNomePorId(idconta) + 
-							  " de R$ " + 
+							  " $ " + 
 							  mval.valStr() + " - " 
 							  + desc,
-                              "Clientes::vender()",
-                              "");
+                "Clientes::vender()",
+                "");
     timeline_->adiciona(itemTimeline);
 }
 
@@ -197,7 +198,7 @@ void Clientes::receber(int idconta,
 
 	Moeda mval(valor);
     contabilidade_->setDescricaoLancamento(
-					"Recebimento - " + desc);
+					Wt::WString::tr("receive").toUTF8() + " - " + desc);
 	contabilidade_->adicionaDebito(
 					contabilidade_->getIdPorNome("CAIXA"), valor, "");
 	contabilidade_->adicionaCredito(
@@ -206,13 +207,13 @@ void Clientes::receber(int idconta,
 	contabilidade_->lanca();
 
     ItemTimeline itemTimeline("",
-                              "Recebido de " 
+                Wt::WString::tr("receive").toUTF8() 
 							  + contabilidade_->getNomePorId(idconta) + 
-							  " R$ " + 
+							  " $ " + 
 							  mval.valStr() + " - " 
 							  + desc,
-                              "Clientes::receber()",
-                              "");
+                "Clientes::receber()",
+                "");
     timeline_->adiciona(itemTimeline);
 }
 

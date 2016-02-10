@@ -57,7 +57,7 @@ bool Fornecedores::adiciona(Fornecedor &c) {
         c.id = stat.last_insert_id();
         //adiciona entrada no timeline
         ItemTimeline itemTimeline("",
-                                  "Adicionado o fornecedor " + c.nome,
+                                  Wt::WString::tr("msg-new-supplier-ok").toUTF8() + c.nome,
                                   "Fornecedores::adiciona(Fornecedor &)",
                                   "");
         timeline_->adiciona(itemTimeline);
@@ -78,7 +78,7 @@ bool Fornecedores::salvar(const Fornecedor &c) {
             << c.telefone << c.celular << c.email << c.observacao
             << c.id << cppdb::exec;
         ItemTimeline itemTimeline("",
-                                  "O cadastro do fornecedor '" + c.nome + "' foi editado" ,
+                                  Wt::WString::tr("msg-edit-supplier-ok").toUTF8() + c.nome ,
                                   "Fornecedores::adiciona(Fornecedor &)",
                                   "");
         timeline_->adiciona(itemTimeline);
@@ -172,17 +172,18 @@ void Fornecedores::comprar(int idconta,
 
     Moeda mval(valor);
     contabilidade_->setDescricaoLancamento(
-        "Compra - " + desc);
+        Wt::WString::tr("sale").toUTF8() +
+        " - " + desc);
     contabilidade_->adicionaCredito(idconta, valor, "");
     contabilidade_->adicionaDebito(
-        contabilidade_->getIdPorNome("CUSTOS PRODUTOS VENDIDOS"),
+        contabilidade_->getIdPorNome("PRODUCTS COSTS"),
         valor, "");
     contabilidade_->lanca();
 
     ItemTimeline itemTimeline("",
-                              "Compra de "
+                              Wt::WString::tr("sell").toUTF8() 
                               + contabilidade_->getNomePorId(idconta) +
-                              " de R$ " +
+                              " $ " +
                               mval.valStr() + " - "
                               + desc,
                               "Fornecedores::comprar()",
@@ -201,7 +202,8 @@ void Fornecedores::pagar(int idconta,
 
 	if(origemDinheiro == 1){
     	contabilidade_->setDescricaoLancamento(
-        	"Pagamento - " + desc + " - Dinheiro do banco " + banco.nome);
+        	Wt::WString::tr("pay").toUTF8() + " - " + 
+          desc + " - " + banco.nome);
     	contabilidade_->adicionaCredito(
         	banco.idconta, valor, "");
     	contabilidade_->adicionaDebito(
@@ -210,17 +212,19 @@ void Fornecedores::pagar(int idconta,
     	contabilidade_->lanca();
 
     	ItemTimeline itemTimeline("",
-                              "Pago para "
+                              Wt::WString::tr("pay").toUTF8() 
                               + contabilidade_->getNomePorId(idconta) +
-                              " R$ " +
+                              " $ " +
                               mval.valStr() + " - "
-                              + desc + " - Dinheiro do banco " + banco.nome ,
+                              + desc + " - " + banco.nome ,
                               "Fornecedores::pagar()",
                               "");
     	timeline_->adiciona(itemTimeline);
 	}else{
     	contabilidade_->setDescricaoLancamento(
-        	"Pagamento - " + desc + " - Dinheiro do Caixa");
+          Wt::WString::tr("pay").toUTF8() + 
+        	" - " + desc + " - " + 
+          Wt::WString::tr("bank").toUTF8());
     	contabilidade_->adicionaCredito(
         	contabilidade_->getIdPorNome("CAIXA"), valor, "");
     	contabilidade_->adicionaDebito(
@@ -229,11 +233,12 @@ void Fornecedores::pagar(int idconta,
     	contabilidade_->lanca();
 
     	ItemTimeline itemTimeline("",
-                              "Pago para "
+                              Wt::WString::tr("pay").toUTF8() 
                               + contabilidade_->getNomePorId(idconta) +
-                              " R$ " +
+                              " $ " +
                               mval.valStr() + " - "
-                              + desc + " - Dinheiro do Caixa",
+                              + desc + " - " +
+                              Wt::WString::tr("cash").toUTF8(),
                               "Fornecedores::pagar()",
                               "");
     	timeline_->adiciona(itemTimeline);

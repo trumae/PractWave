@@ -298,7 +298,7 @@ Wt::WWidget *ContaBancariaApp::ERetiradaBanco(){
   }
   
   WTemplate *t = new WTemplate();
-  t->setTemplateText("<h2>Retirada</h2>"
+  t->setTemplateText("<h2>" + tr("withdrawal").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>"
 		     "     <div class='span2'>" + tr("description").toUTF8() + "</div>"

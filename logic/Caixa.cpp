@@ -1,4 +1,5 @@
 #include <string>
+#include <Wt/WString>
 #include "Caixa.h"
 #include "Contabilidade.h"
 #include "Timeline.h"
@@ -26,10 +27,11 @@ void Caixa::retirada(std::string descricao, int codcentro, long long valor) {
 
     Moeda mval(valor);
     ItemTimeline itemTimeline("",
-                              "O lan&ccedil;amento com descri&ccedil;&atilde;o '"
+                              "'"
                               + descricao +
-                              "' de R$ " + mval.valStr() +
-							  " foi adicionado no CAIXA." ,
+                              "' $ " + mval.valStr() +
+                              Wt::WString::tr("was-add-in-cash").toUTF8() +
+							                "." ,
                               "CaixaWidget::retirada()",
                               "");
     timeline_->adiciona(itemTimeline);
@@ -44,20 +46,21 @@ void Caixa::retiradaDepositoBanco(std::string descr,
 
 	Moeda mval(valor);
     contabilidade_->setDescricaoLancamento(
-			       "Retirada para banco '" + nomebanco + 
-				   "' de R$ " + mval.valStr() +
-				   " - " + descr);
+           Wt::WString::tr("withdrawal-cash").toUTF8() +  
+			     " '" + nomebanco + 
+				   "' - " + descr);
 	contabilidade_->adicionaDebito(codbanco, valor, "");
 	contabilidade_->adicionaCredito(codcaixa, valor, "");
 	contabilidade_->lanca();
 
     ItemTimeline itemTimeline("",
-                              "Retirada de CAIXA para '" + nomebanco + 
-							  "' de R$ " + 
+                Wt::WString::tr("withdrawal-cash").toUTF8() +
+                " '" + nomebanco + 
+							  "' $ " + 
 							  mval.valStr() + " - " 
 							  + descr,
-                              "Caixa::retiradaDepositoBanco()",
-                              "");
+                "Caixa::retiradaDepositoBanco()",
+                "");
     timeline_->adiciona(itemTimeline);
 }
 
