@@ -3,13 +3,13 @@
 #include <Wt/WText>
 #include <Wt/WLineEdit>
 #include <Wt/WMessageBox>
+#include <Wt/WString>
 
 #include "AjusteContaWidget.h"
 #include "../../core/CabureApplication.h"
 #include "../../logic/Moeda.h"
 
 using namespace Wt;
-using namespace std;
 
 AjusteContaWidget::AjusteContaWidget(int conta) :
   conta_(conta) {
@@ -19,8 +19,8 @@ AjusteContaWidget::AjusteContaWidget(int conta) :
 Wt::WWidget *AjusteContaWidget::getButton() {
   Wt::WText *button = new Wt::WText(
 				    "<button class='command-button bg-color-pinkDark default'>"
-				    "Ajuste"
-				    "<small>Fa&ccedil;a ajustes no Saldo da conta</small>"
+            + WString::tr("fix").toUTF8() + 
+				    "<small>" + WString::tr("msg-fix").toUTF8() + "</small>"
 				    "</button>",
 				    Wt::XHTMLUnsafeText);
   button->clicked().connect(this, &AjusteContaWidget::ajuste);
@@ -30,8 +30,8 @@ Wt::WWidget *AjusteContaWidget::getButton() {
 Wt::WWidget *AjusteContaWidget::getButtonApp() {
   Wt::WText *button = new Wt::WText(
 				    "<button class='command-button bg-color-pinkDark default'>"
-				    "Ajuste"
-				    "<small>Fa&ccedil;a ajustes no Saldo da conta</small>"
+            + WString::tr("fix").toUTF8() + 
+				    "<small>" + WString::tr("msg-fix").toUTF8() + "</small>"
 				    "</button>",
 				    Wt::XHTMLUnsafeText);
   button->clicked().connect(this, &AjusteContaWidget::ajusteApp);
@@ -82,31 +82,28 @@ WWidget* AjusteContaWidget::getAjusteConteudo() {
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(this, &AjusteContaWidget::trataOk);
 
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(WString::tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &AjusteContaWidget::trataCancela);
 
   WTemplate *t = new WTemplate();
   t->setTemplateText(
-		     "<h1>Ajuste</h1>"
+		     "<h1>" + WString::tr("fix").toUTF8() + "</h1>"
 		     "<div class='alerta'>"
-		     "<h3>Cuidado!</h3>"
-		     "O comando de ajuste deve ser usado com cuidado. "
-		     "A utiliza&ccedil;&atilde;o em excesso mostra que "
-		     "algumas das suas a&ccedil;&otilde;es n&atilde;o est&atilde;o "
-		     "sendo registradas. "
+		     "<h3>" + WString::tr("careful").toUTF8() + "!</h3>"
+         + WString::tr("msg-careful").toUTF8() + 
 		     "</div>"
 
-		     "<h4>Dados do ajuste</h4>"
+		     "<h4>" + WString::tr("fix-info").toUTF8() + "</h4>"
 		     "<div class='grid'>"
 		     "  <div class='row'>"
-		     "      <div class='span1'>Descri&ccedil;&atilde;o</div>"
+		     "      <div class='span1'>" + WString::tr("description").toUTF8() + "</div>"
 		     "      <div class='input-control text span4'>"
 		     "        ${descricao}"
 		     "      </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "      <div class='span1'>Saldo</div>"
+		     "      <div class='span1'>" + WString::tr("balance").toUTF8() + "</div>"
 		     "      <div class='input-control text span4'>"
 		     "        ${valor}"
 		     "      </div>"
@@ -132,7 +129,7 @@ void AjusteContaWidget::trataOk() {
 		   m.valInt());
       app_->setEstado(estadoRetorno_);
     } else {
-      WMessageBox::show("Erro", "Um valor para o ajuste deve ser fornecido.", Ok);
+      WMessageBox::show("Erro", WString::tr("value-required").toUTF8(), Ok);
     }
   }
 }
@@ -149,9 +146,9 @@ void AjusteContaWidget::ajusteAction(std::string descricao, int valor) {
   string natureza = contabilidade->getNaturezaPorId(conta_);
   string nome = contabilidade->getNomePorId(conta_);
   int diff = valor - contabilidade->getSaldoContaFolha(conta_);
-  int idAjuste = contabilidade->getIdPorNome("AJUSTES");
+  int idAjuste = contabilidade->getIdPorNome(WString::tr("fixes").toUTF8());
   contabilidade->limpaLancamento();
-  contabilidade->setDescricaoLancamento("AJUSTE - " + descricao);
+  contabilidade->setDescricaoLancamento(WString::tr("fix").toUTF8() + " - " + descricao);
   if(natureza == "DEVEDORA") {
     if(diff > 0) {
       contabilidade->adicionaDebito(conta_, diff, "");
@@ -174,9 +171,10 @@ void AjusteContaWidget::ajusteAction(std::string descricao, int valor) {
   contabilidade->lanca();
   Moeda moeda(valor);
   ItemTimeline itemTimeline("",
-			    "AJUSTE - " + descricao +
-			    " - conta: '" + nome + "' ajustada"
-			    " para R$ " + moeda.valStr(),
+			    WString::tr("fix").toUTF8() + " - " + descricao +
+			    " - " + WString::tr("account").toUTF8() + ": '" + nome + "' "
+          + WString::tr("fixed").toUTF8() + 
+			    " $ " + moeda.valStr(),
 			    "AjusteContaWidget::ajusteAction()",
 			    "");
   timeline->adiciona(itemTimeline);

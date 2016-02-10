@@ -14,7 +14,8 @@ using namespace Wt;
 
 ContaWidget::ContaWidget(WContainerWidget *parent, int codconta):
   WContainerWidget(parent), codconta_(codconta),
-  cabDebito_("D&eacute;bito"), cabCredito_("Cr&eacute;dito"){
+  cabDebito_(tr("debit").toUTF8()), 
+  cabCredito_(tr("credit").toUTF8()){
   viewHome();
 }
 
@@ -35,15 +36,15 @@ void ContaWidget::viewHome(){
 			       "        <h2>${nomeconta}</h2>"
 			       "     </div>"
 			       "     <div class='span4'>"
-			       "        <h2>Saldo R$$ ${saldo}</h2>"
+			       "        <h2>" + tr("balance").toUTF8() + " $ ${saldo}</h2>"
 			       "     </div>"
 			       "  </div>"
 
 			       "  <div class='row'>"
 			       "  <table class='striped span12'>"
 			       "   <tr>"
-			       "     <td class='right'><b>Data</b></td>"
-			       "     <td><b>Descri&ccedil;&atilde;o</b></td>"
+			       "     <td class='right'><b>" + tr("date").toUTF8() + "</b></td>"
+			       "     <td><b>" + tr("description").toUTF8() + "</b></td>"
 			       "     <td class='right'><b>${cabDebito}</b></td>"
 			       "     <td class='right'><b>${cabCredito}</b></td>"
 			       "     <td></td></tr>", XHTMLUnsafeText);

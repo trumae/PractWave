@@ -45,6 +45,8 @@
     Cash
   </message>
 
+  <message id='cash'>Cash</message>
+
   <message id='registered-customers'>
     Registered customers
   </message>
@@ -114,7 +116,7 @@
   </message>
 
   <message id='withdrawal-cash'>
-    Withdrawal for expenses
+    Withdrawal for cash
   </message>
 
   <message id='msg-withdrawal-cash'>
@@ -284,5 +286,66 @@
   <message id='msg-delete-transaction-success'>
     The transaction with description '{1}' was deleted. 
   </message>
+
+  <message id='debit'>Debit</message>
+  <message id='credit'>Credit</message>
+  <message id='balance'>Balance</message>
+  <message id='date'>Date</message>
+
+  <message id='buy'>Buy</message>
+  <message id='msg-buy'>
+    Register a purchase the vendor account
+  </message>
+
+  <message id='pay'>Pay</message>
+  <message id='msg-pay'>
+    Register a payment to the supplier
+  </message>
+
+  <message id='msg-info-supplier'>
+    View/Edit the supplier informations
+  </message>
+
+  <message id='msg-info-customer'>
+    View/Edit customer data
+  </message>
+
+  <message id="money-from">
+    Money from
+  </message>
+
+  <message id='sell'>Sell</message>
+  <message id='msg-sell'>
+    Register a sale the customer's account
+  </message>
+
+  <message id='receive'>Receive</message>
+  <message id='msg-receive'>
+    register a receipt in the account
+  </message>
+
+  <message id="fix">Fix</message>
+  <message id="fixes">Fixes</message>
+  <message id="fixed">Fixed</message>
+  <message id="msg-fix">
+    Fix the account balance
+  </message>
+
+  <message id='careful'>Careful</message>
+  <message id='msg-careful'>
+    The fix command must be used with care. 
+    The excess utilization shows that some of its 
+    transactions are not being recorded.
+  </message>
+
+  <message id='fix-info'>
+    Fix information
+  </message>
+
+  <message id='value-required'>
+    A value is required
+  </message>
+
+  <message id='account'>Account</message>
 
 </messages>

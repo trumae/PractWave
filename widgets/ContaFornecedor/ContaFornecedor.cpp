@@ -46,24 +46,24 @@ void ContaFornecedor::viewHome() {
 
   WText *anotarBtn = new WText(
 			       "<button class='command-button bg-color-orangeDark default'>"
-			       "Comprar"
-			       "<small>Anote compra na conta do fornecedor</small>"
+             + tr("buy").toUTF8() +			      
+			       "<small>" + tr("msg-buy").toUTF8() + "</small>"
 			       "</button>",
 			       Wt::XHTMLUnsafeText);
   anotarBtn->clicked().connect(this, &ContaFornecedor::comprar);
 
   WText *receberBtn = new WText(
 				"<button class='command-button bg-color-blueDark default'>"
-				"Pagar"
-				"<small>Registre um pagamento na conta</small>"
+        + tr("pay").toUTF8() + 
+				"<small>" + tr("msg-pay").toUTF8() + "</small>"
 				"</button>",
 				Wt::XHTMLUnsafeText);
   receberBtn->clicked().connect(this, &ContaFornecedor::pagar);
 
   WText *dadosBtn = new WText(
 			      "<button class='command-button bg-color-greenDark default'>"
-			      "Dados"
-			      "<small>Veja/Edite os dados do fornecedor</small>"
+			      + tr("info").toUTF8() +  
+			      "<small>" + tr("msg-info-supplier").toUTF8() + "</small>"
 			      "</button>",
 				Wt::XHTMLUnsafeText);
   dadosBtn->clicked().connect(this, &ContaFornecedor::goDadosFornecedor);
@@ -120,7 +120,7 @@ void ContaFornecedor::trataPagarOk() {
     long long saldo = contabilidade->getSaldoContaFolha(
 							contabilidade->getIdPorNome("CAIXA"));
     if(saldo - m.valInt() < 0 && origemDinheiro->currentIndex() == 0) {
-      WMessageBox::show("Erro", "O saldo do caixa n&atilde;o pode ficar negativo!", Ok);
+      WMessageBox::show("Error", tr("msg-not-negative-balance").toUTF8(), Ok);
     } else {
       if(bancos->currentText() != "")
 	banco = contasBancarias->getContaBancariaPorNome(bancos->currentText().toUTF8());
@@ -144,22 +144,22 @@ void ContaFornecedor::comprar() {
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(this, &ContaFornecedor::trataComprarOk);
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &ContaFornecedor::trataCancela);
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Anotar para fornecedor</h2>"
+		     "<h2>" + tr("msg-buy").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+		     "    <div class='span1'>" + tr("description").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- descricao -->"
 		     "        ${descricao}"
 		     "    </div>"
 		     "  </div>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Valor</div>"
+		     "    <div class='span1'>" + tr("value").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- valor -->"
 		     "      ${valor}"
 		     "    </div>"
@@ -187,7 +187,7 @@ void ContaFornecedor::pagar() {
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(this, &ContaFornecedor::trataPagarOk);
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &ContaFornecedor::trataCancela);
 
@@ -200,9 +200,9 @@ void ContaFornecedor::pagar() {
   }
   
   origemDinheiro = new WComboBox();
-  origemDinheiro->addItem("Caixa");
+  origemDinheiro->addItem(tr("cash").toUTF8());
   if(nomes.size() > 0)
-    origemDinheiro->addItem("Banco");
+    origemDinheiro->addItem(tr("bank").toUTF8());
   origemDinheiro->sactivated().connect(this, &ContaFornecedor::exibirEsconderBancos);
   
   bancosTemplate = new WTemplate(this);
@@ -216,23 +216,23 @@ void ContaFornecedor::pagar() {
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Pagar fornecedor</h2>"
+		     "<h2>" + tr("msg-pay").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
-		     "    <div class='span2'>Descri&ccedil;&atilde;o</div>"
+		     "    <div class='span2'>" + tr("description").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- descricao -->"
 		     "        ${descricao}"
 		     "    </div>"
 		     "  </div>"
 		     "  <div class='row'>"
-		     "    <div class='span2'>Dinheiro de </div>"
+		     "    <div class='span2'>" + tr("money-from").toUTF8() + "</div>"
 		     "    <div class='input-control text span6'>"
 		     "        ${origemDinheiro}"
 		     "    </div>"
 		     "  </div>"
 		     "  ${bancosTemplate}"
 		     "  <div class='row'>  "
-		     "    <div class='span2'>Valor</div>"
+		     "    <div class='span2'>" + tr("value").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- valor -->"
 		     "        ${valor}"
 		     "    </div>"

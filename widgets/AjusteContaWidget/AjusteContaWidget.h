@@ -2,6 +2,7 @@
 #define __AJUSTE_CONTA_WIDGET__
 
 #include <string>
+#include <Wt/WString>
 #include <Wt/WPushButton>
 #include <Wt/WContainerWidget>
 

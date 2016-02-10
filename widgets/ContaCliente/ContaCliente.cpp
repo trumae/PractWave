@@ -46,24 +46,24 @@ void ContaCliente::viewHome() {
 
   WText *anotarBtn = new WText(
 			       "<button class='command-button bg-color-orangeDark default'>"
-			       "Anotar"
-			       "<small>Anote na conta do cliente</small>"
+             + tr("sell").toUTF8() + 
+			       "<small>" + tr("msg-sell").toUTF8() + "</small>"
 			       "</button>",
 			       Wt::XHTMLUnsafeText);
   anotarBtn->clicked().connect(this, &ContaCliente::anotar);
 
   WText *receberBtn = new WText(
 				"<button class='command-button bg-color-blueDark default'>"
-				"Receber"
-				"<small>Registre um recebimento na conta</small>"
+        + tr("receive").toUTF8() + 
+				"<small>" + tr("msg-receive").toUTF8() + "</small>"
 				"</button>",
 				Wt::XHTMLUnsafeText);
   receberBtn->clicked().connect(this, &ContaCliente::receber);
 
   WText *dadosBtn = new WText(
 			      "<button class='command-button bg-color-greenDark default'>"
-			      "Dados"
-			      "<small>Veja/Edite os dados do cliente</small>"
+            + tr("info").toUTF8() + 
+			      "<small>" + tr("msg-info-customer").toUTF8() + "</small>"
 			      "</button>",
 				Wt::XHTMLUnsafeText);
   dadosBtn->clicked().connect(this, &ContaCliente::goDadosCliente);
@@ -130,22 +130,22 @@ void ContaCliente::anotar() {
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(this, &ContaCliente::trataAnotarOk);
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &ContaCliente::trataCancela);
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Anotar para cliente</h2>"
+		     "<h2>" + tr("msg-sell").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+		     "    <div class='span1'>" + tr("description").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- descricao -->"
 		     "        ${descricao}"
 		     "    </div>"
 		     "  </div>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Valor</div>"
+		     "    <div class='span1'>" + tr("value").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- valor -->"
 		     "      ${valor}"
 		     "    </div>"
@@ -170,22 +170,22 @@ void ContaCliente::receber() {
   Wt::WPushButton *ok = new WPushButton("Ok");
   ok->setStyleClass("bg-color-blue fg-color-white");
   ok->clicked().connect(this, &ContaCliente::trataReceberOk);
-  Wt::WPushButton *cancel = new WPushButton("Cancela");
+  Wt::WPushButton *cancel = new WPushButton(tr("btn-cancel").toUTF8());
   cancel->setStyleClass("bg-color-orange fg-color-white");
   cancel->clicked().connect(this, &ContaCliente::trataCancela);
 
   WTemplate *t = new WTemplate(this);
   t->setTemplateText(
-		     "<h2>Receber de cliente</h2>"
+		     "<h2>" + tr("msg-receive").toUTF8() + "</h2>"
 		     "<div class='grid'>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Descri&ccedil;&atilde;o</div>"
+		     "    <div class='span1'>" + tr("description").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- descricao -->"
 		     "        ${descricao}"
 		     "    </div>"
 		     "  </div>"
 		     "  <div class='row'>  "
-		     "    <div class='span1'>Valor</div>"
+		     "    <div class='span1'>" + tr("value").toUTF8() + "</div>"
 		     "    <div class='input-control text span4'> <!-- valor -->"
 		     "        ${valor}"
 		     "    </div>"
