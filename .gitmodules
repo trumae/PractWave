@@ -1,0 +1,6 @@
+[submodule "wt"]
+	path = wt
+	url = https://github.com/emweb/wt.git
+[submodule "cppdb"]
+	path = cppdb
+	url = https://github.com/trumae/cppdb.git

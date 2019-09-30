@@ -1,12 +1,19 @@
-cmake_minimum_required (VERSION 2.6) 
-project (PractWave2)
+cmake_minimum_required (VERSION 2.8) 
+project (PractWave3)
 
-#inclui suporte a c++11
-list( APPEND CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS} -g")
+SET(VERSION_SERIES 0)
+SET(VERSION_MAJOR 0)
+SET(VERSION_MINOR 3)
+
+#c++ flags
+list( APPEND CMAKE_CXX_FLAGS " ${CMAKE_CXX_FLAGS} -g")
+
+FIND_PACKAGE(Wt REQUIRED Wt HTTP)
+FIND_PACKAGE(Boost)
 
 add_subdirectory (utils) 
-add_subdirectory (widgets)
-add_subdirectory (apps) 
-add_subdirectory (logic)
-add_subdirectory (core)
-add_subdirectory (cabureAds)
+#add_subdirectory (widgets)
+#add_subdirectory (apps) 
+#add_subdirectory (logic)
+#add_subdirectory (core)
+#add_subdirectory (cabureAds)
